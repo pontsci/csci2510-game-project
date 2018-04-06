@@ -25,8 +25,8 @@ public class RatManager extends Manager{
 
     //Get the rat's sprite sheet and make a rat.
     public void initialize(){
-        ratAnimations.add(loadFile("ratwalk.png"));
-        whiteRatAnimations.add(loadFile("whiteratwalk.png"));
+        ratAnimations.add(loadFile("src/resources/character/enemy/ratwalk.png"));
+        whiteRatAnimations.add(loadFile("src/resources/character/enemy/whiteratwalk.png"));
         getSprites().add(new Rat(4, -4f, new Vector2f(-2,2), ratAnimations, false) );
     }
 
