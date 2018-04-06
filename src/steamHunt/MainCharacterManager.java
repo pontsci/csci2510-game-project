@@ -13,9 +13,9 @@ public class MainCharacterManager extends Manager{
     //Get the MainCharacter's sprite sheets and make the main character.
     public void initialize(){
         ArrayList<BufferedImage> spriteAnimations = new ArrayList<>();
-        spriteAnimations.add(loadFile("MainCharSprite_WH_237x356_Move.png"));
-        spriteAnimations.add(loadFile("MainCharSprite_WH_237x356_Idle.png"));
-        spriteAnimations.add(loadFile("MainCharSprite_WH_237x356_Jump.png"));
+        spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Move.png"));
+        spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png"));
+        spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png"));
         getSprites().add(new MainCharacter(0, -4, new Vector2f(.4f,.4f), spriteAnimations));
     }
 
