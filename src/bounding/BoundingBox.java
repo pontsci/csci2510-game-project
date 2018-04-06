@@ -46,4 +46,24 @@ public class BoundingBox extends BoundingShape{
         int rectHeight = (int)(bottomRight.y - topLeft.y);
         g.drawRect(rectX, rectY, rectWidth, rectHeight);
     }
+
+    @Override
+    protected void resetDimensions(){
+        if(negativeXScale){
+            min.x = -originalMax.x;
+            max.x = -originalMin.x;
+        }
+        else{
+            min.x = originalMin.x;
+            max.x = originalMax.x;
+        }
+        if(negativeYScale){
+            min.y = -originalMax.y;
+            max.y = -originalMin.y;
+        }
+        else{
+            min.y = originalMin.y;
+            max.y = originalMax.y;
+        }
+    }
 }

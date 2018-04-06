@@ -97,6 +97,7 @@ public abstract class BoundingShape implements Drawable{
 
     //When the scale changes, the square and circle coordinates need to be altered accordingly
     //For example, a negative scale flips the picture, the points need to be flipped as well
+    protected abstract void resetDimensions();/*
     private void resetDimensions(){
         if(this instanceof BoundingBox){
             if(negativeXScale){
@@ -130,7 +131,7 @@ public abstract class BoundingShape implements Drawable{
                 point.y = originalPoint.y;
             }
         }
-    }
+    }*/
 
     public Vector2f getCurrentMin(){
         return currentWorld.mul(min);

@@ -45,4 +45,20 @@ public class BoundingCircle extends BoundingShape{
         g.drawOval(circleX, circleY, circleWidth, circleHeight);
 
     }
+
+    @Override
+    protected void resetDimensions() {
+        if(negativeXScale){
+            point.x = -originalPoint.x;
+        }
+        else{
+            point.x = originalPoint.x;
+        }
+        if(negativeYScale){
+            point.y = -originalPoint.y;
+        }
+        else{
+            point.y = originalPoint.y;
+        }
+    }
 }
