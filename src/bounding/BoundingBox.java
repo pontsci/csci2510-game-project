@@ -6,8 +6,16 @@ import util.Vector2f;
 import java.awt.*;
 
 public class BoundingBox extends BoundingShape{
+
+    //Constructor for a Box
     public BoundingBox(Vector2f min, Vector2f max, float startX, float startY, Color c){
-        super(min, max, startX, startY, c);
+        //coordinates for where the box starts in the world
+        super(c);
+        this.min = min;
+        this.max = max;
+        //coordinates around the object
+        originalMin = new Vector2f(min.x, min.y);
+        originalMax = new Vector2f(max.x, max.y);
     }
 
     //Unused code from book - May be needed for something later

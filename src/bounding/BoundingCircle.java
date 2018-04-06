@@ -6,8 +6,13 @@ import util.Vector2f;
 import java.awt.*;
 
 public class BoundingCircle extends BoundingShape{
+
     public BoundingCircle(float radius, float startX, float startY, Color c){
-        super(radius, startX, startY, c);
+        //coordinates for where the box starts in the world
+        super(c);
+        this.radius = radius;
+        point = new Vector2f(startX, startY);
+        originalPoint = new Vector2f(startX, startY);
     }
 
     //Unused code from book

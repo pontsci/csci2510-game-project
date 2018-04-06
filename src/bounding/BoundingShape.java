@@ -28,25 +28,8 @@ public abstract class BoundingShape implements Drawable{
     protected Vector2f originalMax;//this will only change if the entire shape of the object changes
     protected Vector2f originalPoint;//this will only change if the entire shape of the object changes
 
-
-    //Constructor for a Box
-    public BoundingShape(Vector2f min, Vector2f max, float startX, float startY, Color c){
-        this.min = min;
-        this.max = max;
-        //coordinates around the object
-        originalMin = new Vector2f(min.x, min.y);
-        originalMax = new Vector2f(max.x, max.y);
-        //coordinates for where the box starts in the world
-        xTranslation = startX;
-        yTranslation = startY;
-        objectColor = c;
-    }
-
-    //Constructor for a Circle
-    public BoundingShape(float radius, float startX, float startY, Color c){
-        this.radius = radius;
-        point = new Vector2f(startX, startY);
-        originalPoint = new Vector2f(startX, startY);
+    //Constructor for a BoundingShape
+    public BoundingShape(Color c){
         objectColor = c;
     }
 
@@ -97,41 +80,7 @@ public abstract class BoundingShape implements Drawable{
 
     //When the scale changes, the square and circle coordinates need to be altered accordingly
     //For example, a negative scale flips the picture, the points need to be flipped as well
-    protected abstract void resetDimensions();/*
-    private void resetDimensions(){
-        if(this instanceof BoundingBox){
-            if(negativeXScale){
-                min.x = -originalMax.x;
-                max.x = -originalMin.x;
-            }
-            else{
-                min.x = originalMin.x;
-                max.x = originalMax.x;
-            }
-            if(negativeYScale){
-                min.y = -originalMax.y;
-                max.y = -originalMin.y;
-            }
-            else{
-                min.y = originalMin.y;
-                max.y = originalMax.y;
-            }
-        }
-        else if(this instanceof BoundingCircle){
-            if(negativeXScale){
-                point.x = -originalPoint.x;
-            }
-            else{
-                point.x = originalPoint.x;
-            }
-            if(negativeYScale){
-                point.y = -originalPoint.y;
-            }
-            else{
-                point.y = originalPoint.y;
-            }
-        }
-    }*/
+    protected abstract void resetDimensions();
 
     public Vector2f getCurrentMin(){
         return currentWorld.mul(min);
