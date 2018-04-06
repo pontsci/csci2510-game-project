@@ -1,5 +1,6 @@
 package steamHunt;
 
+import managers.*;
 import util.SimpleFramework;
 
 import java.awt.*;
