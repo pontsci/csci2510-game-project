@@ -4,6 +4,7 @@ import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import bounding.BoundingShape;
 import sprite.Sprite;
+import util.Intersect;
 import util.Matrix3x3f;
 
 import javax.imageio.ImageIO;
@@ -70,19 +71,19 @@ public abstract class Manager{
             for(int j = 1; j < sprite2Hitboxes.size(); j++){
                 //check if two shapes are intersecting and return true if so
                 if(sprite1Hitboxes.get(i) instanceof BoundingBox && sprite2Hitboxes.get(j) instanceof BoundingBox){
-                    if(((BoundingBox)sprite1Hitboxes.get(i)).intersectAABB(sprite1Hitboxes.get(i).getCurrentMin(), sprite1Hitboxes.get(i).getCurrentMax(), sprite2Hitboxes.get(j).getCurrentMin(), sprite2Hitboxes.get(j).getCurrentMax()))
+                    if(Intersect.intersectAABB(sprite1Hitboxes.get(i).getCurrentMin(), sprite1Hitboxes.get(i).getCurrentMax(), sprite2Hitboxes.get(j).getCurrentMin(), sprite2Hitboxes.get(j).getCurrentMax()))
                         return true;
                 }
                 else if(sprite1Hitboxes.get(i) instanceof BoundingBox && sprite2Hitboxes.get(j) instanceof BoundingCircle){
-                    if(sprite1Hitboxes.get(i).intersectCircleAABB(sprite2Hitboxes.get(j).getCurrentPoint(), sprite2Hitboxes.get(j).getCurrentRadius(), sprite1Hitboxes.get(i).getCurrentMin(), sprite1Hitboxes.get(i).getCurrentMax()))
+                    if(Intersect.intersectCircleAABB(sprite2Hitboxes.get(j).getCurrentPoint(), sprite2Hitboxes.get(j).getCurrentRadius(), sprite1Hitboxes.get(i).getCurrentMin(), sprite1Hitboxes.get(i).getCurrentMax()))
                         return true;
                 }
                 else if(sprite1Hitboxes.get(i) instanceof BoundingCircle && sprite2Hitboxes.get(j) instanceof BoundingBox){
-                    if(sprite1Hitboxes.get(i).intersectCircleAABB(sprite1Hitboxes.get(i).getCurrentPoint(), sprite1Hitboxes.get(i).getCurrentRadius(), sprite2Hitboxes.get(j).getCurrentMin(), sprite2Hitboxes.get(j).getCurrentMax()))
+                    if(Intersect.intersectCircleAABB(sprite1Hitboxes.get(i).getCurrentPoint(), sprite1Hitboxes.get(i).getCurrentRadius(), sprite2Hitboxes.get(j).getCurrentMin(), sprite2Hitboxes.get(j).getCurrentMax()))
                         return true;
                 }
                 else if(sprite1Hitboxes.get(i) instanceof BoundingCircle && sprite2Hitboxes.get(j) instanceof BoundingCircle){
-                    if(((BoundingCircle)sprite1Hitboxes.get(i)).intersectCircle(sprite1Hitboxes.get(i).getCurrentPoint(), sprite1Hitboxes.get(i).getCurrentRadius(), sprite2Hitboxes.get(j).getCurrentPoint(), sprite2Hitboxes.get(j).getCurrentRadius()))
+                    if(Intersect.intersectCircle(sprite1Hitboxes.get(i).getCurrentPoint(), sprite1Hitboxes.get(i).getCurrentRadius(), sprite2Hitboxes.get(j).getCurrentPoint(), sprite2Hitboxes.get(j).getCurrentRadius()))
                         return true;
                 }
             }
@@ -96,7 +97,7 @@ public abstract class Manager{
             BoundingBox SOH = ((BoundingBox)spriteOutHitbox.getHitboxes().get(0));//get the sprite's outer hitbox
             for(int i = 0; i < 2; i++){
                 BoundingBox WOH = ((BoundingBox)walls.get(i).getHitboxes().get(0));//get the wall's outer hitbox
-                if(SOH.intersectAABB(SOH.getCurrentMin(), SOH.getCurrentMax(), WOH.getCurrentMin(), WOH.getCurrentMax())){
+                if(Intersect.intersectAABB(SOH.getCurrentMin(), SOH.getCurrentMax(), WOH.getCurrentMin(), WOH.getCurrentMax())) {
                     //While some innerbox collides
                     while(innerHitboxCollision(spriteOutHitbox.getHitboxes(), walls.get(i).getHitboxes())){
                         //Left wall hit, move mouse right
@@ -120,7 +121,7 @@ public abstract class Manager{
         for(Sprite cat : getSprites()){
             BoundingBox cOH = ((BoundingBox)cat.getHitboxes().get(0));//get the cat's outer hitbox
             BoundingBox fOH = ((BoundingBox)floors.get(0).getHitboxes().get(0));//get the cat's outer hitbox
-            if(cOH.intersectAABB(cOH.getCurrentMin(), cOH.getCurrentMax(), fOH.getCurrentMin(), fOH.getCurrentMax())){
+            if(Intersect.intersectAABB(cOH.getCurrentMin(), cOH.getCurrentMax(), fOH.getCurrentMin(), fOH.getCurrentMax())){
                 //While some innerbox collides
                 while(innerHitboxCollision(cat.getHitboxes(), floors.get(0).getHitboxes())){
                     cat.setRotation(0);//Make character level with the ground

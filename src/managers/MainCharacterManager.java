@@ -3,6 +3,7 @@ package managers;
 import bounding.BoundingBox;
 import sprite.character.player.MainCharacter;
 import sprite.Sprite;
+import util.Intersect;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -53,7 +54,7 @@ public class MainCharacterManager extends Manager{
             BoundingBox spriteOutHitbox = ((BoundingBox)mainCharacter.getHitboxes().get(0));//get the mainCharacter's outer hitbox
             for(int i = 0; i < mice.size(); i++){
                 BoundingBox rOH = ((BoundingBox)mice.get(i).getHitboxes().get(0));//get the rat's outer hitbox
-                if(spriteOutHitbox.intersectAABB(spriteOutHitbox.getCurrentMin(), spriteOutHitbox.getCurrentMax(), rOH.getCurrentMin(), rOH.getCurrentMax())){
+                if(Intersect.intersectAABB(spriteOutHitbox.getCurrentMin(), spriteOutHitbox.getCurrentMax(), rOH.getCurrentMin(), rOH.getCurrentMax())){
                     //if some innerbox collides, remove a mouse
                     if(innerHitboxCollision(mainCharacter.getHitboxes(), mice.get(i).getHitboxes())){
                         mice.remove(i);

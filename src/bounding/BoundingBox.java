@@ -18,20 +18,6 @@ public class BoundingBox extends BoundingShape{
         originalMax = new Vector2f(max.x, max.y);
     }
 
-    //Unused code from book - May be needed for something later
-    public boolean pointInAABB(Vector2f p, Vector2f min, Vector2f max){
-        return p.x > min.x && p.x < max.x && p.y > min.y && p.y < max.y;
-    }
-
-    //Given two boxes, returns if they collide
-    public boolean intersectAABB(Vector2f minA, Vector2f maxA, Vector2f minB, Vector2f maxB){
-        if(minA.x > maxB.x || minB.x > maxA.x)
-            return false;
-        if(minA.y > maxB.y || minB.y > maxA.y)
-            return false;
-        return true;
-    }
-
     //Render where the bounding box is in the world
     @Override
     public void render(Graphics g){
@@ -73,5 +59,15 @@ public class BoundingBox extends BoundingShape{
             min.y = originalMin.y;
             max.y = originalMax.y;
         }
+    }
+
+    //This is a special method specifically for changing hitboxes with an animation
+    //If hitbox's don't need to be altered to match an animation because it already fits,
+    //Then this method isn't needed
+    public void alterShape(Vector2f min, Vector2f max){
+        this.min = min;
+        this.max = max;
+        originalMin = new Vector2f(min.x, min.y);
+        originalMax = new Vector2f(max.x, max.y);
     }
 }

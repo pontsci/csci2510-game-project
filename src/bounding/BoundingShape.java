@@ -33,23 +33,6 @@ public abstract class BoundingShape implements Drawable{
         objectColor = c;
     }
 
-    //This is a special method specifically for changing hitboxes with an animation
-    //If hitbox's don't need to be altered to match an animation because it already fits,
-    //Then this method isn't needed
-    public void alterShape(Vector2f min, Vector2f max){
-        this.min = min;
-        this.max = max;
-        originalMin = new Vector2f(min.x, min.y);
-        originalMax = new Vector2f(max.x, max.y);
-    }
-
-    //Does the same as the other alterShape but takes a square's points instead of a circle.
-    public void alterShape(float radius, float startX, float startY){
-        this.radius = radius;
-        point = new Vector2f(startX, startY);
-        originalPoint = new Vector2f(startX, startY);
-    }
-
     //Update the world
     public void updateWorld(Matrix3x3f viewport){
         currentWorld = Matrix3x3f.identity();
@@ -57,20 +40,6 @@ public abstract class BoundingShape implements Drawable{
         currentWorld = currentWorld.mul(Matrix3x3f.rotate(rot));
         currentWorld = currentWorld.mul(Matrix3x3f.translate(xTranslation, yTranslation));
         this.viewport = viewport;
-    }
-
-    //Given a circle and a box, returns true if they collide
-    public boolean intersectCircleAABB(Vector2f c, float r, Vector2f min, Vector2f max){
-        float dx = 0.0f;
-        if(c.x < min.x) dx = c.x - min.x;
-        if(c.x > max.x) dx = c.x - max.x;
-
-        float dy = 0.0f;
-        if(c.y < min.y) dy = c.y - min.y;
-        if(c.y > max.y) dy = c.y - max.y;
-
-        float d = dx * dx + dy * dy;
-        return d < r * r;
     }
 
     //Render the color, subclasses should implement rendering specifics
