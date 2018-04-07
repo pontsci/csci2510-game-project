@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public abstract class CharacterSprite extends Sprite{
-    Floor floor;
-    ArrayList<Sprite> walls = new ArrayList<>();
+    private Floor floor;
+    private ArrayList<Sprite> walls = new ArrayList<>();
     int health;
     boolean onFire = false;
     boolean dotHeal = false;
@@ -24,53 +24,40 @@ public abstract class CharacterSprite extends Sprite{
         this.walls = walls;
     }
 
+    //begin checking collision
     public void checkCollision(float delta, Matrix3x3f viewport){
-        checkWallCollision(delta, viewport);
-        checkFloorCollision(delta, viewport);
-    }
-
-    private void checkWallCollision(float delta, Matrix3x3f viewport){
-        //Get the outer hitboxes' min and max to check collision
-        Vector2f wallMin;
-        Vector2f wallMax;
-        Vector2f characterMin = ((BoundingBox)getHitboxes().get(0)).getCurrentMin();
-        Vector2f characterMax = ((BoundingBox)getHitboxes().get(0)).getCurrentMax();
-
         for(int i = 0; i < walls.size(); i++){
-            wallMin = ((BoundingBox)walls.get(i).getHitboxes().get(0)).getCurrentMin();
-            wallMax = ((BoundingBox)walls.get(i).getHitboxes().get(0)).getCurrentMax();
-            if(Intersect.intersectAABB(characterMin, characterMax, wallMin, wallMax)){
-                while(checkInnerCollision(walls.get(i).getHitboxes())){
-                    if(i == 0){
-                        pushCharacter(delta, viewport, 'x', .0001f);
-                    }
-                    //Right wall is being hit, move mouse left;
-                    else if(i == 1){
-                        pushCharacter(delta, viewport, 'x', -.0001f);
-                    }
+            while(checkSpriteCollision(delta, viewport, walls.get(i))){
+                if(i == 0){
+                    pushCharacter(delta, viewport, 'x', .0001f);
+                }
+                //Right wall is being hit, move mouse left;
+                else if(i == 1){
+                    pushCharacter(delta, viewport, 'x', -.0001f);
                 }
             }
         }
+        while(checkSpriteCollision(delta, viewport, floor)){
+            pushCharacter(delta, viewport, 'y', .0001f);
+        }
     }
 
-    //Check if the character sprite is colliding with the floor.
-    private void checkFloorCollision(float delta, Matrix3x3f viewport){
-        //Get the outer hitboxes' min and max to check collision
-        Vector2f floorMin = ((BoundingBox)floor.getHitboxes().get(0)).getCurrentMin();
-        Vector2f floorMax = ((BoundingBox)floor.getHitboxes().get(0)).getCurrentMax();
+    //returns true if collides with given sprite
+    protected boolean checkSpriteCollision(float delta, Matrix3x3f viewport, Sprite sprite){
+        Vector2f spriteMin = ((BoundingBox)sprite.getHitboxes().get(0)).getCurrentMin();
+        Vector2f spriteMax = ((BoundingBox)sprite.getHitboxes().get(0)).getCurrentMax();
         Vector2f characterMin = ((BoundingBox)getHitboxes().get(0)).getCurrentMin();
         Vector2f characterMax = ((BoundingBox)getHitboxes().get(0)).getCurrentMax();
 
-        if(Intersect.intersectAABB(characterMin, characterMax, floorMin, floorMax)){
-            while(checkInnerCollision(floor.getHitboxes())){
-                pushCharacter(delta, viewport, 'y', .0001f);
-            }
+        if(Intersect.intersectAABB(characterMin, characterMax, spriteMin, spriteMax)){
+            return checkInnerCollision(sprite.getHitboxes());
         }
+        return false;
     }
 
     //Check collision of the inner hitboxes of the character, and the foreign hitboxes.
     //returns true if the inner hitboxes collide.
-    protected boolean checkInnerCollision(ArrayList<BoundingShape> foreignHitboxes){
+    private boolean checkInnerCollision(ArrayList<BoundingShape> foreignHitboxes){
         BoundingShape foreignHitbox;
         BoundingShape characterHitbox;
 

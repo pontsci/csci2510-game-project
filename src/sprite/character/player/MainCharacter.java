@@ -1,12 +1,11 @@
 package sprite.character.player;
 
-import animation.Animation;
+import util.Animation;
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.world.Floor;
-import util.Intersect;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -65,27 +64,14 @@ public class MainCharacter extends CharacterSprite{
         }
     }
 
+    //checks rat collision
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
-        checkMouseCollision(delta, viewport);
-    }
-
-    public void checkMouseCollision(float delta, Matrix3x3f viewport){
-        //Get the outer hitboxes' min and max to check collision
-        Vector2f ratMin;
-        Vector2f ratMax;
-        Vector2f characterMin = ((BoundingBox)getHitboxes().get(0)).getCurrentMin();
-        Vector2f characterMax = ((BoundingBox)getHitboxes().get(0)).getCurrentMax();
-
         for(int i = 0; i < rats.size(); i++){
-            ratMin = ((BoundingBox)rats.get(i).getHitboxes().get(0)).getCurrentMin();
-            ratMax = ((BoundingBox)rats.get(i).getHitboxes().get(0)).getCurrentMax();
-            if(Intersect.intersectAABB(characterMin, characterMax, ratMin, ratMax)){
-                if(checkInnerCollision(rats.get(i).getHitboxes())){
-                    rats.remove(i);
-                    i--;
-                }
+            if(checkSpriteCollision(delta,viewport,rats.get(i))){
+                rats.remove(i);
+                i--;
             }
         }
     }
