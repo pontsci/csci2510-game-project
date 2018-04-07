@@ -36,8 +36,8 @@ public class SteamHuntDriver extends SimpleFramework{
         managers[0] = new BackgroundManager();
         managers[1] = new FloorManager();
         managers[4] = new WallManager();
-        managers[2] = new MainCharacterManager((Floor)managers[1].getSprites().get(0), managers[4].getSprites());
         managers[3] = new RatManager((Floor)managers[1].getSprites().get(0), managers[4].getSprites());
+        managers[2] = new MainCharacterManager((Floor)managers[1].getSprites().get(0), managers[4].getSprites(), managers[3].getSprites());
     }
 
     @Override
@@ -96,11 +96,6 @@ public class SteamHuntDriver extends SimpleFramework{
     private void checkCollision(float delta){
         for(Manager manager : managers)
             manager.checkCollision(delta, getViewportTransform());
-        managers[3].checkWallCollision(managers[4].getSprites(), delta, getViewportTransform());
-        managers[3].checkFloorCollision(managers[1].getSprites(), delta, getViewportTransform());
-        managers[2].checkWallCollision(managers[4].getSprites(), delta, getViewportTransform());
-        managers[2].checkFloorCollision(managers[1].getSprites(), delta, getViewportTransform());
-        ((MainCharacterManager)managers[2]).checkMouseCollision(managers[3].getSprites(), delta, getViewportTransform());
     }
 
     @Override

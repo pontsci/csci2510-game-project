@@ -1,11 +1,7 @@
 package managers;
 
-import bounding.BoundingBox;
-import bounding.BoundingCircle;
-import bounding.BoundingShape;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
-import util.Intersect;
 import util.Matrix3x3f;
 
 import javax.imageio.ImageIO;
@@ -61,84 +57,13 @@ public abstract class Manager{
         }
     }
 
-     //Checks if two sprites are intersecting returns true if they are
-    public boolean innerHitboxCollision(ArrayList<BoundingShape> firstHitboxes, ArrayList<BoundingShape> secondHitboxes){
-        BoundingShape fh;
-        BoundingShape sh;
-        for(int i = 1; i < firstHitboxes.size(); i++){
-            fh = firstHitboxes.get(i);
-            for(int j = 1; j < secondHitboxes.size(); j++){
-                sh = secondHitboxes.get(j);
-                //check if two shapes are intersecting and return true if so
-                if(fh instanceof BoundingBox && sh instanceof BoundingBox){
-                    if(Intersect.intersectAABB(((BoundingBox)fh).getCurrentMin(), ((BoundingBox)fh).getCurrentMax(), ((BoundingBox)sh).getCurrentMin(), ((BoundingBox)sh).getCurrentMax()))
-                        return true;
-                }
-                else if(fh instanceof BoundingBox && sh instanceof BoundingCircle){
-                    if(Intersect.intersectCircleAABB(((BoundingCircle)sh).getCurrentPoint(), ((BoundingCircle)sh).getCurrentRadius(), ((BoundingBox)fh).getCurrentMin(), ((BoundingBox)fh).getCurrentMax()))
-                        return true;
-                }
-                else if(fh instanceof BoundingCircle && sh instanceof BoundingBox){
-                    if(Intersect.intersectCircleAABB(((BoundingCircle)fh).getCurrentPoint(), ((BoundingCircle)fh).getCurrentRadius(), ((BoundingBox)sh).getCurrentMin(), ((BoundingBox)sh).getCurrentMax()))
-                        return true;
-                }
-                else if(fh instanceof BoundingCircle && sh instanceof BoundingCircle){
-                    if(Intersect.intersectCircle(((BoundingCircle)fh).getCurrentPoint(), ((BoundingCircle)fh).getCurrentRadius(), ((BoundingCircle)sh).getCurrentPoint(), ((BoundingCircle)sh).getCurrentRadius()))
-                        return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public void checkCollision(float delta, Matrix3x3f viewport){
         for(Sprite sprite : sprites){
             if(sprite instanceof CharacterSprite){
-                ((CharacterSprite)sprite).checkCollision(delta);
+                ((CharacterSprite)sprite).checkCollision(delta, viewport);
             }
             else//if not the correct sprite, back out. A Manager only contains one kind of sprite.
                 return;
-        }
-    }
-
-    //Check for collision with the wall
-    public void checkWallCollision(ArrayList<Sprite> walls, float delta, Matrix3x3f viewport){
-        for(Sprite spriteOutHitbox : getSprites()){
-            BoundingBox SOH = ((BoundingBox)spriteOutHitbox.getHitboxes().get(0));//get the sprite's outer hitbox
-            for(int i = 0; i < 2; i++){
-                BoundingBox WOH = ((BoundingBox)walls.get(i).getHitboxes().get(0));//get the wall's outer hitbox
-                if(Intersect.intersectAABB(SOH.getCurrentMin(), SOH.getCurrentMax(), WOH.getCurrentMin(), WOH.getCurrentMax())) {
-                    //While some innerbox collides
-                    while(innerHitboxCollision(spriteOutHitbox.getHitboxes(), walls.get(i).getHitboxes())){
-                        //Left wall hit, move mouse right
-                        if(i == 0){
-                            spriteOutHitbox.setxTranslation(spriteOutHitbox.getxTranslation() + .0001f);
-                            spriteOutHitbox.update(delta, viewport);
-                        }
-                        //Right wall hit, move mouse left
-                        else if(i == 1){
-                            spriteOutHitbox.setxTranslation(spriteOutHitbox.getxTranslation() - .0001f);
-                            spriteOutHitbox.update(delta, viewport);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    //Check for collision with the floor
-    public void checkFloorCollision(ArrayList<Sprite> floors, float delta, Matrix3x3f viewport){
-        for(Sprite cat : getSprites()){
-            BoundingBox cOH = ((BoundingBox)cat.getHitboxes().get(0));//get the cat's outer hitbox
-            BoundingBox fOH = ((BoundingBox)floors.get(0).getHitboxes().get(0));//get the cat's outer hitbox
-            if(Intersect.intersectAABB(cOH.getCurrentMin(), cOH.getCurrentMax(), fOH.getCurrentMin(), fOH.getCurrentMax())){
-                //While some innerbox collides
-                while(innerHitboxCollision(cat.getHitboxes(), floors.get(0).getHitboxes())){
-                    cat.setRotation(0);//Make character level with the ground
-                    cat.setyTranslation(cat.getyTranslation() + .0001f);
-                    cat.update(delta, viewport);
-                }
-            }
         }
     }
 
