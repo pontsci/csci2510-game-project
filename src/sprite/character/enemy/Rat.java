@@ -1,5 +1,6 @@
 package sprite.character.enemy;
 
+import animation.Animation;
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import sprite.Sprite;
@@ -11,26 +12,23 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Rat extends Sprite {
-    private float aTime = 0;//Animation Time
-    private float hTime = 0;//Horizontal Time
-    private float vTime = 0;//Vertical Time
-    private ArrayList<BufferedImage> walkAnimation = new ArrayList<>();
-    private float frameTime = .1f; //time between each frame
+    private final static int WALK_ANIMATION = 0;
+    private final static boolean GO_RIGHT = true;
+    private final static boolean GO_LEFT = false;
+    private float hTime = 0;//Horizontal Movement Timer
+    private float vTime = 0;//Vertical Movement Timer
+    private Animation animation = new Animation();
     private float walkRate = 2f;//Walk rate per second.
-    private boolean direction;//True means the rat faces right, false means left.
+    private boolean facingDirection;//True means the rat faces right, false means left.
     private float jumpForce = 0;
     Random rand = new Random();
 
     public Rat(float startX, float startY, Vector2f scale, ArrayList<BufferedImage> spriteAnimations, boolean direction){
         super(startX, startY, scale, spriteAnimations.get(0).getSubimage(0,0,17,8));
         //true faces right, false faces left
-        this.direction = direction;
+        this.facingDirection = direction;
 
-        walkAnimation.add(spriteAnimations.get(0).getSubimage(0,0, 17, 8));
-        walkAnimation.add(spriteAnimations.get(0).getSubimage(17,0, 17, 8));
-        walkAnimation.add(spriteAnimations.get(0).getSubimage(34,0,17,8));
-        walkAnimation.add(spriteAnimations.get(0).getSubimage(51,0, 17, 8));
-
+        animation.addAnimation(spriteAnimations.get(0), 4);
         initializeHitboxes();
     }
 
@@ -46,18 +44,18 @@ public class Rat extends Sprite {
     public void process(float delta){
         horizontalMovement(delta);
         verticalMovement(delta);
-        playAnimation(delta, walkAnimation);
+        animation.playAnimation(delta, WALK_ANIMATION, this);
     }
 
     //SIMPLE Random horizontal movement of the rat.
     private void horizontalMovement(float delta){
         hTime = hTime + delta;
         //Every second a random boolean is chosen to
-        //determine the direction the mouse will go
+        //determine the facingDirection the mouse will go
         if(hTime > 1){
-            direction = rand.nextBoolean();
+            facingDirection = rand.nextBoolean();
             //True faces right
-            if(direction)
+            if(facingDirection == GO_RIGHT)
                 setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
             //False faces left
             else
@@ -65,8 +63,8 @@ public class Rat extends Sprite {
             hTime = hTime - 1;
         }
 
-        //move the mouse in a direction
-        if(direction)
+        //move the mouse in a facingDirection
+        if(facingDirection == GO_RIGHT)
             setxTranslation(getxTranslation() + (walkRate * delta));
         else
             setxTranslation(getxTranslation() - (walkRate * delta));
@@ -96,27 +94,5 @@ public class Rat extends Sprite {
         }
 
         setyTranslation(getyTranslation() + ((getGravity() + jumpForce) * delta));
-    }
-
-    //Process an animation by setting the frame and setting how long the animation has been going on (time determines frame)
-    private boolean playAnimation(float delta, ArrayList<BufferedImage> animation){
-        float animationTimeLength = animation.size() * frameTime;
-        setFrame(delta, animation);
-        if(aTime >= animationTimeLength){
-            aTime = aTime - animationTimeLength;
-            return true;
-        }
-        return false;
-    }
-
-    //Switch an animation's frame based on time.
-    private void setFrame(float delta, ArrayList<BufferedImage> animation){
-        aTime = aTime + delta;
-        for(int i = 1; i <= animation.size(); i++){
-            if(aTime < frameTime * i){
-                setCurrentSpriteFrame(animation.get(i - 1));
-                break;
-            }
-        }
     }
 }

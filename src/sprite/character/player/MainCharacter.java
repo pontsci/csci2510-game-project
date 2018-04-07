@@ -1,5 +1,6 @@
 package sprite.character.player;
 
+import animation.Animation;
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import sprite.Sprite;
@@ -10,28 +11,18 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class MainCharacter extends Sprite {
-    private float animationTime = 0;//Keeps track of how long an animation has been going in order to show the correct frame
-    private int playAnimation = 1;
-    private ArrayList<BufferedImage> moveAnimation = new ArrayList<>();
-    private ArrayList<BufferedImage> idleAnimation = new ArrayList<>();
-    private ArrayList<BufferedImage> jumpAnimation = new ArrayList<>();
-    private float frameTime = .1f; //time between each frame
+    private final static int MOVE_ANIMATION = 0;
+    private final static int IDLE_ANIMATION = 1;
+    private final static int JUMP_ANIMATION = 2;
+    private Animation animation = new Animation();
+    private int currentAnimation = 1;
     private float walkRate = 2.5f;//Walk rate per second. (The world is 16 by 9)
 
     public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<BufferedImage> spriteAnimations){
         super(startX, startY, scale, spriteAnimations.get(1).getSubimage(0,0, 237, 356));
-
-        //Pull the individual frames out now to prevent doing the work
-        //of cutting out a subimage everytime the object needs a frame
-        for(int i = 0; i < 6; i++)
-            moveAnimation.add(spriteAnimations.get(0).getSubimage(237 * i,0, 237, 356));
-
-        for(int i = 0; i < 5; i++)
-            idleAnimation.add(spriteAnimations.get(1).getSubimage(237 * i,0, 237, 356));
-
-        for(int i = 0; i < 7; i++)
-            jumpAnimation.add(spriteAnimations.get(2).getSubimage(237 * i,0,237,356));
-
+        animation.addAnimation(spriteAnimations.get(0), 6);
+        animation.addAnimation(spriteAnimations.get(1), 5);
+        animation.addAnimation(spriteAnimations.get(2), 7);
         initializeHitboxes();
     }
 
@@ -52,55 +43,27 @@ public class MainCharacter extends Sprite {
 
     //Process which animation is playing
     private void processAnimations(float delta){
-        switch(playAnimation){
+        switch(currentAnimation){
             //move Animation
-            case 0:
-                playAnimation(delta, moveAnimation);//Returns true when animation is complete
+            case MOVE_ANIMATION:
+                animation.playAnimation(delta, MOVE_ANIMATION, this);
                 break;
             //idle Animation
-            case 1:
-                playAnimation(delta, idleAnimation);//Returns true when animation is complete
+            case IDLE_ANIMATION:
+                animation.playAnimation(delta, IDLE_ANIMATION, this);
                 break;
             //jump Animation
-            case 2:
-                if(playAnimation(delta, jumpAnimation)){//Returns true when animation is complete
-                    //Go back to idle when jump is complete
-                    playAnimation = 1;
-                }
+            case JUMP_ANIMATION:
+                if(animation.playAnimation(delta, JUMP_ANIMATION, this))
+                    currentAnimation = IDLE_ANIMATION;
                 break;
-        }
-    }
-
-    //Process an animation by setting the frame and setting how long the animation has been going on (time determines frame)
-    //Returns true when animation is complete
-    private boolean playAnimation(float delta, ArrayList<BufferedImage> animation){
-        float animationTimeLength = animation.size() * frameTime;
-        setFrame(delta, animation);
-        if(animationTime >= animationTimeLength){
-            animationTime = animationTime - animationTimeLength;
-            return true;
-        }
-        return false;
-    }
-
-    //Switch an animation's frame based on time.
-    private void setFrame(float delta, ArrayList<BufferedImage> animation){
-        animationTime = animationTime + delta;
-        for(int i = 1; i <= animation.size(); i++){
-            if(animationTime < frameTime * i){
-                setCurrentSpriteFrame(animation.get(i - 1));
-                break;
-            }
         }
     }
 
     //play left move animation
     public void walkLeft(float delta){
-        if(playAnimation != 2){
-            if(playAnimation != 0){
-                animationTime = 0;
-                playAnimation = 0;
-            }
+        if(currentAnimation != JUMP_ANIMATION && currentAnimation != MOVE_ANIMATION){
+            currentAnimation = MOVE_ANIMATION;
         }
         setxTranslation(getxTranslation() - (walkRate * delta));
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
@@ -108,28 +71,21 @@ public class MainCharacter extends Sprite {
 
     //play right move animation
     public void walkRight(float delta){
-        if(playAnimation != 2){
-            if(playAnimation != 0){
-                animationTime = 0;
-                playAnimation = 0;
-            }
-        }
+        if(currentAnimation != JUMP_ANIMATION && currentAnimation != MOVE_ANIMATION)
+            currentAnimation = MOVE_ANIMATION;
         setxTranslation(getxTranslation() + (walkRate * delta));
         setScale(new Vector2f(-Math.abs(getScale().x), Math.abs(getScale().y)));
     }
 
     //play jump animation
     public void jump(){
-        if(playAnimation != 2){
-            animationTime = 0;
-            playAnimation = 2;
-        }
+        if(currentAnimation != JUMP_ANIMATION)
+            currentAnimation = JUMP_ANIMATION;
     }
 
     //Play idle animation as long as the main character is not jumping or already idle.
     public void idle(){
-        if(playAnimation != 2 && playAnimation != 1){
-            playAnimation = 1;
-        }
+        if(currentAnimation != JUMP_ANIMATION && currentAnimation != IDLE_ANIMATION)
+            currentAnimation = IDLE_ANIMATION;
     }
 }

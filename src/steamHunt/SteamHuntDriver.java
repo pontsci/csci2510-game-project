@@ -88,10 +88,10 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //Check the collision of everything that needs collision detection - Rat's and Cats
     private void checkCollision(float delta){
-        ((RatManager)managers[3]).checkWallCollision(managers[4].getSprites(), delta, getViewportTransform());
-        ((RatManager)managers[3]).checkFloorCollision(managers[1].getSprites(), delta, getViewportTransform());
-        ((MainCharacterManager)managers[2]).checkWallCollision(managers[4].getSprites(), delta, getViewportTransform());
-        ((MainCharacterManager)managers[2]).checkFloorCollision(managers[1].getSprites(), delta, getViewportTransform());
+        managers[3].checkWallCollision(managers[4].getSprites(), delta, getViewportTransform());
+        managers[3].checkFloorCollision(managers[1].getSprites(), delta, getViewportTransform());
+        managers[2].checkWallCollision(managers[4].getSprites(), delta, getViewportTransform());
+        managers[2].checkFloorCollision(managers[1].getSprites(), delta, getViewportTransform());
         ((MainCharacterManager)managers[2]).checkMouseCollision(managers[3].getSprites(), delta, getViewportTransform());
     }
 
