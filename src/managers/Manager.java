@@ -4,6 +4,7 @@ import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import bounding.BoundingShape;
 import sprite.Sprite;
+import sprite.character.CharacterSprite;
 import util.Intersect;
 import util.Matrix3x3f;
 
@@ -18,9 +19,6 @@ import java.util.ArrayList;
 //This includes collision between sprites, and when to add/remove more sprites.
 public abstract class Manager{
     private ArrayList<Sprite> sprites = new ArrayList<>();
-
-    //Managers will load an image and make a sprite with that image
-    public abstract void initialize();
 
     //Load an image and return the found image
     protected BufferedImage loadFile(String fileName) {
@@ -63,9 +61,7 @@ public abstract class Manager{
         }
     }
 
-    //I'm planning on going over collision with Mason more to make this cleaner. It may be moved to the sprite superclass instead of a manager.
-
-    //Checks if two sprites are intersecting returns true if they are
+     //Checks if two sprites are intersecting returns true if they are
     public boolean innerHitboxCollision(ArrayList<BoundingShape> firstHitboxes, ArrayList<BoundingShape> secondHitboxes){
         BoundingShape fh;
         BoundingShape sh;
@@ -93,6 +89,16 @@ public abstract class Manager{
             }
         }
         return false;
+    }
+
+    public void checkCollision(float delta, Matrix3x3f viewport){
+        for(Sprite sprite : sprites){
+            if(sprite instanceof CharacterSprite){
+                ((CharacterSprite)sprite).checkCollision(delta);
+            }
+            else//if not the correct sprite, back out. A Manager only contains one kind of sprite.
+                return;
+        }
     }
 
     //Check for collision with the wall

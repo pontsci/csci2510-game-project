@@ -3,6 +3,7 @@ package managers;
 import bounding.BoundingBox;
 import sprite.character.player.MainCharacter;
 import sprite.Sprite;
+import sprite.world.Floor;
 import util.Intersect;
 import util.Matrix3x3f;
 import util.Vector2f;
@@ -12,13 +13,15 @@ import java.util.ArrayList;
 
 public class MainCharacterManager extends Manager{
     //Get the MainCharacter's sprite sheets and make the main character.
-    public void initialize(){
+
+    public MainCharacterManager(Floor floor, ArrayList<Sprite> walls){
         ArrayList<BufferedImage> spriteAnimations = new ArrayList<>();
         spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Move.png"));
         spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png"));
         spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png"));
-        getSprites().add(new MainCharacter(-7, -4, new Vector2f(.4f,.4f), spriteAnimations));
+        getSprites().add(new MainCharacter(-7, -4, new Vector2f(.4f,.4f), spriteAnimations, floor, walls));
     }
+
 
     //Tell all main characters to jump - Note, there should only be one
     public void processJump(){

@@ -1,6 +1,8 @@
 package managers;
 
+import sprite.Sprite;
 import sprite.character.enemy.Rat;
+import sprite.world.Floor;
 import util.Vector2f;
 
 import java.awt.image.BufferedImage;
@@ -16,15 +18,20 @@ public class RatManager extends Manager{
     //more sprites throughout the 'game'
     private ArrayList<BufferedImage> ratAnimations = new ArrayList<>();
     private ArrayList<BufferedImage> whiteRatAnimations = new ArrayList<>();
+    private Floor floor;
+    private ArrayList<Sprite> walls;
+
     private Random rand = new Random();
     private float ratTime = 0;//Used to determine when a rat can spawn
     private float megaRatTime = 0;//Used to determine when a mega rat can spawn.
 
     //Get the rat's sprite sheet and make a rat.
-    public void initialize(){
+    public RatManager(Floor floor, ArrayList<Sprite> walls){
         ratAnimations.add(loadFile("src/resources/character/enemy/ratwalk.png"));
         whiteRatAnimations.add(loadFile("src/resources/character/enemy/whiteratwalk.png"));
-        getSprites().add(new Rat(4, -4f, new Vector2f(-2,2), ratAnimations, false) );
+        this.floor = floor;
+        this.walls = walls;
+        getSprites().add(new Rat(4, -4f, new Vector2f(-2,2), ratAnimations, false, floor, walls));
     }
 
     @Override //spawn rats
@@ -43,12 +50,12 @@ public class RatManager extends Manager{
                 //Right
                 if(rand.nextBoolean()){
                     int size = rand.nextInt(3) - 1;//-1 to 1
-                    getSprites().add(new Rat(8,-4f,new Vector2f(-(4 + size), (4 + size)), ratAnimations, false));
+                    getSprites().add(new Rat(8,-4f,new Vector2f(-(4 + size), (4 + size)), ratAnimations, false, floor, walls));
                 }
                 //Left
                 else{
                     int size = rand.nextInt(3) - 1;//-1 to 1
-                    getSprites().add(new Rat(-8,-4, new Vector2f((5  + size), (5 + size)), ratAnimations, true));
+                    getSprites().add(new Rat(-8,-4, new Vector2f((5  + size), (5 + size)), ratAnimations, true, floor, walls));
                 }
             }
             ratTime = ratTime - 4;
@@ -66,11 +73,11 @@ public class RatManager extends Manager{
             if(i == 0){
                 //right
                 if(rand.nextBoolean()){
-                       getSprites().add(new Rat(8,-4f,new Vector2f(-(4), (4f)), whiteRatAnimations, false));
+                       getSprites().add(new Rat(8,-4f,new Vector2f(-(4), (4f)), whiteRatAnimations, false, floor, walls));
                 }
                 //Left
                 else{
-                    getSprites().add(new Rat(-8,-4f, new Vector2f((4), (4f)), whiteRatAnimations, true));
+                    getSprites().add(new Rat(-8,-4f, new Vector2f((4), (4f)), whiteRatAnimations, true, floor, walls));
                 }
             }
             megaRatTime = megaRatTime - 2;

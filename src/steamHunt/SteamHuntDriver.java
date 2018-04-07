@@ -1,15 +1,19 @@
 package steamHunt;
 
 import managers.*;
+import sprite.world.Floor;
+import sprite.world.Wall;
+import util.Matrix3x3f;
 import util.SimpleFramework;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 //The driver's job is to direct information between managers.
 //It does not deal with individual sprites, that is left for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
-    private Manager[] managers = {new BackgroundManager(), new FloorManager(), new MainCharacterManager(), new RatManager(), new WallManager()};
+    private Manager[] managers = new Manager[5];
     private boolean renderHitboxes = false;
 
 
@@ -29,9 +33,11 @@ public class SteamHuntDriver extends SimpleFramework{
     //Initialize the sprites each manager starts with
     protected void initialize(){
         super.initialize();
-        for(Manager manager : managers){
-            manager.initialize();
-        }
+        managers[0] = new BackgroundManager();
+        managers[1] = new FloorManager();
+        managers[4] = new WallManager();
+        managers[2] = new MainCharacterManager((Floor)managers[1].getSprites().get(0), managers[4].getSprites());
+        managers[3] = new RatManager((Floor)managers[1].getSprites().get(0), managers[4].getSprites());
     }
 
     @Override
@@ -88,6 +94,8 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //Check the collision of everything that needs collision detection - Rat's and Cats
     private void checkCollision(float delta){
+        for(Manager manager : managers)
+            manager.checkCollision(delta, getViewportTransform());
         managers[3].checkWallCollision(managers[4].getSprites(), delta, getViewportTransform());
         managers[3].checkFloorCollision(managers[1].getSprites(), delta, getViewportTransform());
         managers[2].checkWallCollision(managers[4].getSprites(), delta, getViewportTransform());

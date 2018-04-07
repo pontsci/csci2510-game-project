@@ -4,13 +4,15 @@ import animation.Animation;
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import sprite.Sprite;
+import sprite.character.CharacterSprite;
+import sprite.world.Floor;
 import util.Vector2f;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class MainCharacter extends Sprite {
+public class MainCharacter extends CharacterSprite{
     private final static int MOVE_ANIMATION = 0;
     private final static int IDLE_ANIMATION = 1;
     private final static int JUMP_ANIMATION = 2;
@@ -18,8 +20,8 @@ public class MainCharacter extends Sprite {
     private int currentAnimation = 1;
     private float walkRate = 2.5f;//Walk rate per second. (The world is 16 by 9)
 
-    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<BufferedImage> spriteAnimations){
-        super(startX, startY, scale, spriteAnimations.get(1).getSubimage(0,0, 237, 356));
+    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<BufferedImage> spriteAnimations, Floor floor, ArrayList<Sprite> walls){
+        super(startX, startY, scale, spriteAnimations.get(1).getSubimage(0,0, 237, 356), floor, walls);
         animation.addAnimation(spriteAnimations.get(0), 6);
         animation.addAnimation(spriteAnimations.get(1), 5);
         animation.addAnimation(spriteAnimations.get(2), 7);
@@ -34,7 +36,6 @@ public class MainCharacter extends Sprite {
         hitboxes.add(new BoundingBox(new Vector2f(-1.1f, -1.9f), new Vector2f( 1.1f, 1.15f), Color.RED));
     }
 
-    @Override
     //Process the constant gravity applied to the main character
     public void process(float delta){
         setyTranslation(getyTranslation() + (getGravity() * delta));
