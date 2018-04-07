@@ -11,6 +11,6 @@ public class EnemyManager extends Manager
     @Override
     public void initialize()
     {
-        triBotAnimations.add(loadFile("resources/character/enemy/tribot/Enemy_WH_237x356_EnemyMove_EnemyAttack.png"));
+        triBotAnimations.add(loadFile("src/resources/character/enemy/tribot/Enemy_WH_237x356_EnemyMove_EnemyAttack.png"));
     }
 }
