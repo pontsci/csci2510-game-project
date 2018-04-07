@@ -16,9 +16,9 @@ public class Wall extends Sprite {
 
     //Initialize the wall's hitboxes, the first box is the outer hitbox
     public void initializeHitboxes(){
-        hitboxes.add(new BoundingBox(new Vector2f(-5f, -.5f), new Vector2f( .021f, .6f),  getxTranslation(), 0, Color.BLUE));
-        hitboxes.add(new BoundingBox(new Vector2f(-5f, -.5f), new Vector2f( .021f, -.195f),  getxTranslation(), 0, Color.RED));
-        hitboxes.add(new BoundingBox(new Vector2f(-5f, -.195f), new Vector2f( .011f, .5f),  getxTranslation(), 0, Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-5f, -.5f), new Vector2f( .021f, .6f),  Color.BLUE));
+        hitboxes.add(new BoundingBox(new Vector2f(-5f, -.5f), new Vector2f( .021f, -.195f), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-5f, -.195f), new Vector2f( .011f, .5f), Color.RED));
     }
 
     @Override
