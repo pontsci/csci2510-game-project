@@ -6,9 +6,11 @@ import util.Vector2f;
 import java.awt.*;
 
 public class BoundingBox extends BoundingShape{
+    protected Vector2f min;
+    protected Vector2f max;
 
     //Constructor for a Box
-    public BoundingBox(Vector2f min, Vector2f max, float startX, float startY, Color c){
+    public BoundingBox(Vector2f min, Vector2f max, Color c){
         //coordinates for where the box starts in the world
         super(c);
         this.min = min;
@@ -69,5 +71,11 @@ public class BoundingBox extends BoundingShape{
         this.max = max;
         originalMin = new Vector2f(min.x, min.y);
         originalMax = new Vector2f(max.x, max.y);
+    }
+    public Vector2f getCurrentMin(){
+        return currentWorld.mul(min);
+    }
+    public Vector2f getCurrentMax(){
+        return currentWorld.mul(max);
     }
 }

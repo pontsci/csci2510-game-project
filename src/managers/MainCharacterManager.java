@@ -17,7 +17,7 @@ public class MainCharacterManager extends Manager{
         spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Move.png"));
         spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png"));
         spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png"));
-        getSprites().add(new MainCharacter(0, -4, new Vector2f(.4f,.4f), spriteAnimations));
+        getSprites().add(new MainCharacter(-7, -4, new Vector2f(.4f,.4f), spriteAnimations));
     }
 
     //Tell all main characters to jump - Note, there should only be one

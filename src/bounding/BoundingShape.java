@@ -16,11 +16,6 @@ public abstract class BoundingShape implements Drawable{
     private float xTranslation;
     private float yTranslation;
 
-    protected Vector2f point;
-    protected Vector2f min;
-    protected Vector2f max;
-    protected float radius;
-
     protected boolean negativeXScale;//Used for correcting the box to work with inversion
     protected boolean negativeYScale;//Used for correcting the box to work with inversion
 
@@ -51,19 +46,6 @@ public abstract class BoundingShape implements Drawable{
     //For example, a negative scale flips the picture, the points need to be flipped as well
     protected abstract void resetDimensions();
 
-    public Vector2f getCurrentMin(){
-        return currentWorld.mul(min);
-    }
-    public Vector2f getCurrentMax(){
-        return currentWorld.mul(max);
-    }
-    public Vector2f getCurrentPoint(){
-        return currentWorld.mul(point);
-    }
-    public float getCurrentRadius(){
-        return radius * scale.x;
-    }
-
     //Sets the scale but also prepares the dimensions of a hitbox to change with inversion.
     public void setScale(Vector2f scale){
         if(scale.x < 0)
@@ -85,5 +67,9 @@ public abstract class BoundingShape implements Drawable{
     }
     public void setyTranslation(float yTranslation){
         this.yTranslation = yTranslation;
+    }
+
+    protected Vector2f getScale(){
+        return scale;
     }
 }

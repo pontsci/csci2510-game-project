@@ -6,7 +6,10 @@ import util.Vector2f;
 import java.awt.*;
 
 public class BoundingCircle extends BoundingShape{
+    protected Vector2f point;
+    protected float radius;
 
+    //Constructor for a circle
     public BoundingCircle(float radius, float startX, float startY, Color c){
         //coordinates for where the box starts in the world
         super(c);
@@ -59,5 +62,12 @@ public class BoundingCircle extends BoundingShape{
         this.radius = radius;
         point = new Vector2f(startX, startY);
         originalPoint = new Vector2f(startX, startY);
+    }
+
+    public Vector2f getCurrentPoint(){
+        return currentWorld.mul(point);
+    }
+    public float getCurrentRadius(){
+        return radius * ((getScale().x + getScale().y)/2);
     }
 }

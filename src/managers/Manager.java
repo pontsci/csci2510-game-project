@@ -66,24 +66,28 @@ public abstract class Manager{
     //I'm planning on going over collision with Mason more to make this cleaner. It may be moved to the sprite superclass instead of a manager.
 
     //Checks if two sprites are intersecting returns true if they are
-    public boolean innerHitboxCollision(ArrayList<BoundingShape> sprite1Hitboxes, ArrayList<BoundingShape> sprite2Hitboxes){
-        for(int i = 1; i < sprite1Hitboxes.size(); i++){
-            for(int j = 1; j < sprite2Hitboxes.size(); j++){
+    public boolean innerHitboxCollision(ArrayList<BoundingShape> firstHitboxes, ArrayList<BoundingShape> secondHitboxes){
+        BoundingShape fh;
+        BoundingShape sh;
+        for(int i = 1; i < firstHitboxes.size(); i++){
+            fh = firstHitboxes.get(i);
+            for(int j = 1; j < secondHitboxes.size(); j++){
+                sh = secondHitboxes.get(j);
                 //check if two shapes are intersecting and return true if so
-                if(sprite1Hitboxes.get(i) instanceof BoundingBox && sprite2Hitboxes.get(j) instanceof BoundingBox){
-                    if(Intersect.intersectAABB(sprite1Hitboxes.get(i).getCurrentMin(), sprite1Hitboxes.get(i).getCurrentMax(), sprite2Hitboxes.get(j).getCurrentMin(), sprite2Hitboxes.get(j).getCurrentMax()))
+                if(fh instanceof BoundingBox && sh instanceof BoundingBox){
+                    if(Intersect.intersectAABB(((BoundingBox)fh).getCurrentMin(), ((BoundingBox)fh).getCurrentMax(), ((BoundingBox)sh).getCurrentMin(), ((BoundingBox)sh).getCurrentMax()))
                         return true;
                 }
-                else if(sprite1Hitboxes.get(i) instanceof BoundingBox && sprite2Hitboxes.get(j) instanceof BoundingCircle){
-                    if(Intersect.intersectCircleAABB(sprite2Hitboxes.get(j).getCurrentPoint(), sprite2Hitboxes.get(j).getCurrentRadius(), sprite1Hitboxes.get(i).getCurrentMin(), sprite1Hitboxes.get(i).getCurrentMax()))
+                else if(fh instanceof BoundingBox && sh instanceof BoundingCircle){
+                    if(Intersect.intersectCircleAABB(((BoundingCircle)sh).getCurrentPoint(), ((BoundingCircle)sh).getCurrentRadius(), ((BoundingBox)fh).getCurrentMin(), ((BoundingBox)fh).getCurrentMax()))
                         return true;
                 }
-                else if(sprite1Hitboxes.get(i) instanceof BoundingCircle && sprite2Hitboxes.get(j) instanceof BoundingBox){
-                    if(Intersect.intersectCircleAABB(sprite1Hitboxes.get(i).getCurrentPoint(), sprite1Hitboxes.get(i).getCurrentRadius(), sprite2Hitboxes.get(j).getCurrentMin(), sprite2Hitboxes.get(j).getCurrentMax()))
+                else if(fh instanceof BoundingCircle && sh instanceof BoundingBox){
+                    if(Intersect.intersectCircleAABB(((BoundingCircle)fh).getCurrentPoint(), ((BoundingCircle)fh).getCurrentRadius(), ((BoundingBox)sh).getCurrentMin(), ((BoundingBox)sh).getCurrentMax()))
                         return true;
                 }
-                else if(sprite1Hitboxes.get(i) instanceof BoundingCircle && sprite2Hitboxes.get(j) instanceof BoundingCircle){
-                    if(Intersect.intersectCircle(sprite1Hitboxes.get(i).getCurrentPoint(), sprite1Hitboxes.get(i).getCurrentRadius(), sprite2Hitboxes.get(j).getCurrentPoint(), sprite2Hitboxes.get(j).getCurrentRadius()))
+                else if(fh instanceof BoundingCircle && sh instanceof BoundingCircle){
+                    if(Intersect.intersectCircle(((BoundingCircle)fh).getCurrentPoint(), ((BoundingCircle)fh).getCurrentRadius(), ((BoundingCircle)sh).getCurrentPoint(), ((BoundingCircle)sh).getCurrentRadius()))
                         return true;
                 }
             }
