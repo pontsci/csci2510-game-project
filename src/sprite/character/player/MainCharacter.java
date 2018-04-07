@@ -1,6 +1,6 @@
 package sprite.character.player;
 
-import animation.Animation;
+import util.Animation;
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import sprite.Sprite;

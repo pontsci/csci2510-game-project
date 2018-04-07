@@ -1,12 +1,11 @@
 package sprite.character.enemy;
 
-import animation.Animation;
+import util.Animation;
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.world.Floor;
-import sprite.world.Wall;
 import util.Vector2f;
 
 import java.awt.*;
@@ -24,7 +23,7 @@ public class Rat extends CharacterSprite{
     private float walkRate = 2f;//Walk rate per second.
     private boolean facingDirection;//True means the rat faces right, false means left.
     private float jumpForce = 0;
-    Random rand = new Random();
+    private Random rand = new Random();
 
     public Rat(float startX, float startY, Vector2f scale, ArrayList<BufferedImage> spriteAnimations, boolean direction, Floor floor, ArrayList<Sprite> walls){
         super(startX, startY, scale, spriteAnimations.get(0).getSubimage(0,0,17,8), floor, walls);

@@ -1,4 +1,4 @@
-package animation;
+package util;
 
 import sprite.Sprite;
 
@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Animation{
-    ArrayList<ArrayList<BufferedImage>> animations = new ArrayList<>();
+    private ArrayList<ArrayList<BufferedImage>> animations = new ArrayList<>();
     private float animationTime = 0;//Keeps track of how long an animation has been going in order to show the correct frame
     private float frameTime = .1f; //time between each frame
     private int lastAnimation;
