@@ -14,16 +14,16 @@ public class RatManager extends Manager{
     //Used for spawning rats without having to load the file multiple times,
     //with other managers, they can discard the file because they are not spawning
     //more sprites throughout the 'game'
-    ArrayList<BufferedImage> ratAnimations = new ArrayList<>();
-    ArrayList<BufferedImage> whiteRatAnimations = new ArrayList<>();
-    Random rand = new Random();
-    float ratTime = 0;//Used to determine when a rat can spawn
-    float megaRatTime = 0;//Used to determine when a mega rat can spawn.
+    private ArrayList<BufferedImage> ratAnimations = new ArrayList<>();
+    private ArrayList<BufferedImage> whiteRatAnimations = new ArrayList<>();
+    private Random rand = new Random();
+    private float ratTime = 0;//Used to determine when a rat can spawn
+    private float megaRatTime = 0;//Used to determine when a mega rat can spawn.
 
     //Get the rat's sprite sheet and make a rat.
     public void initialize(){
-        ratAnimations.add(loadFile("src/resources/character/enemy/ratwalk.png"));
-        whiteRatAnimations.add(loadFile("src/resources/character/enemy/whiteratwalk.png"));
+        ratAnimations.add(loadFile("resources/character/enemy/ratwalk.png"));
+        whiteRatAnimations.add(loadFile("resources/character/enemy/whiteratwalk.png"));
         getSprites().add(new Rat(4, -4f, new Vector2f(-2,2), ratAnimations, false) );
     }
 
