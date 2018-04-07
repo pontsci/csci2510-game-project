@@ -64,10 +64,10 @@ public class MainCharacter extends CharacterSprite{
         }
     }
 
+    //checks rat collision
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
-        //checkMouseCollision(delta, viewport);
         for(int i = 0; i < rats.size(); i++){
             if(checkSpriteCollision(delta,viewport,rats.get(i))){
                 rats.remove(i);

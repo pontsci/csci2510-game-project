@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public abstract class CharacterSprite extends Sprite{
-    Floor floor;
-    ArrayList<Sprite> walls = new ArrayList<>();
+    private Floor floor;
+    private ArrayList<Sprite> walls = new ArrayList<>();
     int health;
     boolean onFire = false;
     boolean dotHeal = false;
@@ -26,8 +26,6 @@ public abstract class CharacterSprite extends Sprite{
 
     //begin checking collision
     public void checkCollision(float delta, Matrix3x3f viewport){
-        //checkWallCollision(delta, viewport);
-        //checkFloorCollision(delta, viewport);
         for(int i = 0; i < walls.size(); i++){
             while(checkSpriteCollision(delta, viewport, walls.get(i))){
                 if(i == 0){
@@ -45,23 +43,21 @@ public abstract class CharacterSprite extends Sprite{
     }
 
     //returns true if collides with given sprite
-    public boolean checkSpriteCollision(float delta, Matrix3x3f viewport, Sprite sprite){
+    protected boolean checkSpriteCollision(float delta, Matrix3x3f viewport, Sprite sprite){
         Vector2f spriteMin = ((BoundingBox)sprite.getHitboxes().get(0)).getCurrentMin();
         Vector2f spriteMax = ((BoundingBox)sprite.getHitboxes().get(0)).getCurrentMax();
         Vector2f characterMin = ((BoundingBox)getHitboxes().get(0)).getCurrentMin();
         Vector2f characterMax = ((BoundingBox)getHitboxes().get(0)).getCurrentMax();
 
         if(Intersect.intersectAABB(characterMin, characterMax, spriteMin, spriteMax)){
-            if(checkInnerCollision(sprite.getHitboxes())){
-                return true;
-            }
+            return checkInnerCollision(sprite.getHitboxes());
         }
         return false;
     }
 
     //Check collision of the inner hitboxes of the character, and the foreign hitboxes.
     //returns true if the inner hitboxes collide.
-    protected boolean checkInnerCollision(ArrayList<BoundingShape> foreignHitboxes){
+    private boolean checkInnerCollision(ArrayList<BoundingShape> foreignHitboxes){
         BoundingShape foreignHitbox;
         BoundingShape characterHitbox;
 
