@@ -17,8 +17,8 @@ public class Floor extends Sprite {
     //Initialize the floor's hitboxes, the first box is the outer hitbox
     public void initializeHitboxes(){
         //May consider adding an option where I don't need an inner box for the floor collision and such
-        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -5f), new Vector2f( .9f, .04f),  0, getyTranslation(), Color.BLUE));
-        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -5f), new Vector2f( .9f, .04f),  0, getyTranslation(), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -5f), new Vector2f( .9f, .04f), Color.BLUE));
+        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -5f), new Vector2f( .9f, .04f), Color.RED));
     }
 
     @Override

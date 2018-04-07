@@ -6,22 +6,18 @@ import util.Vector2f;
 import java.awt.*;
 
 public class BoundingBox extends BoundingShape{
-    public BoundingBox(Vector2f min, Vector2f max, float startX, float startY, Color c){
-        super(min, max, startX, startY, c);
-    }
+    protected Vector2f min;
+    protected Vector2f max;
 
-    //Unused code from book - May be needed for something later
-    public boolean pointInAABB(Vector2f p, Vector2f min, Vector2f max){
-        return p.x > min.x && p.x < max.x && p.y > min.y && p.y < max.y;
-    }
-
-    //Given two boxes, returns if they collide
-    public boolean intersectAABB(Vector2f minA, Vector2f maxA, Vector2f minB, Vector2f maxB){
-        if(minA.x > maxB.x || minB.x > maxA.x)
-            return false;
-        if(minA.y > maxB.y || minB.y > maxA.y)
-            return false;
-        return true;
+    //Constructor for a Box
+    public BoundingBox(Vector2f min, Vector2f max, Color c){
+        //coordinates for where the box starts in the world
+        super(c);
+        this.min = min;
+        this.max = max;
+        //coordinates around the object
+        originalMin = new Vector2f(min.x, min.y);
+        originalMax = new Vector2f(max.x, max.y);
     }
 
     //Render where the bounding box is in the world
@@ -45,5 +41,41 @@ public class BoundingBox extends BoundingShape{
         int rectWidth = (int)(bottomRight.x - topLeft.x);
         int rectHeight = (int)(bottomRight.y - topLeft.y);
         g.drawRect(rectX, rectY, rectWidth, rectHeight);
+    }
+
+    @Override
+    protected void resetDimensions(){
+        if(negativeXScale){
+            min.x = -originalMax.x;
+            max.x = -originalMin.x;
+        }
+        else{
+            min.x = originalMin.x;
+            max.x = originalMax.x;
+        }
+        if(negativeYScale){
+            min.y = -originalMax.y;
+            max.y = -originalMin.y;
+        }
+        else{
+            min.y = originalMin.y;
+            max.y = originalMax.y;
+        }
+    }
+
+    //This is a special method specifically for changing hitboxes with an animation
+    //If hitbox's don't need to be altered to match an animation because it already fits,
+    //Then this method isn't needed
+    public void alterShape(Vector2f min, Vector2f max){
+        this.min = min;
+        this.max = max;
+        originalMin = new Vector2f(min.x, min.y);
+        originalMax = new Vector2f(max.x, max.y);
+    }
+    public Vector2f getCurrentMin(){
+        return currentWorld.mul(min);
+    }
+    public Vector2f getCurrentMax(){
+        return currentWorld.mul(max);
     }
 }

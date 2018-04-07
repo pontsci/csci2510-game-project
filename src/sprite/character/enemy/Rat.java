@@ -36,9 +36,9 @@ public class Rat extends Sprite {
 
     //Initialize the rat's hitboxes, the first box is the outer hitbox
     public void initializeHitboxes(){
-        hitboxes.add(new BoundingBox(new Vector2f(-.07f, -.05f), new Vector2f( .10f, .02f),  0, getyTranslation(), Color.BLUE));
-        hitboxes.add(new BoundingCircle(.025f,.04f,-.02f,Color.RED));
-        hitboxes.add(new BoundingBox(new Vector2f(-.03f, -.03f), new Vector2f( .09f, -.01f),  0, getyTranslation(), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.07f, -.05f), new Vector2f( .10f, .02f), Color.BLUE));
+        hitboxes.add(new BoundingCircle(.025f,.04f,-.02f, Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.03f, -.03f), new Vector2f( .09f, -.01f), Color.RED));
     }
 
     @Override

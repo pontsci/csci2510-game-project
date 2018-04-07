@@ -38,9 +38,9 @@ public class MainCharacter extends Sprite {
     //Initialize the main character's hitboxes, the first box is the outer hitbox
     public void initializeHitboxes(){
         //Create the hitboxes
-        hitboxes.add(new BoundingBox(new Vector2f(-1.25f, -2), new Vector2f( 1.1f, 1.9f),  getxTranslation(), getyTranslation(), Color.BLUE));
+        hitboxes.add(new BoundingBox(new Vector2f(-1.25f, -2), new Vector2f( 1.1f, 1.9f), Color.BLUE));
         hitboxes.add(new BoundingCircle(.35f,-.12f,1.4f, Color.RED));
-        hitboxes.add(new BoundingBox(new Vector2f(-1.1f, -1.9f), new Vector2f( 1.1f, 1.15f),  getxTranslation(), getyTranslation(), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-1.1f, -1.9f), new Vector2f( 1.1f, 1.15f), Color.RED));
     }
 
     @Override
