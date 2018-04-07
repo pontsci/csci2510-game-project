@@ -6,7 +6,6 @@ import bounding.BoundingCircle;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.world.Floor;
-import util.Intersect;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -70,43 +69,9 @@ public class MainCharacter extends CharacterSprite{
         super.checkCollision(delta, viewport);
         //checkMouseCollision(delta, viewport);
         for(int i = 0; i < rats.size(); i++){
-            if(checkCollision(delta,viewport,rats.get(i))){
+            if(checkSpriteCollision(delta,viewport,rats.get(i))){
                 rats.remove(i);
                 i--;
-            }
-        }
-    }
-
-    public boolean checkCollision(float delta, Matrix3x3f viewport, Sprite sprite){
-        Vector2f spriteMin = ((BoundingBox)sprite.getHitboxes().get(0)).getCurrentMin();
-        Vector2f spriteMax = ((BoundingBox)sprite.getHitboxes().get(0)).getCurrentMax();
-        Vector2f characterMin = ((BoundingBox)getHitboxes().get(0)).getCurrentMin();
-        Vector2f characterMax = ((BoundingBox)getHitboxes().get(0)).getCurrentMax();
-
-        if(Intersect.intersectAABB(characterMin, characterMax, spriteMin, spriteMax)){
-            if(checkInnerCollision(sprite.getHitboxes())){
-                System.out.println("Hit! " + sprite.toString());
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void checkMouseCollision(float delta, Matrix3x3f viewport){
-        //Get the outer hitboxes' min and max to check collision
-        Vector2f ratMin;
-        Vector2f ratMax;
-        Vector2f characterMin = ((BoundingBox)getHitboxes().get(0)).getCurrentMin();
-        Vector2f characterMax = ((BoundingBox)getHitboxes().get(0)).getCurrentMax();
-
-        for(int i = 0; i < rats.size(); i++){
-            ratMin = ((BoundingBox)rats.get(i).getHitboxes().get(0)).getCurrentMin();
-            ratMax = ((BoundingBox)rats.get(i).getHitboxes().get(0)).getCurrentMax();
-            if(Intersect.intersectAABB(characterMin, characterMax, ratMin, ratMax)){
-                if(checkInnerCollision(rats.get(i).getHitboxes())){
-                    rats.remove(i);
-                    i--;
-                }
             }
         }
     }
