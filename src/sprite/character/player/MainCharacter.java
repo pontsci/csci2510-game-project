@@ -68,7 +68,28 @@ public class MainCharacter extends CharacterSprite{
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
-        checkMouseCollision(delta, viewport);
+        //checkMouseCollision(delta, viewport);
+        for(int i = 0; i < rats.size(); i++){
+            if(checkCollision(delta,viewport,rats.get(i))){
+                rats.remove(i);
+                i--;
+            }
+        }
+    }
+
+    public boolean checkCollision(float delta, Matrix3x3f viewport, Sprite sprite){
+        Vector2f spriteMin = ((BoundingBox)sprite.getHitboxes().get(0)).getCurrentMin();
+        Vector2f spriteMax = ((BoundingBox)sprite.getHitboxes().get(0)).getCurrentMax();
+        Vector2f characterMin = ((BoundingBox)getHitboxes().get(0)).getCurrentMin();
+        Vector2f characterMax = ((BoundingBox)getHitboxes().get(0)).getCurrentMax();
+
+        if(Intersect.intersectAABB(characterMin, characterMax, spriteMin, spriteMax)){
+            if(checkInnerCollision(sprite.getHitboxes())){
+                System.out.println("Hit! " + sprite.toString());
+                return true;
+            }
+        }
+        return false;
     }
 
     public void checkMouseCollision(float delta, Matrix3x3f viewport){
