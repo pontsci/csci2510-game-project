@@ -1,19 +1,25 @@
 package steamHunt;
 
-import managers.*;
-import sprite.world.Floor;
-import sprite.world.Wall;
-import util.Matrix3x3f;
-import util.SimpleFramework;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+
+import managers.BackgroundManager;
+import managers.FloorManager;
+import managers.MainCharacterManager;
+import managers.Manager;
+import managers.PowerUpManager;
+import managers.RatManager;
+import managers.WallManager;
+import sprite.world.Floor;
+import status.StatusArchive;
+import util.SimpleFramework;
+import util.Vector2f;
 
 //The driver's job is to direct information between managers.
 //It does not deal with individual sprites, that is left for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
-    private Manager[] managers = new Manager[5];
+    private Manager[] managers = new Manager[6];
     private boolean renderHitboxes = false;
 
 
@@ -36,8 +42,18 @@ public class SteamHuntDriver extends SimpleFramework{
         managers[0] = new BackgroundManager();
         managers[1] = new FloorManager();
         managers[4] = new WallManager();
+        managers[5] = new PowerUpManager();
+        
+        //Add six power up items
+        ((PowerUpManager)managers[5]).addPowerUp(StatusArchive.getHealthStatus(), new Vector2f(-6,0));
+        ((PowerUpManager)managers[5]).addPowerUp(StatusArchive.getFireRateStatus(), new Vector2f(-4,0));
+        ((PowerUpManager)managers[5]).addPowerUp(StatusArchive.getDmgStatus(), new Vector2f(-2,0));
+        ((PowerUpManager)managers[5]).addPowerUp(StatusArchive.getShieldStatus(), new Vector2f(2,0));
+        ((PowerUpManager)managers[5]).addPowerUp(StatusArchive.getTaserStatus(), new Vector2f(4,0));
+        ((PowerUpManager)managers[5]).addPowerUp(StatusArchive.getDoTStatus(), new Vector2f(6,0));
+        
         managers[3] = new RatManager((Floor)managers[1].getSprites().get(0), managers[4].getSprites());
-        managers[2] = new MainCharacterManager((Floor)managers[1].getSprites().get(0), managers[4].getSprites(), managers[3].getSprites());
+        managers[2] = new MainCharacterManager((Floor)managers[1].getSprites().get(0), managers[4].getSprites(), managers[3].getSprites(), managers[5].getSprites());
     }
 
     @Override
