@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Rat extends CharacterSprite{
+    private final static int GRAY_RAT = 0;
+    private final static int WHITE_RAT = 1;
     private final static int WALK_ANIMATION = 0;
     private final static boolean GO_RIGHT = true;
     private final static boolean GO_LEFT = false;
@@ -25,11 +27,20 @@ public class Rat extends CharacterSprite{
     private float jumpForce = 0;
     private Random rand = new Random();
 
-    public Rat(float startX, float startY, Vector2f scale, ArrayList<BufferedImage> spriteAnimations, boolean direction, Floor floor, ArrayList<Sprite> walls){
-        super(startX, startY, scale, spriteAnimations.get(0).getSubimage(0,0,17,8), floor, walls);
-        //true faces right, false faces left
+    public Rat(float startX, float startY, Vector2f scale, int spriteImg, boolean direction, Floor floor, ArrayList<Sprite> walls){
+        super(startX, startY, scale, floor, walls);
         this.facingDirection = direction;
-        animation.addAnimation(spriteAnimations.get(0), 4);
+        switch (spriteImg){
+            case GRAY_RAT:
+                animation.addAnimation(loadFile("src/resources/character/enemy/ratwalk.png"), 4);
+                setCurrentSpriteFrame(loadFile("src/resources/character/enemy/ratwalk.png").getSubimage(0,0,17,8));
+                break;
+            case WHITE_RAT:
+                animation.addAnimation(loadFile("src/resources/character/enemy/whiteratwalk.png"), 4);
+                setCurrentSpriteFrame(loadFile("src/resources/character/enemy/whiteratwalk.png").getSubimage(0,0,17,8));
+                break;
+        }
+        //true faces right, false faces left
         initializeHitboxes();
     }
 

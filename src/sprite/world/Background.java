@@ -8,8 +8,9 @@ import java.util.ArrayList;
 
 //If anything special were to happen to the background, such as sliding, it would occur here
 public class Background extends Sprite {
-    public Background(float startX, float startY, Vector2f scale, ArrayList<BufferedImage> spriteAnimations){
-        super(startX, startY, scale, spriteAnimations.get(0).getSubimage(0,0,128,72));
+    public Background(float startX, float startY, Vector2f scale){
+        super(startX, startY, scale);
+        setCurrentSpriteFrame(loadFile("src/resources/world/background/dungeon.png"));
     }
 
     @Override

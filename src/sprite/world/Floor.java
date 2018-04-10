@@ -9,8 +9,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Floor extends Sprite {
-    public Floor(float startX, float startY, Vector2f scale, ArrayList<BufferedImage> spriteAnimations){
-        super(startX, startY, scale, spriteAnimations.get(0).getSubimage(0,0,128,8));
+    public Floor(float startX, float startY, Vector2f scale){
+        super(startX, startY, scale);
+        setCurrentSpriteFrame(loadFile("src/resources/world/foreground/floor/floor.png"));
         initializeHitboxes();
     }
 

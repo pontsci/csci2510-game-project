@@ -25,16 +25,19 @@ public class MainCharacter extends CharacterSprite implements VulnStatus {
 	private Animation animation = new Animation();
 	private int currentAnimation = 1;
 	private float walkRate = 2.5f;// Walk rate per second. (The world is 16 by 9)
-	protected int hp = 3;
+	private int hp = 3;
 	private int healTicks = 0;//Tick values for hp and dmg
 	private int dmgTicks = 0;
 
-	public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<BufferedImage> spriteAnimations,
-			Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> rats, ArrayList<Sprite> powerups) {
-		super(startX, startY, scale, spriteAnimations.get(1).getSubimage(0, 0, 237, 356), floor, walls);
-		animation.addAnimation(spriteAnimations.get(0), 6);
-		animation.addAnimation(spriteAnimations.get(1), 5);
-		animation.addAnimation(spriteAnimations.get(2), 7);
+	public MainCharacter(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> rats, ArrayList<Sprite> powerups) {
+		super(startX, startY, scale, floor, walls);
+		BufferedImage idleAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png");
+
+		//Always set the frame, even if it runs without setting the frame, a null error can occur on animated sprites when you try to create a new one.
+		setCurrentSpriteFrame(idleAnimation.getSubimage(0, 0, 237, 356));
+		animation.addAnimation(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Move.png"), 6);
+		animation.addAnimation(idleAnimation, 5);
+		animation.addAnimation(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png"), 7);
 		this.rats = rats;
 		this.powerups = powerups;
 		initializeHitboxes();
@@ -43,9 +46,9 @@ public class MainCharacter extends CharacterSprite implements VulnStatus {
 	// Initialize the main character's hitboxes, the first box is the outer hitbox
 	public void initializeHitboxes() {
 		// Create the hitboxes
-		hitboxes.add(new BoundingBox(new Vector2f(-1.25f, -2), new Vector2f(1.1f, 1.9f), Color.BLUE));
-		hitboxes.add(new BoundingCircle(.35f, -.12f, 1.4f, Color.RED));
-		hitboxes.add(new BoundingBox(new Vector2f(-1.1f, -1.9f), new Vector2f(1.1f, 1.15f), Color.RED));
+		hitboxes.add(new BoundingBox(new Vector2f(-1.2f, -2), new Vector2f(1.1f, 1.9f), Color.BLUE));
+		hitboxes.add(new BoundingCircle(.4f, -.1f, 1.4f, Color.RED));
+		hitboxes.add(new BoundingBox(new Vector2f(-1.1f, -1.9f), new Vector2f(1f, 1.1f), Color.RED));
 	}
 
 	// Process the constant gravity applied to the main character

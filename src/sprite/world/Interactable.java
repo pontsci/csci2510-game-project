@@ -7,8 +7,10 @@ import java.awt.image.BufferedImage;
 public abstract class Interactable extends Sprite{
 	
 	//Create the sprite
-	public Interactable(float startX, float startY, Vector2f scale, BufferedImage sprite) {
-		super(startX, startY, scale, sprite);
+	public Interactable(float startX, float startY, Vector2f scale) {
+		super(startX, startY, scale);
+		//Load the file and set the frame if interactable has an image
+		//setCurrentSpriteFrame();
 		initializeHitboxes();
 	}
 	

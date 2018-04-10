@@ -3,21 +3,14 @@ package managers;
 import sprite.character.player.MainCharacter;
 import sprite.Sprite;
 import sprite.world.Floor;
-import sprite.world.PowerUp;
 import util.Vector2f;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class MainCharacterManager extends Manager{
     //Get the MainCharacter's sprite sheets and make the main character.
-
     public MainCharacterManager(Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> rats, ArrayList<Sprite> powerups){
-        ArrayList<BufferedImage> spriteAnimations = new ArrayList<>();
-        spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Move.png"));
-        spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png"));
-        spriteAnimations.add(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png"));
-        getSprites().add(new MainCharacter(-7, -4, new Vector2f(.4f,.4f), spriteAnimations, floor, walls, rats, powerups));
+        getSprites().add(new MainCharacter(-7, -4, new Vector2f(.4f,.4f), floor, walls, rats, powerups));
     }
 
 

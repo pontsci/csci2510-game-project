@@ -9,8 +9,10 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Wall extends Sprite {
-    public Wall(float startX, float startY, Vector2f scale, ArrayList<BufferedImage> spriteAnimations){
-        super(startX, startY, scale, spriteAnimations.get(0).getSubimage(0,0,4,72));
+    public Wall(float startX, float startY, Vector2f scale){
+        super(startX, startY, scale);
+        //Starting Frame
+        setCurrentSpriteFrame(loadFile("src/resources/world/foreground/wall/wall.png"));
         initializeHitboxes();
     }
 

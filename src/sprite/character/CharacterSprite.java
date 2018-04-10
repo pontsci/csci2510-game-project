@@ -9,7 +9,6 @@ import util.Intersect;
 import util.Matrix3x3f;
 import util.Vector2f;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public abstract class CharacterSprite extends Sprite{
@@ -18,8 +17,8 @@ public abstract class CharacterSprite extends Sprite{
     int health;
     boolean onFire = false;
     boolean dotHeal = false;
-    public CharacterSprite(float startX, float startY, Vector2f scale, BufferedImage currentSpriteFrame, Floor floor, ArrayList<Sprite> walls){
-        super(startX, startY, scale, currentSpriteFrame);
+    public CharacterSprite(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls){
+        super(startX, startY, scale);
         this.floor = floor;
         this.walls = walls;
     }
@@ -29,16 +28,16 @@ public abstract class CharacterSprite extends Sprite{
         for(int i = 0; i < walls.size(); i++){
             while(checkSpriteCollision(delta, viewport, walls.get(i))){
                 if(i == 0){
-                    pushCharacter(delta, viewport, 'x', .0001f);
+                    pushCharacter(delta, viewport, 'x', .001f);
                 }
                 //Right wall is being hit, move mouse left;
                 else if(i == 1){
-                    pushCharacter(delta, viewport, 'x', -.0001f);
+                    pushCharacter(delta, viewport, 'x', -.001f);
                 }
             }
         }
         while(checkSpriteCollision(delta, viewport, floor)){
-            pushCharacter(delta, viewport, 'y', .0001f);
+            pushCharacter(delta, viewport, 'y', .001f);
         }
     }
 
@@ -49,10 +48,7 @@ public abstract class CharacterSprite extends Sprite{
         Vector2f characterMin = ((BoundingBox)getHitboxes().get(0)).getCurrentMin();
         Vector2f characterMax = ((BoundingBox)getHitboxes().get(0)).getCurrentMax();
 
-        if(Intersect.intersectAABB(characterMin, characterMax, spriteMin, spriteMax)){
-            return checkInnerCollision(sprite.getHitboxes());
-        }
-        return false;
+        return Intersect.intersectAABB(characterMin, characterMax, spriteMin, spriteMax) && checkInnerCollision(sprite.getHitboxes());
     }
 
     //Check collision of the inner hitboxes of the character, and the foreign hitboxes.

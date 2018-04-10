@@ -10,8 +10,6 @@ import java.util.ArrayList;
 public class BackgroundManager extends Manager{
     //Get the background's sprite sheet and make a background.
     public BackgroundManager(){
-        ArrayList<BufferedImage> spriteAnimations = new ArrayList<>();
-        spriteAnimations.add(loadFile("src/resources/world/background/dungeon.png"));
-        getSprites().add(new Background(0, 0, new Vector2f(14,14), spriteAnimations));
+        getSprites().add(new Background(0, 0, new Vector2f(14,14)));
     }
 }

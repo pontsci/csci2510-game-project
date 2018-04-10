@@ -16,8 +16,8 @@ public class RatManager extends Manager{
     //Used for spawning rats without having to load the file multiple times,
     //with other managers, they can discard the file because they are not spawning
     //more sprites throughout the 'game'
-    private ArrayList<BufferedImage> ratAnimations = new ArrayList<>();
-    private ArrayList<BufferedImage> whiteRatAnimations = new ArrayList<>();
+    private final static int GRAY_RAT = 0;
+    private final static int WHITE_RAT = 1;
     private Floor floor;
     private ArrayList<Sprite> walls;
 
@@ -27,11 +27,9 @@ public class RatManager extends Manager{
 
     //Get the rat's sprite sheet and make a rat.
     public RatManager(Floor floor, ArrayList<Sprite> walls){
-        ratAnimations.add(loadFile("src/resources/character/enemy/ratwalk.png"));
-        whiteRatAnimations.add(loadFile("src/resources/character/enemy/whiteratwalk.png"));
         this.floor = floor;
         this.walls = walls;
-        getSprites().add(new Rat(4, -4f, new Vector2f(-2,2), ratAnimations, false, floor, walls));
+        getSprites().add(new Rat(4, -4f, new Vector2f(-2,2), GRAY_RAT, false, floor, walls));
     }
 
     @Override //spawn rats
@@ -42,7 +40,7 @@ public class RatManager extends Manager{
     }
 
     //Occasionally spawn a rat every 3 seconds.
-    public void spawnRat(float delta){
+    private void spawnRat(float delta){
         if(ratTime > 4 && getSprites().size() < 8){
             //spawn new rat at either rat hole and orientate it correctly.
             if(rand.nextBoolean()){
@@ -50,12 +48,12 @@ public class RatManager extends Manager{
                 //Right
                 if(rand.nextBoolean()){
                     int size = rand.nextInt(3) - 1;//-1 to 1
-                    getSprites().add(new Rat(8,-4f,new Vector2f(-(4 + size), (4 + size)), ratAnimations, false, floor, walls));
+                    getSprites().add(new Rat(8,-4f,new Vector2f(-(4 + size), (4 + size)), GRAY_RAT, false, floor, walls));
                 }
                 //Left
                 else{
                     int size = rand.nextInt(3) - 1;//-1 to 1
-                    getSprites().add(new Rat(-8,-4, new Vector2f((5  + size), (5 + size)), ratAnimations, true, floor, walls));
+                    getSprites().add(new Rat(-8,-4, new Vector2f((5  + size), (5 + size)), GRAY_RAT, true, floor, walls));
                 }
             }
             ratTime = ratTime - 4;
@@ -66,18 +64,18 @@ public class RatManager extends Manager{
 
     //Doesn't do anything special from regular spawnRat, it's just a big white rat I felt like adding for kicks.
     //It's my first game with sprites... I had to play around with it. ;-;
-    public void spawnMegaRat(float delta){
+    private void spawnMegaRat(float delta){
         if(megaRatTime > 2 && getSprites().size() < 8){
             int i = rand.nextInt(10);
             //10% chance every 2 seconds for a mega rat to spawn as long as there are not 8 rats currently spawned
             if(i == 0){
                 //right
                 if(rand.nextBoolean()){
-                       getSprites().add(new Rat(8,-4f,new Vector2f(-(4), (4f)), whiteRatAnimations, false, floor, walls));
+                       getSprites().add(new Rat(8,-4f,new Vector2f(-(4), (4f)), WHITE_RAT, false, floor, walls));
                 }
                 //Left
                 else{
-                    getSprites().add(new Rat(-8,-4f, new Vector2f((4), (4f)), whiteRatAnimations, true, floor, walls));
+                    getSprites().add(new Rat(-8,-4f, new Vector2f((4), (4f)), WHITE_RAT, true, floor, walls));
                 }
             }
             megaRatTime = megaRatTime - 2;

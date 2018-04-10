@@ -4,9 +4,12 @@ import bounding.BoundingShape;
 import util.Matrix3x3f;
 import util.Vector2f;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Sprite{
@@ -19,13 +22,10 @@ public abstract class Sprite{
     private float gravity = -5;
     protected ArrayList<BoundingShape> hitboxes = new ArrayList<>();
 
-    public Sprite(float startX, float startY, Vector2f scale, BufferedImage currentSpriteFrame){
+    public Sprite(float startX, float startY, Vector2f scale){
         xTranslation = startX;
         yTranslation = startY;
         this.scale = scale;
-
-        //Starting Frame
-        this.currentSpriteFrame = currentSpriteFrame;
     }
 
     //Each sprite has hitboxes which should be set in subclasses
@@ -78,6 +78,18 @@ public abstract class Sprite{
         transform.rotate(angle);
         transform.translate(-currentSpriteFrame.getWidth() / 2, -currentSpriteFrame.getHeight() / 2);
         return transform;
+    }
+
+    //Load an image and return the found image
+    protected BufferedImage loadFile(String fileName) {
+        BufferedImage spriteSheet;
+        try {
+            spriteSheet = ImageIO.read(new File(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+            spriteSheet = null;
+        }
+        return spriteSheet;
     }
 
     //Getters and Setters
