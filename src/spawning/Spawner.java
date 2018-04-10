@@ -1,6 +1,7 @@
 package spawning;
 
 
+import sprite.character.enemy.Rat;
 import util.Vector2f;
 
 import java.util.Random;
@@ -25,12 +26,14 @@ public class Spawner {
 
     public Rat spawnRat(){
         Vector2f spawnpoint = getSpawnPoint();
+        //Temporary null
+        return null;
     }
 
 
 
     public void render(Graphics g){
-        for (spawnRange spawn: spawnRanges){
+        for (SpawnRange spawn: spawnRanges){
             spawn.render(g);
         }
     }
