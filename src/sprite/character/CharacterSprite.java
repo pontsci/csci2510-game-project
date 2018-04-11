@@ -20,6 +20,7 @@ public abstract class CharacterSprite extends Sprite{
     int health;
     boolean onFire = false;
     boolean dotHeal = false;
+
     public CharacterSprite(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls){
         super(startX, startY, scale);
         this.floor = floor;

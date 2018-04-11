@@ -8,10 +8,9 @@ import util.Vector2f;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public abstract class Enemy extends CharacterSprite
-{
+public abstract class Enemy extends CharacterSprite{
     Enemy(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls){
-        super(startX,startY,scale, floor, walls);
+        super(startX, startY, scale, floor, walls);
     }
 
     @Override

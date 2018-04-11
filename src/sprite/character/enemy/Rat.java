@@ -30,14 +30,14 @@ public class Rat extends CharacterSprite{
     public Rat(float startX, float startY, Vector2f scale, int spriteImg, boolean direction, Floor floor, ArrayList<Sprite> walls){
         super(startX, startY, scale, floor, walls);
         this.facingDirection = direction;
-        switch (spriteImg){
+        switch(spriteImg){
             case GRAY_RAT:
                 animation.addAnimation(loadFile("src/resources/character/enemy/ratwalk.png"), 4);
-                setCurrentSpriteFrame(loadFile("src/resources/character/enemy/ratwalk.png").getSubimage(0,0,17,8));
+                setCurrentSpriteFrame(loadFile("src/resources/character/enemy/ratwalk.png").getSubimage(0, 0, 17, 8));
                 break;
             case WHITE_RAT:
                 animation.addAnimation(loadFile("src/resources/character/enemy/whiteratwalk.png"), 4);
-                setCurrentSpriteFrame(loadFile("src/resources/character/enemy/whiteratwalk.png").getSubimage(0,0,17,8));
+                setCurrentSpriteFrame(loadFile("src/resources/character/enemy/whiteratwalk.png").getSubimage(0, 0, 17, 8));
                 break;
         }
         //true faces right, false faces left
@@ -46,9 +46,9 @@ public class Rat extends CharacterSprite{
 
     //Initialize the rat's hitboxes, the first box is the outer hitbox
     public void initializeHitboxes(){
-        hitboxes.add(new BoundingBox(new Vector2f(-.07f, -.05f), new Vector2f( .10f, .02f), Color.BLUE));
-        hitboxes.add(new BoundingCircle(.025f,.04f,-.02f, Color.RED));
-        hitboxes.add(new BoundingBox(new Vector2f(-.03f, -.03f), new Vector2f( .09f, -.01f), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.07f, -.05f), new Vector2f(.10f, .02f), Color.BLUE));
+        hitboxes.add(new BoundingCircle(.025f, .04f, -.02f, Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.03f, -.03f), new Vector2f(.09f, -.01f), Color.RED));
     }
 
     @Override
@@ -67,19 +67,23 @@ public class Rat extends CharacterSprite{
         if(hTime > 1){
             facingDirection = rand.nextBoolean();
             //True faces right
-            if(facingDirection == GO_RIGHT)
+            if(facingDirection == GO_RIGHT){
                 setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
+            }
             //False faces left
-            else
+            else{
                 setScale(new Vector2f(-Math.abs(getScale().x), Math.abs(getScale().y)));
+            }
             hTime = hTime - 1;
         }
 
         //move the mouse in a facingDirection
-        if(facingDirection == GO_RIGHT)
+        if(facingDirection == GO_RIGHT){
             setxTranslation(getxTranslation() + (walkRate * delta));
-        else
+        }
+        else{
             setxTranslation(getxTranslation() - (walkRate * delta));
+        }
     }
 
     //SIMPLE Random jump movement of the rat
@@ -98,11 +102,13 @@ public class Rat extends CharacterSprite{
         //if jumping, adjust jump force by gravity
         if(jumpForce > 0){
             jumpForce = jumpForce + (getGravity() * delta);
-            if(vTime > .50)
+            if(vTime > .50){
                 setRotation(.5f);
+            }
             //if the new jump force is less than 0, make it 0
-            if(jumpForce < 0)
+            if(jumpForce < 0){
                 jumpForce = 0;
+            }
         }
 
         setyTranslation(getyTranslation() + ((getGravity() + jumpForce) * delta));
