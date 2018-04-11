@@ -19,7 +19,6 @@ public abstract class Sprite{
     private Vector2f scale;
     private float xTranslation;
     private float yTranslation;
-    private float gravity = -5;
     protected ArrayList<BoundingShape> hitboxes = new ArrayList<>();
 
     public Sprite(float startX, float startY, Vector2f scale){
@@ -113,9 +112,6 @@ public abstract class Sprite{
     }
     public void setScale(Vector2f scale){
         this.scale = scale;
-    }
-    public float getGravity(){
-        return gravity;
     }
     public void setRotation(float rotation){
         this.rotation = rotation;

@@ -17,13 +17,16 @@ import util.Matrix3x3f;
 import util.Vector2f;
 
 public class MainCharacter extends CharacterSprite implements VulnStatus {
-	private final static int MOVE_ANIMATION = 0;
-	private final static int IDLE_ANIMATION = 1;
-	private final static int JUMP_ANIMATION = 2;
+	private final int MOVE_ANIMATION = 0;
+	private final int IDLE_ANIMATION = 1;
+	private final int JUMP_ANIMATION = 2;
+	private final int FALL_ANIMATION = 3;
+	private final int LAND_ANIMATION = 4;
 	private ArrayList<Sprite> rats;
 	private ArrayList<Sprite> powerups;
 	private Animation animation = new Animation();
 	private int currentAnimation = 1;
+	private float velocityY = 0;
 	private float walkRate = 2.5f;// Walk rate per second. (The world is 16 by 9)
 	private int hp = 3;
 	private int healTicks = 0;//Tick values for hp and dmg
@@ -32,12 +35,17 @@ public class MainCharacter extends CharacterSprite implements VulnStatus {
 	public MainCharacter(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> rats, ArrayList<Sprite> powerups) {
 		super(startX, startY, scale, floor, walls);
 		BufferedImage idleAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png");
+		BufferedImage jumpAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png");
 
 		//Always set the frame, even if it runs without setting the frame, a null error can occur on animated sprites when you try to create a new one.
 		setCurrentSpriteFrame(idleAnimation.getSubimage(0, 0, 237, 356));
 		animation.addAnimation(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Move.png"), 6);
 		animation.addAnimation(idleAnimation, 5);
-		animation.addAnimation(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png"), 7);
+		animation.addAnimation(jumpAnimation.getSubimage(0,0,474,356), 2);
+		//falling part of the jump animation
+		animation.addAnimation(jumpAnimation.getSubimage(474, 0, 711, 356),3);
+		//landing part of the jump animation
+		animation.addAnimation(jumpAnimation.getSubimage(1185, 0, 474, 356), 2);
 		this.rats = rats;
 		this.powerups = powerups;
 		initializeHitboxes();
@@ -51,30 +59,60 @@ public class MainCharacter extends CharacterSprite implements VulnStatus {
 		hitboxes.add(new BoundingBox(new Vector2f(-1.1f, -1.9f), new Vector2f(1f, 1.1f), Color.RED));
 	}
 
-	// Process the constant gravity applied to the main character
+	// Process functions of the main character
 	public void process(float delta) {
-		setyTranslation(getyTranslation() + (getGravity() * delta));
+		//Set animation to falling if the character is falling.
+		if(!onTheFloor() && currentAnimation != JUMP_ANIMATION){
+			currentAnimation = FALL_ANIMATION;
+		}
+
+		//if not on the floor, change the character's velocity based on gravity.
+		if(!onTheFloor()){
+			if(velocityY > TERMINAL_VELOCITY){
+				velocityY += getGravity() * delta;
+			}
+		}
+		else{
+			velocityY = 0 + (getGravity() * delta);
+		}
+
+		setyTranslation(getyTranslation() + velocityY * delta);
+
 		processAnimations(delta);
 		conditions.updateObjects(delta);
 		processEffects(delta);
 	}
 
-	// Process which animation is playing
+
+	// Process which animation is playing, when an animation finishes, it returns true
 	private void processAnimations(float delta) {
-		switch (currentAnimation) {
-		// move Animation
-		case MOVE_ANIMATION:
-			animation.playAnimation(delta, MOVE_ANIMATION, this);
-			break;
-		// idle Animation
-		case IDLE_ANIMATION:
-			animation.playAnimation(delta, IDLE_ANIMATION, this);
-			break;
-		// jump Animation
-		case JUMP_ANIMATION:
-			if (animation.playAnimation(delta, JUMP_ANIMATION, this))
-				currentAnimation = IDLE_ANIMATION;
-			break;
+		switch (currentAnimation){
+			// move Animation
+			case MOVE_ANIMATION:
+				animation.playAnimation(delta, MOVE_ANIMATION, this);
+				break;
+			// idle Animation
+			case IDLE_ANIMATION:
+				animation.playAnimation(delta, IDLE_ANIMATION, this);
+				break;
+			// jump Animation
+			case JUMP_ANIMATION:
+				if(animation.playAnimation(delta, JUMP_ANIMATION, this)){
+					currentAnimation = FALL_ANIMATION;
+				}
+				if(onTheFloor())
+					currentAnimation = LAND_ANIMATION;
+				break;
+			case FALL_ANIMATION:
+				animation.playAnimation(delta, FALL_ANIMATION, this);
+				if(onTheFloor())
+					currentAnimation = LAND_ANIMATION;
+				break;
+			case LAND_ANIMATION:
+				if(animation.playAnimation(delta, LAND_ANIMATION, this)){
+					currentAnimation = IDLE_ANIMATION;
+				}
+				break;
 		}
 	}
 
@@ -124,8 +162,11 @@ public class MainCharacter extends CharacterSprite implements VulnStatus {
 
 	// play jump animation
 	public void jump() {
-		if (currentAnimation != JUMP_ANIMATION)
+		if (currentAnimation != JUMP_ANIMATION){
 			currentAnimation = JUMP_ANIMATION;
+			velocityY = 5f;
+			setOnTheFloor(false);
+		}
 	}
 
 	// Play idle animation as long as the main character is not jumping or already
@@ -157,22 +198,22 @@ public class MainCharacter extends CharacterSprite implements VulnStatus {
 
 		//Fire Rate Check
 		if(conditions.getStatus(1).active) {
-			System.out.println("FR!!!");
+			//System.out.println("FR!!!");
 		}
 		
 		//DMG Up Check
 		if(conditions.getStatus(2).active) {
-			System.out.println("DMG+!!!");
+			//System.out.println("DMG+!!!");
 		}
 		
 		//Shield Check
 		if(conditions.getStatus(3).active) {
-			System.out.println("SHIELD!!!");
+			//System.out.println("SHIELD!!!");
 		}
 		
 		//Taser Check
 		if(conditions.getStatus(4).active) {
-			System.out.println("TASER!!!");
+			//System.out.println("TASER!!!");
 		}
 		
 		//DoT check
@@ -196,7 +237,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus {
 
 	// Health Item effect
 	public void healthEffect() {
-		System.out.println("HEAL!!!");
+		//System.out.println("HEAL!!!");
 		hp++;
 	}
 
@@ -208,8 +249,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus {
 
 	//DoT Effect
 	public void dmgOverTime() {
-		System.out.println("DoT!!!");
+		//System.out.println("DoT!!!");
 		hp--;
 	}
-
 }

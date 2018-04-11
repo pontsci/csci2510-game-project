@@ -12,8 +12,11 @@ import util.Vector2f;
 import java.util.ArrayList;
 
 public abstract class CharacterSprite extends Sprite{
+    protected final int TERMINAL_VELOCITY = -5;
     private Floor floor;
     private ArrayList<Sprite> walls = new ArrayList<>();
+    private float gravity = -10;
+    private boolean onTheFloor = false;
     int health;
     boolean onFire = false;
     boolean dotHeal = false;
@@ -23,7 +26,7 @@ public abstract class CharacterSprite extends Sprite{
         this.walls = walls;
     }
 
-    //begin checking collision
+    //begin checking collision with floor and wall
     public void checkCollision(float delta, Matrix3x3f viewport){
         for(int i = 0; i < walls.size(); i++){
             while(checkSpriteCollision(delta, viewport, walls.get(i))){
@@ -36,8 +39,11 @@ public abstract class CharacterSprite extends Sprite{
                 }
             }
         }
+        onTheFloor = false;
         while(checkSpriteCollision(delta, viewport, floor)){
+            //If the character collided with the floor, push the character out of the floor and set onTheFloor to true
             pushCharacter(delta, viewport, 'y', .001f);
+            onTheFloor = true;
         }
     }
 
@@ -117,5 +123,17 @@ public abstract class CharacterSprite extends Sprite{
             setxTranslation(getxTranslation() + amount);
             update(delta, viewport);
         }
+    }
+
+    protected void setOnTheFloor(boolean onTheFloor){
+        this.onTheFloor = onTheFloor;
+    }
+
+    protected boolean onTheFloor(){
+        return onTheFloor;
+    }
+
+    public float getGravity(){
+        return gravity;
     }
 }
