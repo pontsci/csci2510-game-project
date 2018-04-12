@@ -1,6 +1,7 @@
 package spawning;
 
 
+import managers.Manager;
 import sprite.character.enemy.Rat;
 import util.Vector2f;
 
@@ -8,7 +9,8 @@ import java.util.Random;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Spawner {
+public class Spawner extends Manager
+{
     // The first spawnRange will always be the player spawn.
     ArrayList<SpawnRange> spawnRanges= new ArrayList<SpawnRange>();
     private Random random;
@@ -29,7 +31,6 @@ public class Spawner {
         //Temporary null
         return null;
     }
-
 
 
     public void render(Graphics g){
