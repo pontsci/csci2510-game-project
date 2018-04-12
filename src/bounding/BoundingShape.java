@@ -7,8 +7,8 @@ import util.Vector2f;
 import java.awt.*;
 
 public abstract class BoundingShape implements Drawable{
-    protected Matrix3x3f currentWorld;
-    protected Matrix3x3f viewport;
+    Matrix3x3f currentWorld;
+    Matrix3x3f viewport;
     private Color objectColor;
 
     private float rot = 0;
@@ -16,15 +16,11 @@ public abstract class BoundingShape implements Drawable{
     private float xTranslation;
     private float yTranslation;
 
-    protected boolean negativeXScale;//Used for correcting the box to work with inversion
-    protected boolean negativeYScale;//Used for correcting the box to work with inversion
-
-    protected Vector2f originalMin;//this will only change if the entire shape of the object changes
-    protected Vector2f originalMax;//this will only change if the entire shape of the object changes
-    protected Vector2f originalPoint;//this will only change if the entire shape of the object changes
+    boolean negativeXScale;//Used for correcting the box to work with inversion
+    boolean negativeYScale;//Used for correcting the box to work with inversion
 
     //Constructor for a BoundingShape
-    public BoundingShape(Color c){
+    BoundingShape(Color c){
         objectColor = c;
     }
 
@@ -69,7 +65,7 @@ public abstract class BoundingShape implements Drawable{
         this.yTranslation = yTranslation;
     }
 
-    protected Vector2f getScale(){
+    Vector2f getScale(){
         return scale;
     }
 }

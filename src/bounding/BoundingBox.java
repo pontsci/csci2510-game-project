@@ -6,8 +6,10 @@ import util.Vector2f;
 import java.awt.*;
 
 public class BoundingBox extends BoundingShape{
-    protected Vector2f min;
-    protected Vector2f max;
+    private Vector2f min;
+    private Vector2f max;
+    private Vector2f originalMin;//this will only change if the entire shape of the object changes
+    private Vector2f originalMax;//this will only change if the entire shape of the object changes
 
     //Constructor for a Box
     public BoundingBox(Vector2f min, Vector2f max, Color c){
