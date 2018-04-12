@@ -37,6 +37,7 @@ public class Spawner extends Manager
         //not needed, do nothing
     }
 
+    //technically a SpawnRange, not a hitbox
     public void renderHitboxes(Graphics g){
         for (SpawnRange spawn: spawnRanges){
             spawn.render(g);
