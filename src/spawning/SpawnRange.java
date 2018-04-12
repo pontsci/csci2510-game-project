@@ -43,11 +43,11 @@ public class SpawnRange implements Drawable
     }
 
     public void render(Graphics g){
+        g.setColor(Color.CYAN);
         Vector2f min = new Vector2f(minx, y);
         Vector2f max = new Vector2f(maxx, y);
         Vector2f minScreen = viewport.mul(min);
         Vector2f maxScreen = viewport.mul(max);
         g.drawLine((int)minScreen.x, (int)minScreen.y, (int)maxScreen.x, (int)maxScreen.y);
     }
-
 }

@@ -34,6 +34,10 @@ public class Spawner extends Manager
 
 
     public void render(Graphics g){
+        //not needed, do nothing
+    }
+
+    public void renderHitboxes(Graphics g){
         for (SpawnRange spawn: spawnRanges){
             spawn.render(g);
         }
