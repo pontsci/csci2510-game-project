@@ -28,6 +28,7 @@ public class RatManager extends Manager{
 
     //Get the rat's sprite sheet and make a rat.
     public RatManager(Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms){
+        //Save the objects a rat collides with so it can be used to spawn more rats.
         this.floor = floor;
         this.walls = walls;
         this.platforms = platforms;

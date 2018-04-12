@@ -63,7 +63,7 @@ public abstract class Sprite{
         }
     }
 
-    //Code from book
+    //Code from book, it renders where the sprite is in world coordinates.
     private void doAffineTransform(Graphics2D g2d){
         AffineTransform transform = createTransform(new Vector2f(xTranslation, yTranslation), rotation, scale);
         g2d.drawImage(currentSpriteFrame, transform, null);

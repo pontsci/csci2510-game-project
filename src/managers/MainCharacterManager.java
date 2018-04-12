@@ -13,7 +13,6 @@ public class MainCharacterManager extends Manager{
         getSprites().add(new MainCharacter(-7, -4, new Vector2f(.4f,.4f), floor, walls, rats, powerups, platforms));
     }
 
-
     //Tell all main characters to jump - Note, there should only be one
     public void processJump(){
         for(Sprite mainCharacter : getSprites()){

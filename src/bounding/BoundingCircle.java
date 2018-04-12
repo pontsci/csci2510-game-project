@@ -6,8 +6,9 @@ import util.Vector2f;
 import java.awt.*;
 
 public class BoundingCircle extends BoundingShape{
-    protected Vector2f point;
-    protected float radius;
+    private Vector2f point;
+    private float radius;
+    private Vector2f originalPoint;//this will only change if the entire shape of the object changes
 
     //Constructor for a circle
     public BoundingCircle(float radius, float startX, float startY, Color c){
