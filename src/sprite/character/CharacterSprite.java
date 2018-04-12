@@ -15,16 +15,20 @@ public abstract class CharacterSprite extends Sprite{
     protected final int TERMINAL_VELOCITY = -5;
     private Floor floor;
     private ArrayList<Sprite> walls = new ArrayList<>();
+    private ArrayList<Sprite> platforms = new ArrayList<>();
+    protected float velocityY = 0;
     private float gravity = -10;
-    private boolean onTheFloor = false;
+    private boolean onTheFloor = true;
+    private boolean onAPlatform = false;
     int health;
     boolean onFire = false;
     boolean dotHeal = false;
 
-    public CharacterSprite(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls){
+    public CharacterSprite(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms){
         super(startX, startY, scale);
         this.floor = floor;
         this.walls = walls;
+        this.platforms = platforms;
     }
 
     //begin checking collision with floor and wall
@@ -45,6 +49,39 @@ public abstract class CharacterSprite extends Sprite{
             //If the character collided with the floor, push the character out of the floor and set onTheFloor to true
             pushCharacter(delta, viewport, 'y', .001f);
             onTheFloor = true;
+        }
+        onAPlatform = false;
+
+        //Negative velocity means the character is now falling, so check for platforms
+        if(velocityY < 0){
+            float xStartState = getxTranslation();
+            float yStartState = getyTranslation();
+            int magnitude = 1;
+            for(int i = 0; i < platforms.size(); i++){
+                while(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                    pushCharacter(delta, viewport, 'y', .0001f*magnitude);
+                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                        setyTranslation(yStartState);
+                    }
+                    else
+                        break;
+                    pushCharacter(delta, viewport, 'x', .0001f*magnitude);
+                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                        setxTranslation(xStartState);
+                    }
+                    else
+                        break;
+                    pushCharacter(delta, viewport, 'x', -.0001f*magnitude);
+                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                        setxTranslation(xStartState);
+                    }
+                    else
+                        break;
+                    /*pushCharacter(delta, viewport, 'y', .0001f);
+                    onAPlatform = true;*/
+                    magnitude++;
+                }
+            }
         }
     }
 
@@ -132,6 +169,14 @@ public abstract class CharacterSprite extends Sprite{
 
     protected boolean onTheFloor(){
         return onTheFloor;
+    }
+
+    protected void setOnAPlatform(boolean onAPlatform){
+        this.onAPlatform = onAPlatform;
+    }
+
+    protected boolean onAPlatform(){
+        return onAPlatform;
     }
 
     public float getGravity(){

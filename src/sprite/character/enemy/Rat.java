@@ -27,8 +27,8 @@ public class Rat extends CharacterSprite{
     private float jumpForce = 0;
     private Random rand = new Random();
 
-    public Rat(float startX, float startY, Vector2f scale, int spriteImg, boolean direction, Floor floor, ArrayList<Sprite> walls){
-        super(startX, startY, scale, floor, walls);
+    public Rat(float startX, float startY, Vector2f scale, int spriteImg, boolean direction, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms){
+        super(startX, startY, scale, floor, walls, platforms);
         this.facingDirection = direction;
         switch(spriteImg){
             case GRAY_RAT:

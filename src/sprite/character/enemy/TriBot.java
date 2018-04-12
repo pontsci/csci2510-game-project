@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class TriBot extends Enemy{
     private Animation animation = new Animation();
 
-    public TriBot(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls){
-        super(startX, startY, scale, floor, walls);
+    public TriBot(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms){
+        super(startX, startY, scale, floor, walls, platforms);
         //get the animations for the tri bot - follow the main character
         //set the current frame
         //animation.addAnimation(loadFile("file path here.png"), #of frames);

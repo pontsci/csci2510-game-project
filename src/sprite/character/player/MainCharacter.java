@@ -26,14 +26,13 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private ArrayList<Sprite> powerups;
     private Animation animation = new Animation();
     private int currentAnimation = 1;
-    private float velocityY = 0;
     private float walkRate = 2.5f;// Walk rate per second. (The world is 16 by 9)
     private int hp = 3;
     private int healTicks = 0;//Tick values for hp and dmg
     private int dmgTicks = 0;
 
-    public MainCharacter(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> rats, ArrayList<Sprite> powerups){
-        super(startX, startY, scale, floor, walls);
+    public MainCharacter(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> rats, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms){
+        super(startX, startY, scale, floor, walls, platforms);
         BufferedImage idleAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png");
         BufferedImage jumpAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png");
 
@@ -66,8 +65,8 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
             currentAnimation = FALL_ANIMATION;
         }
 
-        //if not on the floor, change the character's velocity based on gravity.
-        if(!onTheFloor()){
+        //if not on the floor or on a platform, change the character's velocity based on gravity.
+        if(!onTheFloor() && !onAPlatform()){
             if(velocityY > TERMINAL_VELOCITY){
                 velocityY += getGravity() * delta;
             }
@@ -77,12 +76,10 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         }
 
         setyTranslation(getyTranslation() + velocityY * delta);
-
         processAnimations(delta);
         conditions.updateObjects(delta);
         processEffects(delta);
     }
-
 
     // Process which animation is playing, when an animation finishes, it returns true
     private void processAnimations(float delta){
@@ -100,13 +97,13 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                 if(animation.playAnimation(delta, JUMP_ANIMATION, this)){
                     currentAnimation = FALL_ANIMATION;
                 }
-                if(onTheFloor()){
+                if(onTheFloor() || onAPlatform()){
                     currentAnimation = LAND_ANIMATION;
                 }
                 break;
             case FALL_ANIMATION:
                 animation.playAnimation(delta, FALL_ANIMATION, this);
-                if(onTheFloor()){
+                if(onTheFloor() || onAPlatform()){
                     currentAnimation = LAND_ANIMATION;
                 }
                 break;
@@ -147,7 +144,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     // play left move animation
     public void walkLeft(float delta){
-        if(currentAnimation != JUMP_ANIMATION && currentAnimation != MOVE_ANIMATION && currentAnimation != FALL_ANIMATION && currentAnimation != LAND_ANIMATION){
+        if(currentAnimation != MOVE_ANIMATION && currentAnimation != JUMP_ANIMATION  && currentAnimation != FALL_ANIMATION && currentAnimation != LAND_ANIMATION){
             currentAnimation = MOVE_ANIMATION;
         }
         setxTranslation(getxTranslation() - (walkRate * delta));
@@ -156,11 +153,12 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     // play right move animation
     public void walkRight(float delta){
-        if(currentAnimation != JUMP_ANIMATION && currentAnimation != MOVE_ANIMATION && currentAnimation != FALL_ANIMATION && currentAnimation != LAND_ANIMATION){
+        if(currentAnimation != MOVE_ANIMATION && currentAnimation != JUMP_ANIMATION && currentAnimation != FALL_ANIMATION && currentAnimation != LAND_ANIMATION){
             currentAnimation = MOVE_ANIMATION;
         }
         setxTranslation(getxTranslation() + (walkRate * delta));
         setScale(new Vector2f(-Math.abs(getScale().x), Math.abs(getScale().y)));
+
     }
 
     // play jump animation
@@ -169,11 +167,11 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
             currentAnimation = JUMP_ANIMATION;
             velocityY = 7.5f;
             setOnTheFloor(false);
+            setOnAPlatform(false);
         }
     }
 
-    // Play idle animation as long as the main character is not jumping or already
-    // idle.
+    // Play idle animation
     public void idle(){
         if(currentAnimation != JUMP_ANIMATION && currentAnimation != IDLE_ANIMATION && currentAnimation != FALL_ANIMATION && currentAnimation != LAND_ANIMATION){
             currentAnimation = IDLE_ANIMATION;

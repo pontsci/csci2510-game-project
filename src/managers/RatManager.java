@@ -20,16 +20,18 @@ public class RatManager extends Manager{
     private final static int WHITE_RAT = 1;
     private Floor floor;
     private ArrayList<Sprite> walls;
+    private ArrayList<Sprite> platforms;
 
     private Random rand = new Random();
     private float ratTime = 0;//Used to determine when a rat can spawn
     private float megaRatTime = 0;//Used to determine when a mega rat can spawn.
 
     //Get the rat's sprite sheet and make a rat.
-    public RatManager(Floor floor, ArrayList<Sprite> walls){
+    public RatManager(Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms){
         this.floor = floor;
         this.walls = walls;
-        getSprites().add(new Rat(4, -4f, new Vector2f(-2,2), GRAY_RAT, false, floor, walls));
+        this.platforms = platforms;
+        getSprites().add(new Rat(4, -4f, new Vector2f(-2,2), GRAY_RAT, false, floor, walls, platforms));
     }
 
     @Override //spawn rats
@@ -48,12 +50,12 @@ public class RatManager extends Manager{
                 //Right
                 if(rand.nextBoolean()){
                     int size = rand.nextInt(3) - 1;//-1 to 1
-                    getSprites().add(new Rat(8,-4f,new Vector2f(-(4 + size), (4 + size)), GRAY_RAT, false, floor, walls));
+                    getSprites().add(new Rat(8,-4f,new Vector2f(-(4 + size), (4 + size)), GRAY_RAT, false, floor, walls, platforms));
                 }
                 //Left
                 else{
                     int size = rand.nextInt(3) - 1;//-1 to 1
-                    getSprites().add(new Rat(-8,-4, new Vector2f((5  + size), (5 + size)), GRAY_RAT, true, floor, walls));
+                    getSprites().add(new Rat(-8,-4, new Vector2f((5  + size), (5 + size)), GRAY_RAT, true, floor, walls, platforms));
                 }
             }
             ratTime = ratTime - 4;
@@ -71,11 +73,11 @@ public class RatManager extends Manager{
             if(i == 0){
                 //right
                 if(rand.nextBoolean()){
-                       getSprites().add(new Rat(8,-4f,new Vector2f(-(4), (4f)), WHITE_RAT, false, floor, walls));
+                       getSprites().add(new Rat(8,-4f,new Vector2f(-(4), (4f)), WHITE_RAT, false, floor, walls, platforms));
                 }
                 //Left
                 else{
-                    getSprites().add(new Rat(-8,-4f, new Vector2f((4), (4f)), WHITE_RAT, true, floor, walls));
+                    getSprites().add(new Rat(-8,-4f, new Vector2f((4), (4f)), WHITE_RAT, true, floor, walls, platforms));
                 }
             }
             megaRatTime = megaRatTime - 2;

@@ -3,9 +3,6 @@ package managers;
 import sprite.world.Wall;
 import util.Vector2f;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 public class WallManager extends Manager{
     //Get the wall's sprite sheet and make two walls on either side of the screen
     public WallManager(){
