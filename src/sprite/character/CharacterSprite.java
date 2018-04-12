@@ -63,8 +63,10 @@ public abstract class CharacterSprite extends Sprite{
                     if(checkSpriteCollision(delta, viewport, platforms.get(i))){
                         setyTranslation(yStartState);
                     }
-                    else
+                    else{
+                        onAPlatform = true;
                         break;
+                    }
                     pushCharacter(delta, viewport, 'x', .0001f*magnitude);
                     if(checkSpriteCollision(delta, viewport, platforms.get(i))){
                         setxTranslation(xStartState);
@@ -77,8 +79,6 @@ public abstract class CharacterSprite extends Sprite{
                     }
                     else
                         break;
-                    /*pushCharacter(delta, viewport, 'y', .0001f);
-                    onAPlatform = true;*/
                     magnitude++;
                 }
             }
