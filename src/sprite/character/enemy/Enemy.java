@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public abstract class Enemy extends CharacterSprite{
+
+    
     Enemy(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms){
         super(startX, startY, scale, floor, walls, platforms);
     }
@@ -17,5 +19,8 @@ public abstract class Enemy extends CharacterSprite{
     public abstract void initializeHitboxes();
 
     @Override
-    public abstract void process(float delta);
+    public void process(float delta){
+        //setyTranslation(getyTranslation() + getGravity());
+
+    }
 }

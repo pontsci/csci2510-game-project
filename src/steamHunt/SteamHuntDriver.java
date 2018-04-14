@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import managers.*;
 import spawning.SpawnRange;
 import spawning.Spawner;
+import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
 import status.StatusArchive;
 import util.SimpleFramework;
@@ -16,7 +17,7 @@ import util.Vector2f;
 //The driver's job is to direct information between managers.
 //It does not deal with individual sprites, that is left for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
-    private Manager[] managers = new Manager[8];
+    private Manager[] managers = new Manager[9];
     private boolean renderHitboxes = false;
 
 
@@ -44,7 +45,7 @@ public class SteamHuntDriver extends SimpleFramework{
         managers[2] = new PlatformManager();
         managers[5] = new WallManager();
         managers[6] = new PowerUpManager();
-        managers[7] = new Spawner();
+        managers[8] = new Spawner();
 
         //Add six power up items
         ((PowerUpManager)managers[6]).addPowerUp(StatusArchive.getHealthStatus(), new Vector2f(-6,0));
@@ -58,10 +59,11 @@ public class SteamHuntDriver extends SimpleFramework{
         SpawnRange sp = new SpawnRange(-4, -2, 0, getViewportTransform());
         ArrayList<SpawnRange> spawnRanges = new ArrayList<>();
         spawnRanges.add(sp);
-        ((Spawner)managers[7]).setSpawnRanges(spawnRanges);
+        ((Spawner)managers[8]).setSpawnRanges(spawnRanges);
 
         managers[4] = new RatManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[2].getSprites());
         managers[3] = new MainCharacterManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[4].getSprites(), managers[6].getSprites(), managers[2].getSprites());
+        managers[7] = new EnemyManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[2].getSprites(), (MainCharacter) managers[3].getSprites().get(0));
     }
 
     @Override
