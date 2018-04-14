@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public abstract class Enemy extends CharacterSprite{
 
-    
+    Vector2f velocity = new Vector2f(0,0);
     Enemy(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms){
         super(startX, startY, scale, floor, walls, platforms);
     }
@@ -20,6 +20,10 @@ public abstract class Enemy extends CharacterSprite{
 
     @Override
     public void process(float delta){
-        setyTranslation(getyTranslation() + ((getGravity()) * delta));
+        super.process(delta);
+        for(Sprite p:platforms){
+            //checkSpriteCollision();
+        }
     }
+
 }
