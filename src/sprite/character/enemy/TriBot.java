@@ -31,9 +31,6 @@ public class TriBot extends Enemy{
         super(startX, startY, scale, floor, walls, platforms, player);
         //get the animations for the tri bot - follow the main character
         BufferedImage spriteSheet = loadFile("src/resources/character/enemy/tribot/Enemy_WH_237x356_EnemyMove_EnemyAttack.png");
-        //set the current frame
-        //animation.addAnimation(loadFile("file path here.png"), #of frames);
-        //Do this for each animation series.
         setCurrentSpriteFrame(spriteSheet.getSubimage(0,0,237,356));
         animation.addAnimation(spriteSheet.getSubimage(0,0, 1659, 356), 7);
         animation.addAnimation(spriteSheet.getSubimage(0,356, 1422, 356), 6);
@@ -50,7 +47,6 @@ public class TriBot extends Enemy{
     @Override
     public void process(float delta){
         super.process(delta);
-        System.out.println(wallCollision);
         processAnimations(delta);
         processMovement(delta);
     }
