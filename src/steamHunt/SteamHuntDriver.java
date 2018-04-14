@@ -59,7 +59,7 @@ public class SteamHuntDriver extends SimpleFramework{
         ArrayList<SpawnRange> spawnRanges = new ArrayList<>();
         spawnRanges.add(sp);
         ((Spawner)managers[7]).setSpawnRanges(spawnRanges);
-        
+
         managers[4] = new RatManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[2].getSprites());
         managers[3] = new MainCharacterManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[4].getSprites(), managers[6].getSprites(), managers[2].getSprites());
     }
@@ -71,6 +71,7 @@ public class SteamHuntDriver extends SimpleFramework{
         processSpaceKeyInput();
         processMovementInput(delta);
         processBKeyInput();
+        processSKeyInput();
         for(Manager manager : managers){
             manager.process(delta);
         }
@@ -105,6 +106,15 @@ public class SteamHuntDriver extends SimpleFramework{
         if(keyboard.keyDownOnce(KeyEvent.VK_B)){
             renderHitboxes = !renderHitboxes;
         }
+    }
+
+    //Process what happens when S is pressed
+    private void processSKeyInput(){
+        if(keyboard.keyDown(KeyEvent.VK_S)){
+            ((MainCharacterManager)managers[3]).processIgnorePlatformCollision();
+        }
+        else
+            ((MainCharacterManager)managers[3]).processAllowPlatformCollision();
     }
 
     @Override

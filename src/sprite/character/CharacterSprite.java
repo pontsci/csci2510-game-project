@@ -19,7 +19,9 @@ public abstract class CharacterSprite extends Sprite{
     protected float velocityY = 0;
     private float gravity = -10;
     private boolean onTheFloor = true;
-    private boolean onAPlatform = false;
+    protected boolean onAPlatform = false;
+    protected boolean ignorePlatforms = false;
+    protected float platformTimer = 2;
     int health;
     boolean onFire = false;
     boolean dotHeal = false;
@@ -53,7 +55,7 @@ public abstract class CharacterSprite extends Sprite{
         onAPlatform = false;
 
         //Negative velocity means the character is now falling, so check for platforms
-        if(velocityY < 0){
+        if(velocityY < 0 && !ignorePlatforms){
             float xStartState = getxTranslation();
             float yStartState = getyTranslation();
             int magnitude = 1;
