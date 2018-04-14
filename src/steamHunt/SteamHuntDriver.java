@@ -15,7 +15,7 @@ import util.SimpleFramework;
 import util.Vector2f;
 
 //The driver's job is to direct information between managers.
-//It does not deal with individual sprites, that is left for the manager to do.
+//It does not deal with individual sprites, that is footBox for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
     private Manager[] managers = new Manager[9];
     private boolean renderHitboxes = false;

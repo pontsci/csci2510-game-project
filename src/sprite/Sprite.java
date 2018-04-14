@@ -43,6 +43,10 @@ public abstract class Sprite{
             //bound.setRot(rotation); Squares and circles do not do well with the formulas from the book.
             bound.updateWorld(viewport);
         }
+        setViewport(viewport);
+    }
+
+    protected void setViewport(Matrix3x3f viewport){
         this.viewport = viewport;
     }
 

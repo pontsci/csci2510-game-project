@@ -65,7 +65,7 @@ public abstract class CharacterSprite extends Sprite{
                 if(i == 0){
                     pushCharacter(delta, viewport, 'x', .001f);
                 }
-                //Right wall is being hit, move mouse left;
+                //Right wall is being hit, move mouse footBox;
                 else if(i == 1){
                     pushCharacter(delta, viewport, 'x', -.001f);
                 }

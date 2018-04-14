@@ -23,7 +23,7 @@ public class Rat extends CharacterSprite{
     private float vTime = 0;//Vertical Movement Timer
     private Animation animation = new Animation();
     private float walkRate = 2f;//Walk rate per second.
-    private boolean facingDirection;//True means the rat faces right, false means left.
+    private boolean facingDirection;//True means the rat faces right, false means footBox.
     private float jumpForce = 0;
     private Random rand = new Random();
 
@@ -40,7 +40,7 @@ public class Rat extends CharacterSprite{
                 setCurrentSpriteFrame(loadFile("src/resources/character/enemy/whiteratwalk.png").getSubimage(0, 0, 17, 8));
                 break;
         }
-        //true faces right, false faces left
+        //true faces right, false faces footBox
         initializeHitboxes();
     }
 
@@ -70,7 +70,7 @@ public class Rat extends CharacterSprite{
             if(facingDirection == GO_RIGHT){
                 setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
             }
-            //False faces left
+            //False faces footBox
             else{
                 setScale(new Vector2f(-Math.abs(getScale().x), Math.abs(getScale().y)));
             }

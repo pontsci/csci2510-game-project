@@ -58,9 +58,9 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     // Initialize the main character's hitboxes, the first box is the outer hitbox
     public void initializeHitboxes(){
         // Create the hitboxes
-        hitboxes.add(new BoundingBox(new Vector2f(-1.2f, -2), new Vector2f(1.1f, 1.9f), Color.BLUE));
+        hitboxes.add(new BoundingBox(new Vector2f(-.7f, -2), new Vector2f(.7f, 1.9f), Color.BLUE));
         hitboxes.add(new BoundingCircle(.4f, -.1f, 1.4f, Color.RED));
-        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -1.9f), new Vector2f(.8f, 1.1f), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.7f, -1.9f), new Vector2f(.7f, 1.1f), Color.RED));
     }
 
     // Process functions of the main character
@@ -213,7 +213,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         onAPlatform = false;
     }
 
-    // play left move animation
+    // play footBox move animation
     public void walkLeft(float delta){
         if(currentAnimation != MOVE_ANIMATION && currentAnimation != JUMP_ANIMATION  && currentAnimation != FALL_ANIMATION && currentAnimation != LAND_ANIMATION){
             currentAnimation = MOVE_ANIMATION;
