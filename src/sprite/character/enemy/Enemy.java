@@ -20,7 +20,6 @@ public abstract class Enemy extends CharacterSprite{
 
     @Override
     public void process(float delta){
-        //setyTranslation(getyTranslation() + getGravity());
-
+        setyTranslation(getyTranslation() + ((getGravity()) * delta));
     }
 }

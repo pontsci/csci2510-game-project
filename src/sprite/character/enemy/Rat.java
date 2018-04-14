@@ -86,7 +86,6 @@ public class Rat extends CharacterSprite{
         }
     }
 
-    //SIMPLE Random jump movement of the rat
     private void verticalMovement(float delta){
         vTime = vTime + delta;
         //Every 1.5 seconds a random boolean is chosen to
@@ -110,7 +109,12 @@ public class Rat extends CharacterSprite{
                 jumpForce = 0;
             }
         }
+        processGravity(delta);
+    }
 
+    //SIMPLE Random jump movement of the rat
+    @Override
+    protected void processGravity(float delta){
         setyTranslation(getyTranslation() + ((getGravity() + jumpForce) * delta));
     }
 }

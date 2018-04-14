@@ -30,7 +30,7 @@ public class TriBot extends Enemy{
     public void initializeHitboxes(){
         hitboxes.add(new BoundingBox(new Vector2f(-1.2f, -3), new Vector2f(1.1f, 1.9f), Color.BLUE));
         hitboxes.add(new BoundingCircle(.4f, -.1f, 1.4f, Color.RED));
-        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -1.9f), new Vector2f(.8f, 1.1f), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -1.7f), new Vector2f(.8f, 1.1f), Color.RED));
     }
 
     @Override

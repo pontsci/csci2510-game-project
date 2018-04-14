@@ -22,6 +22,11 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private final int JUMP_ANIMATION = 2;
     private final int FALL_ANIMATION = 3;
     private final int LAND_ANIMATION = 4;
+    private boolean onTheFloor = true;
+    private boolean onAPlatform = false;
+    private boolean ignorePlatforms = false;
+    private float platformTimer = 2;
+    private float velocityY = 0;
     private ArrayList<Sprite> rats;
     private ArrayList<Sprite> powerups;
     private Animation animation = new Animation();
@@ -60,13 +65,22 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     // Process functions of the main character
     public void process(float delta){
+        processGravity(delta);
+        processAnimations(delta);
+        conditions.updateObjects(delta);
+        processEffects(delta);
+        processAdjustPlatformTimer(delta);
+    }
+
+    @Override
+    protected void processGravity(float delta){
         //Set animation to falling if the character is falling.
         if(velocityY < -.5f){
             currentAnimation = FALL_ANIMATION;
         }
 
         //if not on the floor or on a platform, change the character's velocity based on gravity.
-        if(!onTheFloor() && !onAPlatform()){
+        if(!onTheFloor && !onAPlatform){
             if(velocityY > TERMINAL_VELOCITY){
                 velocityY += getGravity() * delta;
             }
@@ -74,12 +88,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         else{
             velocityY = 0 + (getGravity() * delta);
         }
-
         setyTranslation(getyTranslation() + velocityY * delta);
-        processAnimations(delta);
-        conditions.updateObjects(delta);
-        processEffects(delta);
-        processAdjustPlatformTimer(delta);
     }
 
     // Process which animation is playing, when an animation finishes, it returns true
@@ -98,13 +107,13 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                 if(animation.playAnimation(delta, JUMP_ANIMATION, this)){
                     currentAnimation = FALL_ANIMATION;
                 }
-                if(onTheFloor() || onAPlatform()){
+                if(onTheFloor || onAPlatform){
                     currentAnimation = LAND_ANIMATION;
                 }
                 break;
             case FALL_ANIMATION:
                 animation.playAnimation(delta, FALL_ANIMATION, this);
-                if(onTheFloor() || onAPlatform()){
+                if(onTheFloor || onAPlatform){
                     currentAnimation = LAND_ANIMATION;
                 }
                 break;
@@ -133,14 +142,11 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
-        //check rat collision
-        for(int i = 0; i < rats.size(); i++){
-            if(checkSpriteCollision(delta, viewport, rats.get(i))){
-                rats.remove(i);
-                i--;
-            }
-        }
+        checkRatCollision(delta, viewport);
+        checkPowerupCollision(delta, viewport);
+    }
 
+    private void checkPowerupCollision(float delta, Matrix3x3f viewport){
         //Checks powerups collision, activate status effect with the same name in VulnStatus's conditions.
         for(int i = 0; i < powerups.size(); i++){
             if(checkSpriteCollision(delta, viewport, powerups.get(i))){
@@ -149,6 +155,62 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                 i--;
             }
         }
+    }
+
+    private void checkRatCollision(float delta, Matrix3x3f viewport){
+        //check rat collision
+        for(int i = 0; i < rats.size(); i++){
+            if(checkSpriteCollision(delta, viewport, rats.get(i))){
+                rats.remove(i);
+                i--;
+            }
+        }
+    }
+
+    @Override
+    protected void checkPlatformCollision(float delta, Matrix3x3f viewport){
+        //Negative velocity means the character is now falling, so check for platforms
+        if(velocityY < 0 && !ignorePlatforms){
+            float xStartState = getxTranslation();
+            float yStartState = getyTranslation();
+            int magnitude = 1;
+            for(int i = 0; i < platforms.size(); i++){
+                while(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                    pushCharacter(delta, viewport, 'y', .0001f*magnitude);
+                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                        setyTranslation(yStartState);
+                    }
+                    else{
+                        onAPlatform = true;
+                        break;
+                    }
+                    pushCharacter(delta, viewport, 'x', .0001f*magnitude);
+                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                        setxTranslation(xStartState);
+                    }
+                    else
+                        break;
+                    pushCharacter(delta, viewport, 'x', -.0001f*magnitude);
+                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                        setxTranslation(xStartState);
+                    }
+                    else
+                        break;
+                    magnitude++;
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void checkFloorCollision(float delta, Matrix3x3f viewport){
+        onTheFloor = false;
+        while(checkSpriteCollision(delta, viewport, floor)){
+            //If the character collided with the floor, push the character out of the floor and set onTheFloor to true
+            pushCharacter(delta, viewport, 'y', .001f);
+            onTheFloor = true;
+        }
+        onAPlatform = false;
     }
 
     // play left move animation
@@ -175,8 +237,8 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         if(currentAnimation != JUMP_ANIMATION && currentAnimation != FALL_ANIMATION){
             currentAnimation = JUMP_ANIMATION;
             velocityY = 7.5f;
-            setOnTheFloor(false);
-            setOnAPlatform(false);
+            onTheFloor = false;
+            onAPlatform = false;
         }
     }
 
@@ -189,7 +251,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     public void ignorePlatformCollision(){
         //If on a platform, ignore Platform collision and reset the timer.
-        if(onAPlatform()){
+        if(onAPlatform){
             System.out.println("Ignoring Platforms.");
             ignorePlatforms = true;
             platformTimer = 0;
@@ -271,17 +333,13 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     }
 
     //These effects are handled by a manager, or are not implemented yet (on/off values)
-    public void fireRateEffect(){
-    }
+    public void fireRateEffect(){}
 
-    public void dmgEffect(){
-    }
+    public void dmgEffect(){}
 
-    public void shieldEffect(){
-    }
+    public void shieldEffect(){}
 
-    public void taserEffect(){
-    }
+    public void taserEffect(){}
 
     //DoT Effect
     public void dmgOverTime(){

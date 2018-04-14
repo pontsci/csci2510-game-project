@@ -13,15 +13,10 @@ import java.util.ArrayList;
 
 public abstract class CharacterSprite extends Sprite{
     protected final int TERMINAL_VELOCITY = -5;
-    private Floor floor;
-    private ArrayList<Sprite> walls = new ArrayList<>();
-    private ArrayList<Sprite> platforms = new ArrayList<>();
-    protected float velocityY = 0;
+    protected Floor floor;
+    protected ArrayList<Sprite> walls = new ArrayList<>();
+    protected ArrayList<Sprite> platforms = new ArrayList<>();
     private float gravity = -10;
-    private boolean onTheFloor = true;
-    protected boolean onAPlatform = false;
-    protected boolean ignorePlatforms = false;
-    protected float platformTimer = 2;
     int health;
     boolean onFire = false;
     boolean dotHeal = false;
@@ -33,8 +28,38 @@ public abstract class CharacterSprite extends Sprite{
         this.platforms = platforms;
     }
 
+    @Override
+    public void process(float delta){
+        processGravity(delta);
+    }
+
+    protected void processGravity(float delta){
+        setyTranslation(getyTranslation() + ((getGravity()) * delta));
+    }
+
     //begin checking collision with floor and wall
     public void checkCollision(float delta, Matrix3x3f viewport){
+        checkWallCollision(delta, viewport);
+        checkFloorCollision(delta, viewport);
+        checkPlatformCollision(delta, viewport);
+    }
+
+    protected void checkPlatformCollision(float delta, Matrix3x3f viewport){
+        for(int i = 0; i < platforms.size(); i++){
+            while(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                pushCharacter(delta, viewport, 'y', .0001f);
+            }
+        }
+    }
+
+    protected void checkFloorCollision(float delta, Matrix3x3f viewport){
+        while(checkSpriteCollision(delta, viewport, floor)){
+            //If the character collided with the floor, push the character out of the floor and set onTheFloor to true
+            pushCharacter(delta, viewport, 'y', .001f);
+        }
+    }
+
+    protected void checkWallCollision(float delta, Matrix3x3f viewport){
         for(int i = 0; i < walls.size(); i++){
             while(checkSpriteCollision(delta, viewport, walls.get(i))){
                 if(i == 0){
@@ -43,45 +68,6 @@ public abstract class CharacterSprite extends Sprite{
                 //Right wall is being hit, move mouse left;
                 else if(i == 1){
                     pushCharacter(delta, viewport, 'x', -.001f);
-                }
-            }
-        }
-        onTheFloor = false;
-        while(checkSpriteCollision(delta, viewport, floor)){
-            //If the character collided with the floor, push the character out of the floor and set onTheFloor to true
-            pushCharacter(delta, viewport, 'y', .001f);
-            onTheFloor = true;
-        }
-        onAPlatform = false;
-
-        //Negative velocity means the character is now falling, so check for platforms
-        if(velocityY < 0 && !ignorePlatforms){
-            float xStartState = getxTranslation();
-            float yStartState = getyTranslation();
-            int magnitude = 1;
-            for(int i = 0; i < platforms.size(); i++){
-                while(checkSpriteCollision(delta, viewport, platforms.get(i))){
-                    pushCharacter(delta, viewport, 'y', .0001f*magnitude);
-                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
-                        setyTranslation(yStartState);
-                    }
-                    else{
-                        onAPlatform = true;
-                        break;
-                    }
-                    pushCharacter(delta, viewport, 'x', .0001f*magnitude);
-                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
-                        setxTranslation(xStartState);
-                    }
-                    else
-                        break;
-                    pushCharacter(delta, viewport, 'x', -.0001f*magnitude);
-                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
-                        setxTranslation(xStartState);
-                    }
-                    else
-                        break;
-                    magnitude++;
                 }
             }
         }
@@ -153,7 +139,7 @@ public abstract class CharacterSprite extends Sprite{
     }
 
     //Push the character back into the world
-    private void pushCharacter(float delta, Matrix3x3f viewport, char axis, float amount){
+    protected void pushCharacter(float delta, Matrix3x3f viewport, char axis, float amount){
         if(axis == 'y'){
             setRotation(0);
             setyTranslation(getyTranslation() + amount);
@@ -163,22 +149,6 @@ public abstract class CharacterSprite extends Sprite{
             setxTranslation(getxTranslation() + amount);
             update(delta, viewport);
         }
-    }
-
-    protected void setOnTheFloor(boolean onTheFloor){
-        this.onTheFloor = onTheFloor;
-    }
-
-    protected boolean onTheFloor(){
-        return onTheFloor;
-    }
-
-    protected void setOnAPlatform(boolean onAPlatform){
-        this.onAPlatform = onAPlatform;
-    }
-
-    protected boolean onAPlatform(){
-        return onAPlatform;
     }
 
     public float getGravity(){
