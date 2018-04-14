@@ -40,4 +40,16 @@ public class MainCharacterManager extends Manager{
             ((MainCharacter)mainCharacter).idle();
         }
     }
+
+    public void processIgnorePlatformCollision(){
+        for(Sprite mainCharacter : getSprites()){
+            ((MainCharacter)mainCharacter).ignorePlatformCollision();
+        }
+    }
+
+    public void processAllowPlatformCollision(){
+        for(Sprite mainCharacter : getSprites()){
+            ((MainCharacter)mainCharacter).allowPlatformCollision();
+        }
+    }
 }

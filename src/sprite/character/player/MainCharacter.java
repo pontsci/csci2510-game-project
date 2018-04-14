@@ -55,7 +55,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         // Create the hitboxes
         hitboxes.add(new BoundingBox(new Vector2f(-1.2f, -2), new Vector2f(1.1f, 1.9f), Color.BLUE));
         hitboxes.add(new BoundingCircle(.4f, -.1f, 1.4f, Color.RED));
-        hitboxes.add(new BoundingBox(new Vector2f(-1.1f, -1.9f), new Vector2f(1f, 1.1f), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -1.9f), new Vector2f(.8f, 1.1f), Color.RED));
     }
 
     // Process functions of the main character
@@ -79,6 +79,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         processAnimations(delta);
         conditions.updateObjects(delta);
         processEffects(delta);
+        processAdjustPlatformTimer(delta);
     }
 
     // Process which animation is playing, when an animation finishes, it returns true
@@ -115,6 +116,13 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         }
     }
 
+
+    private void processAdjustPlatformTimer(float delta){
+        if(platformTimer < .70f){
+            platformTimer = platformTimer + delta;
+        }
+    }
+
     // Renders character and conditions
     public void render(Graphics g){
         super.render(g);
@@ -125,6 +133,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
+        //check rat collision
         for(int i = 0; i < rats.size(); i++){
             if(checkSpriteCollision(delta, viewport, rats.get(i))){
                 rats.remove(i);
@@ -176,6 +185,24 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         if(currentAnimation != JUMP_ANIMATION && currentAnimation != IDLE_ANIMATION && currentAnimation != FALL_ANIMATION && currentAnimation != LAND_ANIMATION){
             currentAnimation = IDLE_ANIMATION;
         }
+    }
+
+    public void ignorePlatformCollision(){
+        //If on a platform, ignore Platform collision and reset the timer.
+        if(onAPlatform()){
+            System.out.println("Ignoring Platforms.");
+            ignorePlatforms = true;
+            platformTimer = 0;
+        }
+        //If not on a platform, and the player is holding s, check for platforms after .75 seconds.
+        else
+            allowPlatformCollision();
+    }
+
+    public void allowPlatformCollision(){
+        //Allow platform collision after .70 seconds
+        if(platformTimer >= .70f)
+            ignorePlatforms = false;
     }
 
     // Process status effects
