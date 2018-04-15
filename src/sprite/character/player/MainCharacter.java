@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
+import managers.BulletManager;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.world.Floor;
@@ -25,6 +26,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private boolean onTheFloor = true;
     private boolean onAPlatform = false;
     private boolean ignorePlatforms = false;
+    private BulletManager bm;
     private float platformTimer = 2;
     private float velocityY = 0;
     private ArrayList<Sprite> rats;
@@ -249,6 +251,11 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         }
     }
 
+    // Shoot a bullet
+    public void shoot(){
+        bm.addMainCharacterBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
+    }
+
     public void ignorePlatformCollision(){
         //If on a platform, ignore Platform collision and reset the timer.
         if(onAPlatform){
@@ -345,5 +352,9 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     public void dmgOverTime(){
         //System.out.println("DoT!!!");
         hp--;
+    }
+
+    public void setBulletManager(BulletManager bm){
+        this.bm = bm;
     }
 }

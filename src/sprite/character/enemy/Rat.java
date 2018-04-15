@@ -55,7 +55,6 @@ public class Rat extends CharacterSprite{
     //Process what's affecting/changing the rat - location/animation
     public void process(float delta){
         horizontalMovement(delta);
-        verticalMovement(delta);
         animation.playAnimation(delta, WALK_ANIMATION, this);
     }
 
@@ -86,33 +85,6 @@ public class Rat extends CharacterSprite{
         }
     }
 
-    private void verticalMovement(float delta){
-        vTime = vTime + delta;
-        //Every 1.5 seconds a random boolean is chosen to
-        //determine if the mouse will jump
-        if(vTime > 1.5f){
-            //if not jumping and the boolean is true, initiate a jump
-            if(jumpForce == 0 && rand.nextBoolean()){
-                setRotation(-.5f);
-                jumpForce = 7f;
-            }
-            vTime = vTime - 1.5f;
-        }
-        //if jumping, adjust jump force by gravity
-        if(jumpForce > 0){
-            jumpForce = jumpForce + (getGravity() * delta);
-            if(vTime > .50){
-                setRotation(.5f);
-            }
-            //if the new jump force is less than 0, make it 0
-            if(jumpForce < 0){
-                jumpForce = 0;
-            }
-        }
-        processGravity(delta);
-    }
-
-    //SIMPLE Random jump movement of the rat
     @Override
     protected void processGravity(float delta){
         setyTranslation(getyTranslation() + ((getGravity() + jumpForce) * delta));

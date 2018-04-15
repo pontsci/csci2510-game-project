@@ -17,7 +17,7 @@ import util.Vector2f;
 //The driver's job is to direct information between managers.
 //It does not deal with individual sprites, that is footBox for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
-    private Manager[] managers = new Manager[9];
+    private Manager[] managers = new Manager[10];
     private boolean renderHitboxes = false;
 
 
@@ -64,6 +64,8 @@ public class SteamHuntDriver extends SimpleFramework{
         managers[4] = new RatManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[2].getSprites());
         managers[3] = new MainCharacterManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[4].getSprites(), managers[6].getSprites(), managers[2].getSprites());
         managers[7] = new EnemyManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[2].getSprites(), (MainCharacter) managers[3].getSprites().get(0));
+        managers[9] = new BulletManager((MainCharacter)managers[3].getSprites().get(0), managers[7].getSprites());
+        ((MainCharacterManager)managers[3]).setBulletManager((BulletManager)managers[9]);
     }
 
     @Override
@@ -74,6 +76,7 @@ public class SteamHuntDriver extends SimpleFramework{
         processMovementInput(delta);
         processBKeyInput();
         processSKeyInput();
+        processJKeyInput();
         for(Manager manager : managers){
             manager.process(delta);
         }
@@ -117,6 +120,13 @@ public class SteamHuntDriver extends SimpleFramework{
         }
         else
             ((MainCharacterManager)managers[3]).processAllowPlatformCollision();
+    }
+
+    //Process what happens when S is pressed
+    private void processJKeyInput(){
+        if(keyboard.keyDownOnce(KeyEvent.VK_J)){
+            ((MainCharacterManager)managers[3]).processShoot();
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package managers;
 
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
+import sprite.bullet.Bullet;
 import util.Matrix3x3f;
 
 import java.awt.*;
@@ -45,6 +46,9 @@ public abstract class Manager{
         for(Sprite sprite : sprites){
             if(sprite instanceof CharacterSprite){
                 ((CharacterSprite)sprite).checkCollision(delta, viewport);
+            }
+            else if(sprite instanceof Bullet){
+                ((Bullet)sprite).checkCollision(delta, viewport);
             }
             else//if not the correct sprite, back out. A Manager only contains one kind of sprite.
                 return;

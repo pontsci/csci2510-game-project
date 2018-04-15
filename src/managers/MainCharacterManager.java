@@ -41,6 +41,13 @@ public class MainCharacterManager extends Manager{
         }
     }
 
+    //Tell all main characters to shoot
+    public void processShoot(){
+        for(Sprite mainCharacter : getSprites()){
+            ((MainCharacter)mainCharacter).shoot();
+        }
+    }
+
     public void processIgnorePlatformCollision(){
         for(Sprite mainCharacter : getSprites()){
             ((MainCharacter)mainCharacter).ignorePlatformCollision();
@@ -50,6 +57,12 @@ public class MainCharacterManager extends Manager{
     public void processAllowPlatformCollision(){
         for(Sprite mainCharacter : getSprites()){
             ((MainCharacter)mainCharacter).allowPlatformCollision();
+        }
+    }
+
+    public void setBulletManager(BulletManager bm){
+        for(Sprite mainCharacter : getSprites()){
+            ((MainCharacter)mainCharacter).setBulletManager(bm);
         }
     }
 }
