@@ -178,7 +178,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
             int magnitude = 1;
             for(int i = 0; i < platforms.size(); i++){
                 while(checkSpriteCollision(delta, viewport, platforms.get(i))){
-                    pushCharacter(delta, viewport, 'y', .0001f*magnitude);
+                    pushCharacter(delta, viewport, 'y', ONE_PIXEL*magnitude);
                     if(checkSpriteCollision(delta, viewport, platforms.get(i))){
                         setyTranslation(yStartState);
                     }
@@ -186,13 +186,13 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                         onAPlatform = true;
                         break;
                     }
-                    pushCharacter(delta, viewport, 'x', .0001f*magnitude);
+                    pushCharacter(delta, viewport, 'x', ONE_PIXEL*magnitude);
                     if(checkSpriteCollision(delta, viewport, platforms.get(i))){
                         setxTranslation(xStartState);
                     }
                     else
                         break;
-                    pushCharacter(delta, viewport, 'x', -.0001f*magnitude);
+                    pushCharacter(delta, viewport, 'x', -ONE_PIXEL*magnitude);
                     if(checkSpriteCollision(delta, viewport, platforms.get(i))){
                         setxTranslation(xStartState);
                     }
@@ -209,7 +209,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         onTheFloor = false;
         while(checkSpriteCollision(delta, viewport, floor)){
             //If the character collided with the floor, push the character out of the floor and set onTheFloor to true
-            pushCharacter(delta, viewport, 'y', .001f);
+            pushCharacter(delta, viewport, 'y', ONE_PIXEL);
             onTheFloor = true;
         }
         onAPlatform = false;

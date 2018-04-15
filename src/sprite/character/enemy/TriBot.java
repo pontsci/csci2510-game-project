@@ -20,12 +20,6 @@ public class TriBot extends Enemy{
     private final int MOVE_ANIMATION = 0;
     private final int ATTACK_ANIMATION = 1;
     private int currentAnimation = 0;
-    private float walkRate = 1.5f;
-    private int currentDirection = 1;
-    private int GOING_RIGHT = 0;
-    private int GOING_LEFT = 1;
-    private boolean footboxCollision = true;
-    private boolean wallCollision = false;
 
     public TriBot(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player){
         super(startX, startY, scale, floor, walls, platforms, player);
@@ -48,7 +42,6 @@ public class TriBot extends Enemy{
     public void process(float delta){
         super.process(delta);
         processAnimations(delta);
-        processMovement(delta);
     }
 
     // Process which animation is playing, when an animation finishes, it returns true
@@ -64,96 +57,5 @@ public class TriBot extends Enemy{
                 break;
             // jump Animation
         }
-    }
-
-    private void processMovement(float delta){
-        //If going footBox
-        if(currentDirection == GOING_LEFT){
-            //If foot box collides continue footBox,
-            if(footboxCollision)
-                walkLeft(delta);
-            //else go right
-            else{
-                walkRight(delta);
-                currentDirection = GOING_RIGHT;
-            }
-        }
-        //if going right
-        else if(currentDirection == GOING_RIGHT){
-            //If foot box collides, continue right
-            if(footboxCollision)
-                walkRight(delta);
-            //else go footBox
-            else{
-                walkLeft(delta);
-                currentDirection = GOING_LEFT;
-            }
-        }
-    }
-
-    @Override
-    public void checkCollision(float delta, Matrix3x3f viewport){
-        super.checkCollision(delta, viewport);
-
-        if(footboxCollidesWithPlatform())
-            footboxCollision = true;
-        else
-            footboxCollision = false;
-
-        if(wallCollision)
-            footboxCollision = false;
-    }
-
-    @Override
-    protected void checkWallCollision(float delta, Matrix3x3f viewport){
-        wallCollision = false;
-        for(int i = 0; i < walls.size(); i++){
-            while(checkSpriteCollision(delta, viewport, walls.get(i))){
-                if(i == 0){
-                    pushCharacter(delta, viewport, 'x', .001f);
-                    wallCollision = true;
-                }
-                //Right wall is being hit, move mouse footBox;
-                else if(i == 1){
-                    pushCharacter(delta, viewport, 'x', -.001f);
-                    wallCollision = true;
-                }
-            }
-        }
-    }
-
-    private boolean footboxCollidesWithPlatform(){
-        for(int i = 0; i < platforms.size(); i++){
-            if(checkFootBoxCollision(platforms.get(i).getHitboxes())){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean checkFootBoxCollision(ArrayList<BoundingShape> platformHitboxes){
-        BoundingShape platformHitbox;
-
-        //For every inner hitbox in the foreign Sprite
-       for(int j = 1; j < platformHitboxes.size(); j++){
-            platformHitbox = platformHitboxes.get(j);
-            if(platformHitbox instanceof BoundingBox && Intersect.intersectAABB(footBox.getCurrentMin(), footBox.getCurrentMax(), ((BoundingBox)platformHitbox).getCurrentMin(), ((BoundingBox)platformHitbox).getCurrentMax())){
-                return true;
-            }
-            else if(platformHitbox instanceof BoundingCircle && Intersect.intersectCircleAABB(((BoundingCircle)platformHitbox).getCurrentPoint(), ((BoundingCircle)platformHitbox).getCurrentRadius(), footBox.getCurrentMin(), footBox.getCurrentMax())){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void walkRight(float delta){
-        setxTranslation(getxTranslation() + (walkRate * delta));
-        setScale(new Vector2f(-Math.abs(getScale().x), Math.abs(getScale().y)));
-    }
-
-    private void walkLeft(float delta){
-        setxTranslation(getxTranslation() - (walkRate * delta));
-        setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
     }
 }

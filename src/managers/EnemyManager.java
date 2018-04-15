@@ -5,6 +5,7 @@ import sprite.character.enemy.TriBot;
 import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
 import util.Vector2f;
+
 import java.util.ArrayList;
 
 public class EnemyManager extends Manager
@@ -23,15 +24,20 @@ public class EnemyManager extends Manager
         getSprites().add(new TriBot(5, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
     }
 
-    public void addTriBot(){
-        //getSprites().add(new TriBot(7, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
-
-        //getSprites().add(new TriBot(8, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
-
-        //getSprites().add(new TriBot(4, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
+    public void addTriBot()
+    {
+        /* Performance testing
+        getSprites().add(new TriBot(7, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
+        getSprites().add(new TriBot(8, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
+        getSprites().add(new TriBot(4, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
+        getSprites().add(new TriBot(6.5f, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
+        getSprites().add(new TriBot(6.2f, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
+        getSprites().add(new TriBot(6, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
+        */
     }
 
-    public void addTriBot(Vector2f pos){
-        
+    public void addTriBot(Vector2f pos)
+    {
+        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.4f, .4f), floor, walls, platforms, player));
     }
 }

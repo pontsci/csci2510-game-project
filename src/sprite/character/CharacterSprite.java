@@ -13,9 +13,10 @@ import java.util.ArrayList;
 
 public abstract class CharacterSprite extends Sprite{
     protected final int TERMINAL_VELOCITY = -5;
+    protected final float ONE_PIXEL = .00833333f;
     protected Floor floor;
-    protected ArrayList<Sprite> walls = new ArrayList<>();
-    protected ArrayList<Sprite> platforms = new ArrayList<>();
+    protected ArrayList<Sprite> walls;
+    protected ArrayList<Sprite> platforms;
     private float gravity = -10;
     int health;
     boolean onFire = false;
@@ -47,7 +48,7 @@ public abstract class CharacterSprite extends Sprite{
     protected void checkPlatformCollision(float delta, Matrix3x3f viewport){
         for(int i = 0; i < platforms.size(); i++){
             while(checkSpriteCollision(delta, viewport, platforms.get(i))){
-                pushCharacter(delta, viewport, 'y', .0001f);
+                pushCharacter(delta, viewport, 'y', ONE_PIXEL);
             }
         }
     }
@@ -55,7 +56,7 @@ public abstract class CharacterSprite extends Sprite{
     protected void checkFloorCollision(float delta, Matrix3x3f viewport){
         while(checkSpriteCollision(delta, viewport, floor)){
             //If the character collided with the floor, push the character out of the floor and set onTheFloor to true
-            pushCharacter(delta, viewport, 'y', .001f);
+            pushCharacter(delta, viewport, 'y', ONE_PIXEL);
         }
     }
 
@@ -63,11 +64,11 @@ public abstract class CharacterSprite extends Sprite{
         for(int i = 0; i < walls.size(); i++){
             while(checkSpriteCollision(delta, viewport, walls.get(i))){
                 if(i == 0){
-                    pushCharacter(delta, viewport, 'x', .001f);
+                    pushCharacter(delta, viewport, 'x', ONE_PIXEL);
                 }
                 //Right wall is being hit, move mouse footBox;
                 else if(i == 1){
-                    pushCharacter(delta, viewport, 'x', -.001f);
+                    pushCharacter(delta, viewport, 'x', -ONE_PIXEL);
                 }
             }
         }
