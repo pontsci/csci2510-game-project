@@ -34,7 +34,7 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private enum ManagerType{
-        BACKGROUND(0), FLOOR(1), PLATFORM(2), MAINCHAR(3), RAT(4), WALL(5), POWERUP(6), ENEMY(7), SPAWNER(8);
+        BACKGROUND(0), FLOOR(1), PLATFORM(2), MAINCHAR(3), RAT(4), WALL(5), POWERUP(6), ENEMY(7), SPAWNER(8), BULLET(9);
 
         private int i;
         ManagerType(int i){
@@ -42,6 +42,7 @@ public class SteamHuntDriver extends SimpleFramework{
         }
     }
 
+    //easier enum usage declarations
     private final ManagerType BACKGROUND = ManagerType.BACKGROUND;
     private final ManagerType FLOOR = ManagerType.FLOOR;
     private final ManagerType PLATFORM = ManagerType.PLATFORM;
@@ -51,6 +52,7 @@ public class SteamHuntDriver extends SimpleFramework{
     private final ManagerType POWERUP = ManagerType.POWERUP;
     private final ManagerType ENEMY = ManagerType.ENEMY;
     private final ManagerType SPAWNER = ManagerType.SPAWNER;
+    private final ManagerType BULLET = ManagerType.BULLET;
 
     @Override
     //Initialize the sprites each manager starts with
@@ -66,25 +68,57 @@ public class SteamHuntDriver extends SimpleFramework{
         managers[POWERUP.i] = new PowerUpManager();
         managers[SPAWNER.i] = new Spawner();
 
+        /*
+         * The following declarations are for ease of use whilst
+         * maintaining the ability to loop through managers
+        */
+
+        //world managers
+        BackgroundManager backgroundManager = (BackgroundManager) managers[BACKGROUND.i];
+        FloorManager floorManager = (FloorManager)managers[FLOOR.i];
+        PlatformManager platformManager = (PlatformManager)managers[PLATFORM.i];
+        WallManager wallManager = (WallManager)managers[WALL.i];
+
+        //spawning/item managers
+        PowerUpManager powerUpManager = (PowerUpManager)managers[POWERUP.i];
+        Spawner spawner = (Spawner) managers[SPAWNER.i];
+
+        //shorten calls
+        Floor floor = (Floor)floorManager.getSprites().get(0);
+
+        //rat
+        managers[RAT.i] = new RatManager(floor, wallManager.getSprites(), platformManager.getSprites());
+        RatManager ratManager = (RatManager) managers[RAT.i];
+
+        //main character
+        managers[MAINCHAR.i] = new MainCharacterManager(floor, wallManager.getSprites(), ratManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites());
+        MainCharacterManager mainCharManager = (MainCharacterManager)managers[MAINCHAR.i];
+        MainCharacter player = (MainCharacter) mainCharManager.getSprites().get(0);
+
+        //enemy
+        managers[ENEMY.i] = new EnemyManager(floor, wallManager.getSprites(), platformManager.getSprites(), player);
+        EnemyManager enemyManager = (EnemyManager) managers[ENEMY.i];
+        //enemyManager.addTriBot();
+
+        //bullet
+        managers[BULLET.i] = new BulletManager((MainCharacter)managers[3].getSprites().get(0), managers[7].getSprites());
+        ((MainCharacterManager)managers[3]).setBulletManager((BulletManager)managers[9]);
+        BulletManager bulletManager = (BulletManager) managers[BULLET.i];
+
+
         //Add six power up items
-        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getHealthStatus(), new Vector2f(-6,0));
-        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getFireRateStatus(), new Vector2f(-4,0));
-        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getDmgStatus(), new Vector2f(-2,0));
-        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getShieldStatus(), new Vector2f(2,0));
-        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getTaserStatus(), new Vector2f(4,0));
-        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getDoTStatus(), new Vector2f(6,0));
+        powerUpManager.addPowerUp(StatusArchive.getHealthStatus(), new Vector2f(-6,0));
+        powerUpManager.addPowerUp(StatusArchive.getFireRateStatus(), new Vector2f(-4,0));
+        powerUpManager.addPowerUp(StatusArchive.getDmgStatus(), new Vector2f(-2,0));
+        powerUpManager.addPowerUp(StatusArchive.getShieldStatus(), new Vector2f(2,0));
+        powerUpManager.addPowerUp(StatusArchive.getTaserStatus(), new Vector2f(4,0));
+        powerUpManager.addPowerUp(StatusArchive.getDoTStatus(), new Vector2f(6,0));
 
         //temporary testing of the spawn range
         SpawnRange sp = new SpawnRange(-4, -2, 0, getViewportTransform());
         ArrayList<SpawnRange> spawnRanges = new ArrayList<>();
         spawnRanges.add(sp);
-        ((Spawner)managers[SPAWNER.i]).setSpawnRanges(spawnRanges);
-
-        managers[4] = new RatManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[2].getSprites());
-        managers[3] = new MainCharacterManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[4].getSprites(), managers[6].getSprites(), managers[2].getSprites());
-        managers[7] = new EnemyManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[2].getSprites(), (MainCharacter) managers[3].getSprites().get(0));
-        managers[9] = new BulletManager((MainCharacter)managers[3].getSprites().get(0), managers[7].getSprites());
-        ((MainCharacterManager)managers[3]).setBulletManager((BulletManager)managers[9]);
+        spawner.setSpawnRanges(spawnRanges);
     }
 
     @Override
