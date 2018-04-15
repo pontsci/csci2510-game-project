@@ -98,12 +98,12 @@ public class SteamHuntDriver extends SimpleFramework{
         //enemy
         managers[ENEMY.i] = new EnemyManager(floor, wallManager.getSprites(), platformManager.getSprites(), player);
         EnemyManager enemyManager = (EnemyManager) managers[ENEMY.i];
-        enemyManager.addTriBot();
+        //enemyManager.addTriBot();
 
         //bullet
-        managers[BULLET.i] = new BulletManager((MainCharacter)managers[3].getSprites().get(0), managers[7].getSprites());
-        ((MainCharacterManager)managers[3]).setBulletManager((BulletManager)managers[9]);
+        managers[BULLET.i] = new BulletManager(player, enemyManager.getSprites());
         BulletManager bulletManager = (BulletManager) managers[BULLET.i];
+        mainCharManager.setBulletManager(bulletManager);
 
 
         //Add six power up items
