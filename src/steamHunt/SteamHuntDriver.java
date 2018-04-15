@@ -80,9 +80,10 @@ public class SteamHuntDriver extends SimpleFramework{
         spawnRanges.add(sp);
         ((Spawner)managers[SPAWNER.i]).setSpawnRanges(spawnRanges);
 
-        managers[RAT.i] = new RatManager((Floor)managers[FLOOR.i].getSprites().get(0), managers[WALL.i].getSprites(), managers[PLATFORM.i].getSprites());
-        managers[MAINCHAR.i] = new MainCharacterManager((Floor)managers[FLOOR.i].getSprites().get(0), managers[WALL.i].getSprites(), managers[RAT.i].getSprites(), managers[POWERUP.i].getSprites(), managers[PLATFORM.i].getSprites());
-        managers[ENEMY.i] = new EnemyManager((Floor)managers[FLOOR.i].getSprites().get(0), managers[WALL.i].getSprites(), managers[PLATFORM.i].getSprites(), (MainCharacter) managers[MAINCHAR.i].getSprites().get(0));
+        Floor floor = (Floor)managers[FLOOR.i].getSprites().get(0);
+        managers[RAT.i] = new RatManager(floor, managers[WALL.i].getSprites(), managers[PLATFORM.i].getSprites());
+        managers[MAINCHAR.i] = new MainCharacterManager(floor, managers[WALL.i].getSprites(), managers[RAT.i].getSprites(), managers[POWERUP.i].getSprites(), managers[PLATFORM.i].getSprites());
+        managers[ENEMY.i] = new EnemyManager(floor, managers[WALL.i].getSprites(), managers[PLATFORM.i].getSprites(), (MainCharacter) managers[MAINCHAR.i].getSprites().get(0));
     }
 
     @Override
@@ -101,7 +102,7 @@ public class SteamHuntDriver extends SimpleFramework{
     //Process what happens when space is pressed
     private void processSpaceKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
-            ((MainCharacterManager)managers[3]).processJump();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processJump();
         }
     }
 
@@ -109,16 +110,16 @@ public class SteamHuntDriver extends SimpleFramework{
     private void processMovementInput(float delta){
         //if both are pressed, do nothing
         if(keyboard.keyDown(KeyEvent.VK_A) && keyboard.keyDown(KeyEvent.VK_D)){
-            ((MainCharacterManager)managers[3]).processIdle();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processIdle();
         }
         else if(keyboard.keyDown(KeyEvent.VK_A)){
-            ((MainCharacterManager)managers[3]).processWalkLeft(delta);
+            ((MainCharacterManager)managers[MAINCHAR.i]).processWalkLeft(delta);
         }
         else if(keyboard.keyDown(KeyEvent.VK_D)){
-            ((MainCharacterManager)managers[3]).processWalkRight(delta);
+            ((MainCharacterManager)managers[MAINCHAR.i]).processWalkRight(delta);
         }
         else{
-            ((MainCharacterManager)managers[3]).processIdle();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processIdle();
         }
     }
 
@@ -132,10 +133,10 @@ public class SteamHuntDriver extends SimpleFramework{
     //Process what happens when S is pressed
     private void processSKeyInput(){
         if(keyboard.keyDown(KeyEvent.VK_S)){
-            ((MainCharacterManager)managers[3]).processIgnorePlatformCollision();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processIgnorePlatformCollision();
         }
         else
-            ((MainCharacterManager)managers[3]).processAllowPlatformCollision();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processAllowPlatformCollision();
     }
 
     @Override
