@@ -33,33 +33,52 @@ public class SteamHuntDriver extends SimpleFramework{
         appWorldHeight = 9f;
     }
 
+    private enum ManagerType{
+        BACKGROUND(0), FLOOR(1), PLATFORM(2), MAINCHAR(3), RAT(4), WALL(5), POWERUP(6), ENEMY(7), SPAWNER(8);
+
+        private int i;
+        ManagerType(int i){
+            this.i = i;
+        }
+    }
+
+    private final ManagerType BACKGROUND = ManagerType.BACKGROUND;
+    private final ManagerType FLOOR = ManagerType.FLOOR;
+    private final ManagerType PLATFORM = ManagerType.PLATFORM;
+    private final ManagerType MAINCHAR = ManagerType.MAINCHAR;
+    private final ManagerType RAT = ManagerType.RAT;
+    private final ManagerType WALL = ManagerType.WALL;
+    private final ManagerType POWERUP = ManagerType.POWERUP;
+    private final ManagerType ENEMY = ManagerType.ENEMY;
+    private final ManagerType SPAWNER = ManagerType.SPAWNER;
+
     @Override
     //Initialize the sprites each manager starts with
     protected void initialize(){
         super.initialize();
-        //The index of these is display ordering: For example
+        //The i of these is display ordering: For example
         //In the very back is the background, ontop of that is the floor and platforms
         //After that is the the walls... and so on so forth.
-        managers[0] = new BackgroundManager();
-        managers[1] = new FloorManager();
-        managers[2] = new PlatformManager();
-        managers[5] = new WallManager();
-        managers[6] = new PowerUpManager();
-        managers[8] = new Spawner();
+        managers[BACKGROUND.i] = new BackgroundManager();
+        managers[FLOOR.i] = new FloorManager();
+        managers[PLATFORM.i] = new PlatformManager();
+        managers[WALL.i] = new WallManager();
+        managers[POWERUP.i] = new PowerUpManager();
+        managers[SPAWNER.i] = new Spawner();
 
         //Add six power up items
-        ((PowerUpManager)managers[6]).addPowerUp(StatusArchive.getHealthStatus(), new Vector2f(-6,0));
-        ((PowerUpManager)managers[6]).addPowerUp(StatusArchive.getFireRateStatus(), new Vector2f(-4,0));
-        ((PowerUpManager)managers[6]).addPowerUp(StatusArchive.getDmgStatus(), new Vector2f(-2,0));
-        ((PowerUpManager)managers[6]).addPowerUp(StatusArchive.getShieldStatus(), new Vector2f(2,0));
-        ((PowerUpManager)managers[6]).addPowerUp(StatusArchive.getTaserStatus(), new Vector2f(4,0));
-        ((PowerUpManager)managers[6]).addPowerUp(StatusArchive.getDoTStatus(), new Vector2f(6,0));
+        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getHealthStatus(), new Vector2f(-6,0));
+        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getFireRateStatus(), new Vector2f(-4,0));
+        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getDmgStatus(), new Vector2f(-2,0));
+        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getShieldStatus(), new Vector2f(2,0));
+        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getTaserStatus(), new Vector2f(4,0));
+        ((PowerUpManager)managers[POWERUP.i]).addPowerUp(StatusArchive.getDoTStatus(), new Vector2f(6,0));
 
         //temporary testing of the spawn range
         SpawnRange sp = new SpawnRange(-4, -2, 0, getViewportTransform());
         ArrayList<SpawnRange> spawnRanges = new ArrayList<>();
         spawnRanges.add(sp);
-        ((Spawner)managers[8]).setSpawnRanges(spawnRanges);
+        ((Spawner)managers[SPAWNER.i]).setSpawnRanges(spawnRanges);
 
         managers[4] = new RatManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[2].getSprites());
         managers[3] = new MainCharacterManager((Floor)managers[1].getSprites().get(0), managers[5].getSprites(), managers[4].getSprites(), managers[6].getSprites(), managers[2].getSprites());
@@ -85,7 +104,7 @@ public class SteamHuntDriver extends SimpleFramework{
     //Process what happens when space is pressed
     private void processSpaceKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
-            ((MainCharacterManager)managers[3]).processJump();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processJump();
         }
     }
 
@@ -93,16 +112,16 @@ public class SteamHuntDriver extends SimpleFramework{
     private void processMovementInput(float delta){
         //if both are pressed, do nothing
         if(keyboard.keyDown(KeyEvent.VK_A) && keyboard.keyDown(KeyEvent.VK_D)){
-            ((MainCharacterManager)managers[3]).processIdle();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processIdle();
         }
         else if(keyboard.keyDown(KeyEvent.VK_A)){
-            ((MainCharacterManager)managers[3]).processWalkLeft(delta);
+            ((MainCharacterManager)managers[MAINCHAR.i]).processWalkLeft(delta);
         }
         else if(keyboard.keyDown(KeyEvent.VK_D)){
-            ((MainCharacterManager)managers[3]).processWalkRight(delta);
+            ((MainCharacterManager)managers[MAINCHAR.i]).processWalkRight(delta);
         }
         else{
-            ((MainCharacterManager)managers[3]).processIdle();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processIdle();
         }
     }
 
@@ -116,10 +135,10 @@ public class SteamHuntDriver extends SimpleFramework{
     //Process what happens when S is pressed
     private void processSKeyInput(){
         if(keyboard.keyDown(KeyEvent.VK_S)){
-            ((MainCharacterManager)managers[3]).processIgnorePlatformCollision();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processIgnorePlatformCollision();
         }
         else
-            ((MainCharacterManager)managers[3]).processAllowPlatformCollision();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processAllowPlatformCollision();
     }
 
     //Process what happens when S is pressed
