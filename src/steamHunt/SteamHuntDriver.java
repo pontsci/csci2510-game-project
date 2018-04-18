@@ -116,9 +116,7 @@ public class SteamHuntDriver extends SimpleFramework{
 
         //temporary testing of the spawn range
         SpawnRange sp = new SpawnRange(-4, -2, 0, getViewportTransform());
-        ArrayList<SpawnRange> spawnRanges = new ArrayList<>();
-        spawnRanges.add(sp);
-        spawner.setSpawnRanges(spawnRanges);
+        spawner.setSpawnRanges(platformManager.getPlatFormSpawns(getViewportTransform()));
     }
 
     @Override
@@ -189,6 +187,7 @@ public class SteamHuntDriver extends SimpleFramework{
             manager.update(delta, getViewportTransform());
         }
         checkCollision(delta);
+
     }
 
     //Check sprite collision

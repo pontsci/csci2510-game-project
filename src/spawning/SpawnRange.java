@@ -23,11 +23,9 @@ public class SpawnRange implements Drawable
         this.viewport = viewport;
     }
 
-    public SpawnRange(float x, float y){
-        this.minx = x;
-        this.maxx = x;
-        this.y = y;
-        random = new Random();
+    // SpawnRange for a point.
+    public SpawnRange(float x, float y, Matrix3x3f viewport){
+        this(x,x,y,viewport);
     }
 
     /* Returns a random vector location from the spawn range. */
