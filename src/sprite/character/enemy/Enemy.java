@@ -115,11 +115,17 @@ public abstract class Enemy extends CharacterSprite{
     }
 
     private boolean footboxCollidesWithPlatform(){
+
         for(int i = 0; i < platforms.size(); i++){
-            if(checkFootBoxCollision(platforms.get(i).getHitboxes())){
+            if(Collision.checkCollision(footBox, platforms.get(i).getHitboxes())){
                 return true;
             }
         }
+        /*for(int i = 0; i < platforms.size(); i++){
+            if(checkFootBoxCollision(platforms.get(i).getHitboxes())){
+                return true;
+            }
+        }*/
         return false;
     }
 
