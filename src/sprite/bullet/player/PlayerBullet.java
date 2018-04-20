@@ -3,6 +3,7 @@ package sprite.bullet.player;
 import bounding.BoundingBox;
 import sprite.Sprite;
 import sprite.bullet.Bullet;
+import util.Collision;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -33,7 +34,7 @@ public class PlayerBullet extends Bullet{
 
     public void checkCollision(float delta, Matrix3x3f viewport){
         for(int i = 0; i < enemies.size(); i++){
-            if(checkSpriteCollision(delta, viewport, enemies.get(i))){
+            if(Collision.checkSpriteCollision(delta, viewport, this, enemies.get(i))){
                 enemies.remove(i);
                 i--;
             }

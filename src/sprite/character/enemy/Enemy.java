@@ -7,6 +7,7 @@ import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
+import util.Collision;
 import util.Intersect;
 import util.Matrix3x3f;
 import util.Vector2f;
@@ -86,6 +87,7 @@ public abstract class Enemy extends CharacterSprite{
         super.checkCollision(delta, viewport);
         footboxCollision = true;
 
+
         if(getyTranslation()>-2) {
             if (!footboxCollidesWithPlatform())
                 footboxCollision = false;
@@ -98,7 +100,7 @@ public abstract class Enemy extends CharacterSprite{
     protected void checkWallCollision(float delta, Matrix3x3f viewport){
         wallCollision = false;
         for(int i = 0; i < walls.size(); i++){
-            while(checkSpriteCollision(delta, viewport, walls.get(i))){
+            while(Collision.checkSpriteCollision(delta, viewport, this, walls.get(i))){
                 if(i == 0){
                     pushCharacter(delta, viewport, 'x', ONE_PIXEL);
                     wallCollision = true;
