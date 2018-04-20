@@ -18,7 +18,18 @@ import util.Vector2f;
 //It does not deal with individual sprites, that is footBox for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
     private Manager[] managers = new Manager[10];
+    BackgroundManager backgroundManager;
+    FloorManager floorManager;
+    PlatformManager platformManager;
+    WallManager wallManager;
+    PowerUpManager powerUpManager;
+    RatManager ratManager;
+    MainCharacterManager mainCharManager;
+    Spawner spawner;
+    BulletManager bulletManager;
+    EnemyManager enemyManager;
     private boolean renderHitboxes = false;
+    private int level = 1;
 
 
     public SteamHuntDriver(){
@@ -74,35 +85,35 @@ public class SteamHuntDriver extends SimpleFramework{
         */
 
         //world managers
-        BackgroundManager backgroundManager = (BackgroundManager) managers[BACKGROUND.i];
-        FloorManager floorManager = (FloorManager)managers[FLOOR.i];
-        PlatformManager platformManager = (PlatformManager)managers[PLATFORM.i];
-        WallManager wallManager = (WallManager)managers[WALL.i];
+        backgroundManager = (BackgroundManager) managers[BACKGROUND.i];
+        floorManager = (FloorManager)managers[FLOOR.i];
+        platformManager = (PlatformManager)managers[PLATFORM.i];
+        wallManager = (WallManager)managers[WALL.i];
 
         //spawning/item managers
-        PowerUpManager powerUpManager = (PowerUpManager)managers[POWERUP.i];
-        Spawner spawner = (Spawner) managers[SPAWNER.i];
+        powerUpManager = (PowerUpManager)managers[POWERUP.i];
+        spawner = (Spawner) managers[SPAWNER.i];
 
         //shorten calls
         Floor floor = (Floor)floorManager.getSprites().get(0);
 
         //rat
         managers[RAT.i] = new RatManager(floor, wallManager.getSprites(), platformManager.getSprites());
-        RatManager ratManager = (RatManager) managers[RAT.i];
+        ratManager = (RatManager) managers[RAT.i];
 
         //main character
         managers[MAINCHAR.i] = new MainCharacterManager(floor, wallManager.getSprites(), ratManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites());
-        MainCharacterManager mainCharManager = (MainCharacterManager)managers[MAINCHAR.i];
+        mainCharManager = (MainCharacterManager)managers[MAINCHAR.i];
         MainCharacter player = (MainCharacter) mainCharManager.getSprites().get(0);
 
         //enemy
         managers[ENEMY.i] = new EnemyManager(floor, wallManager.getSprites(), platformManager.getSprites(), player);
-        EnemyManager enemyManager = (EnemyManager) managers[ENEMY.i];
+        enemyManager = (EnemyManager) managers[ENEMY.i];
         //enemyManager.addTriBot();
 
         //bullet
         managers[BULLET.i] = new BulletManager(player, enemyManager.getSprites());
-        BulletManager bulletManager = (BulletManager) managers[BULLET.i];
+        bulletManager = (BulletManager) managers[BULLET.i];
         mainCharManager.setBulletManager(bulletManager);
 
 
@@ -114,9 +125,10 @@ public class SteamHuntDriver extends SimpleFramework{
         powerUpManager.addPowerUp(StatusArchive.getTaserStatus(), new Vector2f(4,0));
         powerUpManager.addPowerUp(StatusArchive.getDoTStatus(), new Vector2f(6,0));
 
-        //temporary testing of the spawn range
-        SpawnRange sp = new SpawnRange(-4, -2, 0, getViewportTransform());
+        //load level and spawner
+        platformManager.getSprites().addAll(Levels.getLevel(level));
         spawner.setSpawnRanges(platformManager.getPlatFormSpawns(getViewportTransform()));
+
     }
 
     @Override
@@ -128,6 +140,7 @@ public class SteamHuntDriver extends SimpleFramework{
         processBKeyInput();
         processSKeyInput();
         processJKeyInput();
+        processTestLevelChange();
         for(Manager manager : managers){
             manager.process(delta);
         }
@@ -177,6 +190,21 @@ public class SteamHuntDriver extends SimpleFramework{
     private void processJKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_J)){
             ((MainCharacterManager)managers[3]).processShoot();
+        }
+    }
+
+    private void processTestLevelChange(){
+        if(keyboard.keyDownOnce(KeyEvent.VK_Z)){
+            level--;
+            platformManager.getSprites().clear();
+            platformManager.getSprites().addAll(Levels.getLevel(level));
+            spawner.setSpawnRanges(platformManager.getPlatFormSpawns(getViewportTransform()));
+        }
+        else if(keyboard.keyDownOnce(KeyEvent.VK_C)){
+            level++;
+            platformManager.getSprites().clear();
+            platformManager.getSprites().addAll(Levels.getLevel(level));
+            spawner.setSpawnRanges(platformManager.getPlatFormSpawns(getViewportTransform()));
         }
     }
 
