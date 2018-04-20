@@ -83,4 +83,11 @@ public class Collision {
         return checkInnerCollision(thisHitboxes,otherHitboxes,0);
     }
 
+    public static boolean checkCollision(BoundingShape thisHitbox, ArrayList<BoundingShape> otherHitboxes){
+        ArrayList<BoundingShape> thisHitboxes = new ArrayList<>();
+        thisHitboxes.add(thisHitbox);
+        thisHitboxes.add(thisHitbox);
+        return checkInnerCollision(thisHitboxes, otherHitboxes, 1);
+    }
+
 }
