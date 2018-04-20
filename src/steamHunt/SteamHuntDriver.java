@@ -29,7 +29,7 @@ public class SteamHuntDriver extends SimpleFramework{
     BulletManager bulletManager;
     EnemyManager enemyManager;
     private boolean renderHitboxes = false;
-    private int level = 1;
+    private int level = 2;
 
 
     public SteamHuntDriver(){
@@ -109,25 +109,15 @@ public class SteamHuntDriver extends SimpleFramework{
         //enemy
         managers[ENEMY.i] = new EnemyManager(floor, wallManager.getSprites(), platformManager.getSprites(), player);
         enemyManager = (EnemyManager) managers[ENEMY.i];
-        //enemyManager.addTriBot();
 
         //bullet
         managers[BULLET.i] = new BulletManager(player, enemyManager.getSprites());
         bulletManager = (BulletManager) managers[BULLET.i];
         mainCharManager.setBulletManager(bulletManager);
 
-
-        //Add six power up items
-        powerUpManager.addPowerUp(StatusArchive.getHealthStatus(), new Vector2f(-6,0));
-        powerUpManager.addPowerUp(StatusArchive.getFireRateStatus(), new Vector2f(-4,0));
-        powerUpManager.addPowerUp(StatusArchive.getDmgStatus(), new Vector2f(-2,0));
-        powerUpManager.addPowerUp(StatusArchive.getShieldStatus(), new Vector2f(2,0));
-        powerUpManager.addPowerUp(StatusArchive.getTaserStatus(), new Vector2f(4,0));
-        powerUpManager.addPowerUp(StatusArchive.getDoTStatus(), new Vector2f(6,0));
-
         //load level and spawner
-        platformManager.getSprites().addAll(Levels.getLevel(level));
-        spawner.setSpawnRanges(platformManager.getPlatFormSpawns(getViewportTransform()));
+        loadNewLevel();
+
 
     }
 
@@ -196,16 +186,34 @@ public class SteamHuntDriver extends SimpleFramework{
     private void processTestLevelChange(){
         if(keyboard.keyDownOnce(KeyEvent.VK_Z)){
             level--;
-            platformManager.getSprites().clear();
-            platformManager.getSprites().addAll(Levels.getLevel(level));
-            spawner.setSpawnRanges(platformManager.getPlatFormSpawns(getViewportTransform()));
+            loadNewLevel();
         }
         else if(keyboard.keyDownOnce(KeyEvent.VK_C)){
             level++;
-            platformManager.getSprites().clear();
-            platformManager.getSprites().addAll(Levels.getLevel(level));
-            spawner.setSpawnRanges(platformManager.getPlatFormSpawns(getViewportTransform()));
+            loadNewLevel();
         }
+    }
+
+    private void loadNewLevel(){
+        //clear level
+        platformManager.getSprites().clear();
+        enemyManager.getSprites().clear();
+        powerUpManager.getSprites().clear();
+        //Load platforms and spawnranges
+        platformManager.getSprites().clear();
+        platformManager.getSprites().addAll(Levels.getLevel(level));
+        spawner.setSpawnRanges(platformManager.getPlatFormSpawns(getViewportTransform()));
+        //Spawn enemies
+        for (int i = 0; i < 3; i++){
+            enemyManager.addTriBot(spawner.getSpawnPoint());
+        }
+        //Spawn powerups.
+        powerUpManager.addPowerUp(StatusArchive.getHealthStatus(), spawner.getSpawnPoint());
+        powerUpManager.addPowerUp(StatusArchive.getFireRateStatus(), spawner.getSpawnPoint());
+        powerUpManager.addPowerUp(StatusArchive.getDmgStatus(), spawner.getSpawnPoint());
+        powerUpManager.addPowerUp(StatusArchive.getShieldStatus(), spawner.getSpawnPoint());
+        powerUpManager.addPowerUp(StatusArchive.getTaserStatus(), spawner.getSpawnPoint());
+        powerUpManager.addPowerUp(StatusArchive.getDoTStatus(), spawner.getSpawnPoint());
     }
 
     @Override

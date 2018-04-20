@@ -23,6 +23,14 @@ public class Levels {
             platforms.add(new Platform(6.5f, -1, new Vector2f(.75f,.5f)));
             platforms.add(new Platform(-6.5f, -1, new Vector2f(.75f,.5f)));
         }
+        else if( level == 3){
+            platforms.add(new Platform(-6.5f, -1, new Vector2f(.75f,.5f)));
+            platforms.add(new Platform(-3.25f, -1, new Vector2f(.75f,.5f)));
+            platforms.add(new Platform(0.0f, -1, new Vector2f(.75f,.5f)));
+            platforms.add(new Platform(3.25f, -1, new Vector2f(.75f,.5f)));
+            platforms.add(new Platform(6.5f, -1, new Vector2f(.75f,.5f)));
+
+        }
         return platforms;
     }
 }

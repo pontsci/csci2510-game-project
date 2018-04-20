@@ -3,6 +3,7 @@ package spawning;
 
 import managers.Manager;
 import sprite.character.enemy.Rat;
+import sprite.character.enemy.TriBot;
 import util.Vector2f;
 
 import java.util.Random;
@@ -23,18 +24,7 @@ public class Spawner extends Manager
     }
 
     public Vector2f getSpawnPoint(){
-        return spawnRanges.get(random.nextInt(spawnRanges.size() - 1)+ 1).getSpawnPoint();
-    }
-
-    public Rat spawnRat(){
-        Vector2f spawnpoint = getSpawnPoint();
-        //Temporary null
-        return null;
-    }
-
-
-    public void render(Graphics g){
-        //not needed, do nothing
+        return spawnRanges.get(random.nextInt(spawnRanges.size())).getSpawnPoint();
     }
 
     //technically a SpawnRange, not a hitbox
