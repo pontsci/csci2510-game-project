@@ -38,7 +38,7 @@ public class SteamHuntDriver extends SimpleFramework{
         appWidth = 1920;
         appHeight = 1080;
         appMaintainRatio = true;
-        appSleep = 10L;
+        appSleep = 3L;
         appTitle = "SteamHunt";
         appWorldWidth = 16f;
         appWorldHeight = 9f;
