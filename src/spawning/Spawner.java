@@ -34,7 +34,7 @@ public class Spawner extends Manager
 
 
     public void render(Graphics g){
-        //not needed, do nothing
+        //has no sprite, not needed, do nothing
     }
 
     //technically a SpawnRange, not a hitbox
