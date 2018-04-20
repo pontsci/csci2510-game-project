@@ -84,12 +84,12 @@ public abstract class Enemy extends CharacterSprite{
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
+        footboxCollision = true;
 
-        if(footboxCollidesWithPlatform())
-            footboxCollision = true;
-        else
-            footboxCollision = false;
-
+        if(getyTranslation()>-2) {
+            if (!footboxCollidesWithPlatform())
+                footboxCollision = false;
+        }
         if(wallCollision)
             footboxCollision = false;
     }
