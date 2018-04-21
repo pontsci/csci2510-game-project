@@ -5,8 +5,6 @@ import sprite.Sprite;
 import util.Vector2f;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Wall extends Sprite {
     public Wall(float startX, float startY, Vector2f scale){

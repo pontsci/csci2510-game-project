@@ -1,14 +1,8 @@
 package sprite.bullet;
 
-import bounding.BoundingBox;
-import bounding.BoundingCircle;
-import bounding.BoundingShape;
 import sprite.Sprite;
-import util.Intersect;
 import util.Matrix3x3f;
 import util.Vector2f;
-
-import java.util.ArrayList;
 
 public abstract class Bullet extends Sprite{
     private float bulletSpeed = 3.5f;

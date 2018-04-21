@@ -83,6 +83,7 @@ public class Collision {
         return checkInnerCollision(thisHitboxes,otherHitboxes,0);
     }
 
+    //given a hitbox, check it against a list of hitboxes
     public static boolean checkCollision(BoundingShape thisHitbox, ArrayList<BoundingShape> otherHitboxes){
         ArrayList<BoundingShape> thisHitboxes = new ArrayList<>();
         thisHitboxes.add(thisHitbox);

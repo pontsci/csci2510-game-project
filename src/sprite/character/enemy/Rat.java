@@ -9,7 +9,6 @@ import sprite.world.Floor;
 import util.Vector2f;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 

@@ -2,8 +2,6 @@ package spawning;
 
 
 import managers.Manager;
-import sprite.character.enemy.Rat;
-import sprite.character.enemy.TriBot;
 import util.Vector2f;
 
 import java.util.Random;

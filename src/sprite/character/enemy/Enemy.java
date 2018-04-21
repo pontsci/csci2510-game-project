@@ -1,14 +1,11 @@
 package sprite.character.enemy;
 
 import bounding.BoundingBox;
-import bounding.BoundingCircle;
-import bounding.BoundingShape;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
 import util.Collision;
-import util.Intersect;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -118,27 +115,6 @@ public abstract class Enemy extends CharacterSprite{
 
         for(int i = 0; i < platforms.size(); i++){
             if(Collision.checkCollision(footBox, platforms.get(i).getHitboxes())){
-                return true;
-            }
-        }
-        /*for(int i = 0; i < platforms.size(); i++){
-            if(checkFootBoxCollision(platforms.get(i).getHitboxes())){
-                return true;
-            }
-        }*/
-        return false;
-    }
-
-    private boolean checkFootBoxCollision(ArrayList<BoundingShape> platformHitboxes){
-        BoundingShape platformHitbox;
-
-        //For every inner hitbox in the foreign Sprite
-        for(int j = 1; j < platformHitboxes.size(); j++){
-            platformHitbox = platformHitboxes.get(j);
-            if(platformHitbox instanceof BoundingBox && Intersect.intersectAABB(footBox.getCurrentMin(), footBox.getCurrentMax(), ((BoundingBox)platformHitbox).getCurrentMin(), ((BoundingBox)platformHitbox).getCurrentMax())){
-                return true;
-            }
-            else if(platformHitbox instanceof BoundingCircle && Intersect.intersectCircleAABB(((BoundingCircle)platformHitbox).getCurrentPoint(), ((BoundingCircle)platformHitbox).getCurrentRadius(), footBox.getCurrentMin(), footBox.getCurrentMax())){
                 return true;
             }
         }

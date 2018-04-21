@@ -1,7 +1,5 @@
 package managers;
 
-import java.awt.image.BufferedImage;
-
 import sprite.world.PowerUp;
 import status.Status;
 import util.Vector2f;

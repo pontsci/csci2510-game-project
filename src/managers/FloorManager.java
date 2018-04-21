@@ -3,9 +3,6 @@ package managers;
 import sprite.world.Floor;
 import util.Vector2f;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 public class FloorManager extends Manager{
     //Get the floor's sprite sheet and make a floor.
     public FloorManager(){

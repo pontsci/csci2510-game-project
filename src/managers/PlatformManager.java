@@ -3,7 +3,6 @@ package managers;
 import spawning.SpawnRange;
 import sprite.Sprite;
 import sprite.world.Platform;
-import util.Vector2f;
 import util.Matrix3x3f;
 
 import java.util.ArrayList;

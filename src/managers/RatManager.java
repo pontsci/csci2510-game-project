@@ -5,7 +5,6 @@ import sprite.character.enemy.Rat;
 import sprite.world.Floor;
 import util.Vector2f;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
