@@ -225,8 +225,9 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //Check sprite collision
     private void checkCollision(float delta){
-        for(Manager manager : managers)
-            manager.checkCollision(delta, getViewportTransform());
+        bulletManager.checkCollision(delta, getViewportTransform());
+        mainCharManager.checkCollision(delta, getViewportTransform());
+        enemyManager.checkCollision(delta,getViewportTransform());
     }
 
     @Override

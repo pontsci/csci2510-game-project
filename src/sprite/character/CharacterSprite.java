@@ -72,7 +72,7 @@ public abstract class CharacterSprite extends Sprite{
     }
 
     //Push the character back into the world
-    protected void pushCharacter(float delta, Matrix3x3f viewport, char axis, float amount){
+    public void pushCharacter(float delta, Matrix3x3f viewport, char axis, float amount){
         if(axis == 'y'){
             setRotation(0);
             setyTranslation(getyTranslation() + amount);
