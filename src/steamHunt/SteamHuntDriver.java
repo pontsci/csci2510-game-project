@@ -3,10 +3,8 @@ package steamHunt;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 import managers.*;
-import spawning.SpawnRange;
 import spawning.Spawner;
 import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
@@ -14,6 +12,7 @@ import status.StatusArchive;
 import util.SimpleFramework;
 import util.Vector2f;
 import managers.ScreenManager.ScreenType;
+
 
 //The driver's job is to direct information between managers.
 //It does not deal with individual sprites, that is footBox for the manager to do.
@@ -251,8 +250,9 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //Check sprite collision
     private void checkCollision(float delta){
-        for(Manager manager : managers)
-            manager.checkCollision(delta, getViewportTransform());
+        bulletManager.checkCollision(delta, getViewportTransform());
+        mainCharManager.checkCollision(delta, getViewportTransform());
+        enemyManager.checkCollision(delta,getViewportTransform());
     }
 
     @Override

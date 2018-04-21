@@ -4,6 +4,7 @@ import util.Vector2f;
 
 import java.awt.*;
 import sprite.screens.Pause;
+import util.Matrix3x3f;
 
 //Could be used to handle which background to play on each level of the game
 public class ScreenManager extends Manager{
@@ -36,5 +37,10 @@ public class ScreenManager extends Manager{
         if (currentScreen != ScreenType.NONE)
             getSprites().get(currentScreen.getIndex()).render(g);
     }
-    
+      @Override
+    public void checkCollision(float delta, Matrix3x3f viewport)
+    {
+        //no collision needed
+    }
+  
 }

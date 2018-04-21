@@ -1,6 +1,7 @@
 package managers;
 
 import sprite.world.Wall;
+import util.Matrix3x3f;
 import util.Vector2f;
 
 public class WallManager extends Manager{
@@ -8,6 +9,12 @@ public class WallManager extends Manager{
     public WallManager(){
         getSprites().add(new Wall(-7.9f, 1, new Vector2f(14,14)));
         getSprites().add(new Wall(7.9f, 1, new Vector2f(-14,14)));
+    }
+
+    @Override
+    public void checkCollision(float delta, Matrix3x3f viewport)
+    {
+        //not needed
     }
 }
 

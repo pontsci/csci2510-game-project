@@ -3,7 +3,6 @@ package managers;
 import spawning.SpawnRange;
 import sprite.Sprite;
 import sprite.world.Platform;
-import util.Vector2f;
 import util.Matrix3x3f;
 
 import java.util.ArrayList;
@@ -23,4 +22,9 @@ public class PlatformManager extends Manager{
         return spawnRanges;
     }
 
+    @Override
+    public void checkCollision(float delta, Matrix3x3f viewport)
+    {
+        //not needed
+    }
 }

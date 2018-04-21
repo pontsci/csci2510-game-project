@@ -1,9 +1,8 @@
 package managers;
 
-import java.awt.image.BufferedImage;
-
 import sprite.world.PowerUp;
 import status.Status;
+import util.Matrix3x3f;
 import util.Vector2f;
 
 public class PowerUpManager extends Manager{
@@ -43,5 +42,11 @@ public class PowerUpManager extends Manager{
 		else if(effect.id == 5) {
 			getSprites().add(new PowerUp(position.x, position.y, new Vector2f(1,1), TASER_IMG, effect));
 		}
+	}
+
+	@Override
+	public void checkCollision(float delta, Matrix3x3f viewport)
+	{
+		//not needed
 	}
 }

@@ -2,13 +2,10 @@ package sprite.character.enemy;
 
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
-import bounding.BoundingShape;
 import sprite.Sprite;
 import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
 import util.Animation;
-import util.Intersect;
-import util.Matrix3x3f;
 import util.Vector2f;
 
 import java.awt.*;

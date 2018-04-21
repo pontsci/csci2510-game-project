@@ -1,14 +1,11 @@
 package sprite.character.enemy;
 
 import bounding.BoundingBox;
-import bounding.BoundingCircle;
-import bounding.BoundingShape;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
 import util.Collision;
-import util.Intersect;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -18,20 +15,65 @@ import java.util.ArrayList;
 public abstract class Enemy extends CharacterSprite{
     protected BoundingBox footBox = new BoundingBox(new Vector2f(-1.1f, -2.4f), new Vector2f(-.9f, -1.8f), Color.GREEN);
     private float walkRate = 1.5f;
+    protected float regenTimer;
+    private final float REGEN_TIME = 10;
     private int currentDirection = 1;
     private int GOING_RIGHT = 0;
     private int GOING_LEFT = 1;
+    protected int hp;
+    protected int maxHp;
     private boolean footboxCollision = true;
     private boolean wallCollision = false;
-   private MainCharacter player;
+    private boolean damaged = false;
+    private boolean hit = false;
+    private MainCharacter player;
+
+
+    /**
+     * Creates a new enemy with references to objects it collides with and position data
+     * @param startX starting x coord
+     * @param startY starting y coord
+     * @param scale starting scale
+     * @param floor the floor
+     * @param walls the walls
+     * @param platforms the platforms
+     * @param player the player
+     */
     Enemy(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player){
         super(startX, startY, scale, floor, walls, platforms);
         this.player = player;
+        this.hp = 10;
+        maxHp = hp;
+        regenTimer = 0;
+    }
+
+    /**
+     * Creates a new enemy with references to objects it collides with and position data
+     * @param startX starting x coord
+     * @param startY starting y coord
+     * @param scale starting scale
+     * @param floor the floor
+     * @param walls the walls
+     * @param platforms the platforms
+     * @param player the player
+     * @param hp starting hp
+     */
+    Enemy(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player, int hp){
+        super(startX, startY, scale, floor, walls, platforms);
+        this.player = player;
+        this.hp = hp;
+        maxHp = this.hp;
+        regenTimer = 0;
     }
 
     @Override
     public abstract void initializeHitboxes();
 
+    /**
+     * Overrides super method to include the footBox in update calculations
+     * @param delta time
+     * @param viewport screen
+     */
     @Override
     public void update(float delta, Matrix3x3f viewport){
         super.update(delta,viewport);
@@ -55,12 +97,36 @@ public abstract class Enemy extends CharacterSprite{
     {
         super.process(delta);
         processMovement(delta);
+        processRegeneration(delta);
+    }
+
+    private void processRegeneration(float delta)
+    {
+        //enemy is damaged under max hp
+        damaged = hp < maxHp;
+        if(damaged){
+            regenTimer += delta;
+
+            //if the enemy was recently hit by a bullet, reset the timer
+            if(hit){
+                regenTimer = delta;
+                setHit(false);
+            }
+
+            //if the timer goes over specified amount, set back to full hp
+            if(regenTimer > REGEN_TIME){
+                regenTimer = 0;
+                hp = maxHp;
+                damaged = false;
+                System.out.println("REGEN!");
+            }
+        }
     }
 
     private void processMovement(float delta){
-        //If going footBox
+        //If going left
         if(currentDirection == GOING_LEFT){
-            //If foot box collides continue footBox,
+            //If foot box collides continue left,
             if(footboxCollision)
                 walkLeft(delta);
                 //else go right
@@ -74,7 +140,7 @@ public abstract class Enemy extends CharacterSprite{
             //If foot box collides, continue right
             if(footboxCollision)
                 walkRight(delta);
-                //else go footBox
+                //else go left
             else{
                 walkLeft(delta);
                 currentDirection = GOING_LEFT;
@@ -86,7 +152,6 @@ public abstract class Enemy extends CharacterSprite{
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
         footboxCollision = true;
-
 
         if(getyTranslation()>-2) {
             if (!footboxCollidesWithPlatform())
@@ -121,27 +186,6 @@ public abstract class Enemy extends CharacterSprite{
                 return true;
             }
         }
-        /*for(int i = 0; i < platforms.size(); i++){
-            if(checkFootBoxCollision(platforms.get(i).getHitboxes())){
-                return true;
-            }
-        }*/
-        return false;
-    }
-
-    private boolean checkFootBoxCollision(ArrayList<BoundingShape> platformHitboxes){
-        BoundingShape platformHitbox;
-
-        //For every inner hitbox in the foreign Sprite
-        for(int j = 1; j < platformHitboxes.size(); j++){
-            platformHitbox = platformHitboxes.get(j);
-            if(platformHitbox instanceof BoundingBox && Intersect.intersectAABB(footBox.getCurrentMin(), footBox.getCurrentMax(), ((BoundingBox)platformHitbox).getCurrentMin(), ((BoundingBox)platformHitbox).getCurrentMax())){
-                return true;
-            }
-            else if(platformHitbox instanceof BoundingCircle && Intersect.intersectCircleAABB(((BoundingCircle)platformHitbox).getCurrentPoint(), ((BoundingCircle)platformHitbox).getCurrentRadius(), footBox.getCurrentMin(), footBox.getCurrentMax())){
-                return true;
-            }
-        }
         return false;
     }
 
@@ -153,5 +197,19 @@ public abstract class Enemy extends CharacterSprite{
     private void walkLeft(float delta){
         setxTranslation(getxTranslation() - (walkRate * delta));
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
+    }
+
+    /**
+     * Takes an amount and subtracts hp by that amount
+     * @param amount amount to decrease hp by
+     * @return whether or not the enemy is dead
+     */
+    public boolean decreaseHP(int amount){
+        hp = hp - amount;
+        return hp == 0;
+    }
+
+    public void setHit(boolean isHit){
+        hit = isHit;
     }
 }

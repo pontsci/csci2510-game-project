@@ -5,8 +5,6 @@ import sprite.Sprite;
 import util.Vector2f;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Floor extends Sprite {
     public Floor(float startX, float startY, Vector2f scale){

@@ -3,9 +3,6 @@ package sprite.world;
 import sprite.Sprite;
 import util.Vector2f;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 //If anything special were to happen to the background, such as sliding, it would occur here
 public class Background extends Sprite {
     public Background(float startX, float startY, Vector2f scale){
