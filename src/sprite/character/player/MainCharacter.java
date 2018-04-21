@@ -358,4 +358,14 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     public void setBulletManager(BulletManager bm){
         this.bm = bm;
     }
+
+    public int getHp()
+    {
+        return hp;
+    }
+
+    public void setHp(int hp)
+    {
+        this.hp = hp;
+    }
 }
