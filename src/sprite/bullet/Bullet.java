@@ -5,10 +5,30 @@ import util.Matrix3x3f;
 import util.Vector2f;
 
 public abstract class Bullet extends Sprite{
-    private float bulletSpeed = 3.5f;
+    protected float bulletSpeed = 3.5f;
+    protected int bulletDamage = 1;
 
+    /**create a new bullet with starting x and y coords, as well as scale
+     * *
+     * @param startX x coord
+     * @param startY y coord
+     * @param scale scale
+     */
     public Bullet(float startX, float startY, Vector2f scale){
         super(startX, startY, scale);
+    }
+
+    /**
+     * create a new bullet with starting x and y coords, as well as scale and bullet damage
+     * this constructor is good for increasing damage on newly spawned bullets
+     * @param startX x coord
+     * @param startY y coord
+     * @param scale scale
+     * @param bulletDamage bullet damage
+     */
+    public Bullet(float startX, float startY, Vector2f scale, int bulletDamage){
+        super(startX, startY, scale);
+        this.bulletDamage = bulletDamage;
     }
 
     @Override
@@ -40,4 +60,13 @@ public abstract class Bullet extends Sprite{
 
     public abstract void checkCollision(float delta, Matrix3x3f viewport);
 
+    public int getBulletDamage()
+    {
+        return bulletDamage;
+    }
+
+    public void setBulletDamage(int bulletDamage)
+    {
+        this.bulletDamage = bulletDamage;
+    }
 }

@@ -11,9 +11,10 @@ import java.awt.image.BufferedImage;
 
 public class EnemyBullet extends Bullet{
     private MainCharacter player;
+
     public EnemyBullet(float startX, float startY, Vector2f scale, MainCharacter player){
         super(startX, startY, scale);
-        BufferedImage spriteSheet = loadFile("src\\resources\\character\\enemy\\tribot\\Enemy_WH_237x356_EnemyMove_EnemyAttack.png").getSubimage(1422, 356, 237, 356);
+        BufferedImage spriteSheet = loadFile("src/resources/character/enemy/tribot/Enemy_WH_237x356_EnemyMove_EnemyAttack.png").getSubimage(1422, 356, 237, 356);
         setCurrentSpriteFrame(spriteSheet.getSubimage(0,0,237,356));
         this.player = player;
         initializeHitboxes();

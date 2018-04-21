@@ -20,7 +20,19 @@ public abstract class Enemy extends CharacterSprite{
     private int GOING_LEFT = 1;
     private boolean footboxCollision = true;
     private boolean wallCollision = false;
-   private MainCharacter player;
+    private MainCharacter player;
+
+
+    /**
+     * Creates a new enemy with references to objects it collides with and position data
+     * @param startX starting x coord
+     * @param startY starting y coord
+     * @param scale starting scale
+     * @param floor the floor
+     * @param walls the walls
+     * @param platforms the platforms
+     * @param player the player
+     */
     Enemy(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player){
         super(startX, startY, scale, floor, walls, platforms);
         this.player = player;
@@ -29,6 +41,11 @@ public abstract class Enemy extends CharacterSprite{
     @Override
     public abstract void initializeHitboxes();
 
+    /**
+     * Overrides super method to include the footBox in update calculations
+     * @param delta time
+     * @param viewport screen
+     */
     @Override
     public void update(float delta, Matrix3x3f viewport){
         super.update(delta,viewport);
@@ -55,9 +72,9 @@ public abstract class Enemy extends CharacterSprite{
     }
 
     private void processMovement(float delta){
-        //If going footBox
+        //If going left
         if(currentDirection == GOING_LEFT){
-            //If foot box collides continue footBox,
+            //If foot box collides continue left,
             if(footboxCollision)
                 walkLeft(delta);
                 //else go right
@@ -71,7 +88,7 @@ public abstract class Enemy extends CharacterSprite{
             //If foot box collides, continue right
             if(footboxCollision)
                 walkRight(delta);
-                //else go footBox
+                //else go left
             else{
                 walkLeft(delta);
                 currentDirection = GOING_LEFT;
@@ -83,8 +100,7 @@ public abstract class Enemy extends CharacterSprite{
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
         footboxCollision = true;
-
-
+        
         if(getyTranslation()>-2) {
             if (!footboxCollidesWithPlatform())
                 footboxCollision = false;
