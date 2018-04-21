@@ -15,12 +15,17 @@ import java.util.ArrayList;
 public abstract class Enemy extends CharacterSprite{
     protected BoundingBox footBox = new BoundingBox(new Vector2f(-1.1f, -2.4f), new Vector2f(-.9f, -1.8f), Color.GREEN);
     private float walkRate = 1.5f;
+    protected float regenTimer;
+    private final float REGEN_TIME = 10;
     private int currentDirection = 1;
     private int GOING_RIGHT = 0;
     private int GOING_LEFT = 1;
     protected int hp;
+    protected int maxHp;
     private boolean footboxCollision = true;
     private boolean wallCollision = false;
+    private boolean damaged = false;
+    private boolean hit = false;
     private MainCharacter player;
 
 
@@ -38,6 +43,8 @@ public abstract class Enemy extends CharacterSprite{
         super(startX, startY, scale, floor, walls, platforms);
         this.player = player;
         this.hp = 10;
+        maxHp = hp;
+        regenTimer = 0;
     }
 
     /**
@@ -55,6 +62,8 @@ public abstract class Enemy extends CharacterSprite{
         super(startX, startY, scale, floor, walls, platforms);
         this.player = player;
         this.hp = hp;
+        maxHp = this.hp;
+        regenTimer = 0;
     }
 
     @Override
@@ -88,6 +97,30 @@ public abstract class Enemy extends CharacterSprite{
     {
         super.process(delta);
         processMovement(delta);
+        processRegeneration(delta);
+    }
+
+    private void processRegeneration(float delta)
+    {
+        //enemy is damaged under max hp
+        damaged = hp < maxHp;
+        if(damaged){
+            regenTimer += delta;
+
+            //if the enemy was recently hit by a bullet, reset the timer
+            if(hit){
+                regenTimer = delta;
+                setHit(false);
+            }
+
+            //if the timer goes over specified amount, set back to full hp
+            if(regenTimer > REGEN_TIME){
+                regenTimer = 0;
+                hp = maxHp;
+                damaged = false;
+                System.out.println("REGEN!");
+            }
+        }
     }
 
     private void processMovement(float delta){
@@ -174,5 +207,9 @@ public abstract class Enemy extends CharacterSprite{
     public boolean decreaseHP(int amount){
         hp = hp - amount;
         return hp == 0;
+    }
+
+    public void setHit(boolean isHit){
+        hit = isHit;
     }
 }
