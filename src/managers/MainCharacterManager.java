@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class MainCharacterManager extends Manager{
     //Get the MainCharacter's sprite sheets and make the main character.
     public MainCharacterManager(Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> rats, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms){
-        getSprites().add(new MainCharacter(-7, -4, new Vector2f(.4f,.4f), floor, walls, rats, powerups, platforms));
+        getSprites().add(new MainCharacter(-7, -4, new Vector2f(.3f,.3f), floor, walls, rats, powerups, platforms));
     }
 
     //Tell all main characters to jump - Note, there should only be one
