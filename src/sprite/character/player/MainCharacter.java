@@ -14,6 +14,7 @@ import sprite.world.Floor;
 import sprite.world.PowerUp;
 import status.VulnStatus;
 import util.Animation;
+import util.Collision;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -151,7 +152,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private void checkPowerupCollision(float delta, Matrix3x3f viewport){
         //Checks powerups collision, activate status effect with the same name in VulnStatus's conditions.
         for(int i = 0; i < powerups.size(); i++){
-            if(checkSpriteCollision(delta, viewport, powerups.get(i))){
+            if(Collision.checkSpriteCollision(delta, viewport, this, powerups.get(i))){
                 conditions.activateStatus(((PowerUp)(powerups.get(i))).getEffect().name);
                 powerups.remove(i);
                 i--;
@@ -162,7 +163,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private void checkRatCollision(float delta, Matrix3x3f viewport){
         //check rat collision
         for(int i = 0; i < rats.size(); i++){
-            if(checkSpriteCollision(delta, viewport, rats.get(i))){
+            if(Collision.checkSpriteCollision(delta, viewport, this, rats.get(i))){
                 rats.remove(i);
                 i--;
             }
@@ -177,9 +178,9 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
             float yStartState = getyTranslation();
             int magnitude = 1;
             for(int i = 0; i < platforms.size(); i++){
-                while(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                while(Collision.checkSpriteCollision(delta, viewport, this, platforms.get(i))){
                     pushCharacter(delta, viewport, 'y', ONE_PIXEL*magnitude);
-                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                    if(Collision.checkSpriteCollision(delta, viewport, this, platforms.get(i))){
                         setyTranslation(yStartState);
                     }
                     else{
@@ -187,13 +188,13 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                         break;
                     }
                     pushCharacter(delta, viewport, 'x', ONE_PIXEL*magnitude);
-                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                    if(Collision.checkSpriteCollision(delta, viewport, this, platforms.get(i))){
                         setxTranslation(xStartState);
                     }
                     else
                         break;
                     pushCharacter(delta, viewport, 'x', -ONE_PIXEL*magnitude);
-                    if(checkSpriteCollision(delta, viewport, platforms.get(i))){
+                    if(Collision.checkSpriteCollision(delta, viewport, this, platforms.get(i))){
                         setxTranslation(xStartState);
                     }
                     else
@@ -207,7 +208,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     @Override
     protected void checkFloorCollision(float delta, Matrix3x3f viewport){
         onTheFloor = false;
-        while(checkSpriteCollision(delta, viewport, floor)){
+        while(Collision.checkSpriteCollision(delta, viewport, this, floor)){
             //If the character collided with the floor, push the character out of the floor and set onTheFloor to true
             pushCharacter(delta, viewport, 'y', ONE_PIXEL);
             onTheFloor = true;

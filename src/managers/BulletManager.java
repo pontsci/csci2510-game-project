@@ -20,16 +20,16 @@ public class BulletManager extends Manager{
 
     public void addMainCharacterBullet(float x, float y, boolean direction){
         if(direction)
-            getSprites().add(new PlayerBullet(x, y, new Vector2f(.4f, .4f), enemies));
+            getSprites().add(new PlayerBullet(x, y, new Vector2f(.8f, .4f), enemies));
         else
-            getSprites().add(new PlayerBullet(x, y, new Vector2f(-.4f, -.4f), enemies));
+            getSprites().add(new PlayerBullet(x, y, new Vector2f(-.8f, -.4f), enemies));
     }
 
     public void addEnemyBullet(float x, float y, boolean direction){
         if(direction)
-            getSprites().add(new EnemyBullet(x, y, new Vector2f(.4f, .4f), player));
+            getSprites().add(new EnemyBullet(x, y, new Vector2f(.8f, .4f), player));
         else
-            getSprites().add(new EnemyBullet(x, y, new Vector2f(-.4f, -.4f), player));
+            getSprites().add(new EnemyBullet(x, y, new Vector2f(-.8f, -.4f), player));
     }
 
     @Override

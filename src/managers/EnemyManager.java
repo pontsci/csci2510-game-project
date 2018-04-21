@@ -21,8 +21,8 @@ public class EnemyManager extends Manager
         this.walls = walls;
         this.platforms = platforms;
         this.player = player;
-        getSprites().add(new TriBot(5, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
-        getSprites().add(new TriBot(5, -3, new Vector2f(.4f, .4f), floor, walls, platforms, player));
+        getSprites().add(new TriBot(5, 0, new Vector2f(.3f, .3f), floor, walls, platforms, player));
+        getSprites().add(new TriBot(5, -3, new Vector2f(.3f, .3f), floor, walls, platforms, player));
 
     }
 
@@ -40,6 +40,6 @@ public class EnemyManager extends Manager
 
     public void addTriBot(Vector2f pos)
     {
-        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.4f, .4f), floor, walls, platforms, player));
+        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f), floor, walls, platforms, player));
     }
 }
