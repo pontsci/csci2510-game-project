@@ -26,6 +26,7 @@ public class EnemyBullet extends Bullet{
         hitboxes.add(new BoundingBox(new Vector2f(-.1f, -.4f), new Vector2f(.6f, -.1f), Color.RED));
     }
 
-    public void checkCollision(float delta, Matrix3x3f viewport){
+    public boolean checkCollision(float delta, Matrix3x3f viewport){
+        return false;
     }
 }

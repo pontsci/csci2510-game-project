@@ -18,6 +18,7 @@ public abstract class Enemy extends CharacterSprite{
     private int currentDirection = 1;
     private int GOING_RIGHT = 0;
     private int GOING_LEFT = 1;
+    protected int hp;
     private boolean footboxCollision = true;
     private boolean wallCollision = false;
     private MainCharacter player;
@@ -36,6 +37,24 @@ public abstract class Enemy extends CharacterSprite{
     Enemy(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player){
         super(startX, startY, scale, floor, walls, platforms);
         this.player = player;
+        this.hp = 10;
+    }
+
+    /**
+     * Creates a new enemy with references to objects it collides with and position data
+     * @param startX starting x coord
+     * @param startY starting y coord
+     * @param scale starting scale
+     * @param floor the floor
+     * @param walls the walls
+     * @param platforms the platforms
+     * @param player the player
+     * @param hp starting hp
+     */
+    Enemy(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player, int hp){
+        super(startX, startY, scale, floor, walls, platforms);
+        this.player = player;
+        this.hp = hp;
     }
 
     @Override
@@ -100,7 +119,7 @@ public abstract class Enemy extends CharacterSprite{
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
         footboxCollision = true;
-        
+
         if(getyTranslation()>-2) {
             if (!footboxCollidesWithPlatform())
                 footboxCollision = false;
@@ -145,5 +164,10 @@ public abstract class Enemy extends CharacterSprite{
     private void walkLeft(float delta){
         setxTranslation(getxTranslation() - (walkRate * delta));
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
+    }
+
+    public boolean decreaseHP(int amount){
+        hp = hp - amount;
+        return hp == 0;
     }
 }

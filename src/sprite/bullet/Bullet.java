@@ -58,7 +58,7 @@ public abstract class Bullet extends Sprite{
         return getxTranslation() > 8.5 || getxTranslation() < -8.5;
     }
 
-    public abstract void checkCollision(float delta, Matrix3x3f viewport);
+    public abstract boolean checkCollision(float delta, Matrix3x3f viewport);
 
     public int getBulletDamage()
     {

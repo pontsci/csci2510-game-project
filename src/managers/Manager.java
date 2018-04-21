@@ -47,9 +47,6 @@ public abstract class Manager{
             if(sprite instanceof CharacterSprite){
                 ((CharacterSprite)sprite).checkCollision(delta, viewport);
             }
-            else if(sprite instanceof Bullet){
-                ((Bullet)sprite).checkCollision(delta, viewport);
-            }
             else//if not the correct sprite, back out. A Manager only contains one kind of sprite.
                 return;
         }
