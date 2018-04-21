@@ -13,11 +13,12 @@ import sprite.world.Floor;
 import status.StatusArchive;
 import util.SimpleFramework;
 import util.Vector2f;
+import managers.ScreenManager.ScreenType;
 
 //The driver's job is to direct information between managers.
 //It does not deal with individual sprites, that is footBox for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
-    private Manager[] managers = new Manager[10];
+    private Manager[] managers = new Manager[11];
     BackgroundManager backgroundManager;
     FloorManager floorManager;
     PlatformManager platformManager;
@@ -28,6 +29,8 @@ public class SteamHuntDriver extends SimpleFramework{
     Spawner spawner;
     BulletManager bulletManager;
     EnemyManager enemyManager;
+    ScreenManager screenManager;
+    private boolean paused = false;
     private boolean renderHitboxes = false;
     private int level = 2;
 
@@ -45,7 +48,7 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private enum ManagerType{
-        BACKGROUND(0), FLOOR(1), PLATFORM(2), MAINCHAR(3), RAT(4), WALL(5), POWERUP(6), ENEMY(7), SPAWNER(8), BULLET(9);
+        BACKGROUND(0), FLOOR(1), PLATFORM(2), MAINCHAR(3), RAT(4), WALL(5), POWERUP(6), ENEMY(7), SPAWNER(8), BULLET(9), SCREEN(10);
 
         private int i;
         ManagerType(int i){
@@ -64,6 +67,7 @@ public class SteamHuntDriver extends SimpleFramework{
     private final ManagerType ENEMY = ManagerType.ENEMY;
     private final ManagerType SPAWNER = ManagerType.SPAWNER;
     private final ManagerType BULLET = ManagerType.BULLET;
+    private final ManagerType SCREEN = ManagerType.SCREEN;
 
     @Override
     //Initialize the sprites each manager starts with
@@ -78,6 +82,7 @@ public class SteamHuntDriver extends SimpleFramework{
         managers[WALL.i] = new WallManager();
         managers[POWERUP.i] = new PowerUpManager();
         managers[SPAWNER.i] = new Spawner();
+        managers[SCREEN.i] = new ScreenManager();
 
         /*
          * The following declarations are for ease of use whilst
@@ -85,6 +90,7 @@ public class SteamHuntDriver extends SimpleFramework{
         */
 
         //world managers
+        screenManager = (ScreenManager) managers[SCREEN.i];
         backgroundManager = (BackgroundManager) managers[BACKGROUND.i];
         floorManager = (FloorManager)managers[FLOOR.i];
         platformManager = (PlatformManager)managers[PLATFORM.i];
@@ -125,17 +131,35 @@ public class SteamHuntDriver extends SimpleFramework{
     //Process everything, key input, managers, sprites, hitboxes...
     protected void processInput(float delta){
         super.processInput(delta);
-        processSpaceKeyInput();
-        processMovementInput(delta);
-        processBKeyInput();
-        processSKeyInput();
-        processJKeyInput();
-        processTestLevelChange();
+        // Allow Pauses to happen through the P key
+        processPKeyInput();
+        
+        // If we are paused we do not want to allow processing of normal "Play" buttons.
+        if (!isPaused()) { 
+            processSpaceKeyInput();
+            processMovementInput(delta);
+            processBKeyInput();
+            processSKeyInput();
+            processJKeyInput();
+            processTestLevelChange();
+        }
         for(Manager manager : managers){
             manager.process(delta);
         }
     }
 
+    // Process a P key as the pause
+    private void processPKeyInput() {
+        if(keyboard.keyDownOnce(KeyEvent.VK_P)){
+            paused = !paused;
+            if (paused) {
+                screenManager.SetScreen(ScreenType.PAUSE);
+            } else {
+                screenManager.SetScreen(ScreenType.NONE);
+            }
+        }
+    }
+    
     //Process what happens when space is pressed
     private void processSpaceKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
@@ -223,7 +247,6 @@ public class SteamHuntDriver extends SimpleFramework{
             manager.update(delta, getViewportTransform());
         }
         checkCollision(delta);
-
     }
 
     //Check sprite collision
@@ -236,6 +259,7 @@ public class SteamHuntDriver extends SimpleFramework{
     //Render everything's location in the world
     protected void render(Graphics g){
         super.render(g);
+
         for(Manager manager : managers){
             manager.render(g);
         }
@@ -251,6 +275,12 @@ public class SteamHuntDriver extends SimpleFramework{
         super.terminate();
     }
 
+    // Override the isPaused method in SimpleFramework
+    @Override
+    protected boolean isPaused(){
+        return paused;
+    }
+            
     public static void main(String[] args){
         launchApp(new SteamHuntDriver());
     }

@@ -120,6 +120,10 @@ public class SimpleFramework extends JFrame implements Runnable {
         long lastTime = curTime;
         double nsPerFrame;
         while (running) {
+            // If we are supposed to be pausing, cause deltas to equate to 0
+            if (isPaused()) {
+                lastTime = System.nanoTime();
+            }
             curTime = System.nanoTime();
             nsPerFrame = curTime - lastTime;
             gameLoop((float) (nsPerFrame / 1.0E9));
@@ -173,6 +177,11 @@ public class SimpleFramework extends JFrame implements Runnable {
         mouse.poll();
     }
 
+    // Implement an overridable method to allow for pausing delta creation
+    protected boolean isPaused() {
+        return false;
+    }
+    
     protected void updateObjects(float delta) {
     }
 
