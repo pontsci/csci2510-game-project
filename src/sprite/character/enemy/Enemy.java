@@ -166,6 +166,11 @@ public abstract class Enemy extends CharacterSprite{
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
     }
 
+    /**
+     * Takes an amount and subtracts hp by that amount
+     * @param amount amount to decrease hp by
+     * @return whether or not the enemy is dead
+     */
     public boolean decreaseHP(int amount){
         hp = hp - amount;
         return hp == 0;

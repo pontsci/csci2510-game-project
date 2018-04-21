@@ -35,7 +35,9 @@ public class PlayerBullet extends Bullet{
 
     public boolean checkCollision(float delta, Matrix3x3f viewport){
         for(int i = 0; i < enemies.size(); i++){
+            //bullet collides with enemy
             if(Collision.checkSpriteCollision(delta, viewport, this, enemies.get(i))){
+                //if the enemy hp = 0 then remove the enemy
                 if(((Enemy)enemies.get(i)).decreaseHP(bulletDamage)){
                     enemies.remove(i);
                 }

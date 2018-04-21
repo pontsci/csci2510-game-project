@@ -41,7 +41,6 @@ public abstract class Bullet extends Sprite{
         }
     }
 
-    //Shoot the bullet left
     private void shootLeft(float delta){
         setxTranslation(getxTranslation() - (bulletSpeed * delta));
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
