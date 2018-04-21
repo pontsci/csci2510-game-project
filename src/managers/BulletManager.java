@@ -5,6 +5,7 @@ import sprite.character.player.MainCharacter;
 import sprite.bullet.Bullet;
 import sprite.bullet.enemy.EnemyBullet;
 import sprite.bullet.player.PlayerBullet;
+import util.Matrix3x3f;
 import util.Vector2f;
 
 import java.util.ArrayList;
@@ -31,6 +32,19 @@ public class BulletManager extends Manager{
         else
             getSprites().add(new EnemyBullet(x, y, new Vector2f(-.8f, -.4f), player));
     }
+
+    @Override
+    public void checkCollision(float delta, Matrix3x3f viewport)
+    {
+        for(int i = 0; i < getSprites().size(); i++){
+            Bullet sprite = ((Bullet)(getSprites().get(i)));
+            if(sprite.checkCollision(delta, viewport)){
+                getSprites().remove(i);
+                i--;
+            }
+        }
+    }
+
 
     @Override
     public void process(float delta){

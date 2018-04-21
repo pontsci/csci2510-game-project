@@ -2,7 +2,6 @@ package sprite.world;
 
 import sprite.Sprite;
 import util.Vector2f;
-import java.awt.image.BufferedImage;
 
 public abstract class Interactable extends Sprite{
 	

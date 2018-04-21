@@ -3,9 +3,9 @@ package managers;
 import sprite.Sprite;
 import sprite.character.enemy.Rat;
 import sprite.world.Floor;
+import util.Matrix3x3f;
 import util.Vector2f;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -40,6 +40,12 @@ public class RatManager extends Manager{
         super.process(delta);
         spawnRat(delta);
         spawnMegaRat(delta);
+    }
+
+    @Override
+    public void checkCollision(float delta, Matrix3x3f viewport)
+    {
+        //not needed
     }
 
     //Occasionally spawn a rat every 3 seconds.

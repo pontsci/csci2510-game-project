@@ -1,8 +1,10 @@
 package managers;
 
+import sprite.character.CharacterSprite;
 import sprite.character.player.MainCharacter;
 import sprite.Sprite;
 import sprite.world.Floor;
+import util.Matrix3x3f;
 import util.Vector2f;
 
 import java.util.ArrayList;
@@ -11,6 +13,12 @@ public class MainCharacterManager extends Manager{
     //Get the MainCharacter's sprite sheets and make the main character.
     public MainCharacterManager(Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> rats, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms){
         getSprites().add(new MainCharacter(-7, -4, new Vector2f(.3f,.3f), floor, walls, rats, powerups, platforms));
+    }
+
+    public void checkCollision(float delta, Matrix3x3f viewport){
+        for(Sprite sprite : getSprites()){
+            ((MainCharacter)sprite).checkCollision(delta, viewport);
+        }
     }
 
     //Tell all main characters to jump - Note, there should only be one

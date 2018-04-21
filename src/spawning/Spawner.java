@@ -2,8 +2,7 @@ package spawning;
 
 
 import managers.Manager;
-import sprite.character.enemy.Rat;
-import sprite.character.enemy.TriBot;
+import util.Matrix3x3f;
 import util.Vector2f;
 
 import java.util.Random;
@@ -32,6 +31,12 @@ public class Spawner extends Manager
         for (SpawnRange spawn: spawnRanges){
             spawn.render(g);
         }
+    }
+
+    @Override
+    public void checkCollision(float delta, Matrix3x3f viewport)
+    {
+        //not needed
     }
 
 }

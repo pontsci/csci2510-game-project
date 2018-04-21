@@ -19,37 +19,31 @@ public class StatusArchive {
 	
 	//Health Status effect
 	public static Status getHealthStatus() {
-		Status ret = new Status(0, "HealthUp", 1.5f, null);
-		return ret;
+        return new Status(0, "HealthUp", 1.5f, null);
 	}
 	
 	//Fire Rate Up Status effect
 	public static Status getFireRateStatus() {
-		Status ret = new Status(1, "FireRateUp", 5.0f, null);
-		return ret;
+        return new Status(1, "FireRateUp", 5.0f, null);
 	}
 	
 	//Damage Up Status effect
 	public static Status getDmgStatus() {
-		Status ret = new Status(2, "DmgUp", 5.0f, null);
-		return ret;
+        return new Status(2, "DmgUp", 5.0f, null);
 	}
 	
 	//Shield Effect
 	public static Status getShieldStatus() {
-		Status ret = new Status(3, "ShieldUp", 5.0f, null);
-		return ret;
+        return new Status(3, "ShieldUp", 5.0f, null);
 	}
 	
 	//Taser Effect
 	public static Status getTaserStatus() {
-		Status ret = new Status(4, "TaserUp", 5.0f, null);
-		return ret;
+        return new Status(4, "TaserUp", 5.0f, null);
 	}
 	
 	//DoT Effect
 	public static Status getDoTStatus() {
-		Status ret = new Status(5, "DoT", 4.0f, null);
-		return ret;
+        return new Status(5, "DoT", 4.0f, null);
 	}
 }

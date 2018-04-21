@@ -1,9 +1,12 @@
 package managers;
 
 import sprite.Sprite;
+import sprite.character.CharacterSprite;
+import sprite.character.enemy.Enemy;
 import sprite.character.enemy.TriBot;
 import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
+import util.Matrix3x3f;
 import util.Vector2f;
 
 import java.util.ArrayList;
@@ -41,5 +44,11 @@ public class EnemyManager extends Manager
     public void addTriBot(Vector2f pos)
     {
         getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f), floor, walls, platforms, player));
+    }
+
+    public void checkCollision(float delta, Matrix3x3f viewport){
+        for(Sprite sprite : getSprites()){
+            ((Enemy)sprite).checkCollision(delta, viewport);
+        }
     }
 }
