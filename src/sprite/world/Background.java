@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Background extends Sprite {
     public Background(float startX, float startY, Vector2f scale){
         super(startX, startY, scale);
-        setCurrentSpriteFrame(loadFile("src/resources/world/background/dungeon.png"));
+        setCurrentSpriteFrame(loadFile("src/resources/world/background/skyboxresized.png"));
     }
 
     @Override

@@ -10,6 +10,6 @@ import java.util.ArrayList;
 public class BackgroundManager extends Manager{
     //Get the background's sprite sheet and make a background.
     public BackgroundManager(){
-        getSprites().add(new Background(0, 0, new Vector2f(14,14)));
+        getSprites().add(new Background(0, 0, new Vector2f(1,1)));
     }
 }
