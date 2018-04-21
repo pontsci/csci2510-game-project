@@ -33,6 +33,12 @@ public class PlayerBullet extends Bullet{
         super.process(delta);
     }
 
+    /**
+     * Checks all enemies against this bullet
+     * @param delta time
+     * @param viewport screen
+     * @return true if collision, false if no collision
+     */
     public boolean checkCollision(float delta, Matrix3x3f viewport){
         for(int i = 0; i < enemies.size(); i++){
             //bullet collides with enemy

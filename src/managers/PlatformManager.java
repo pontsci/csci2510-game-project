@@ -22,4 +22,9 @@ public class PlatformManager extends Manager{
         return spawnRanges;
     }
 
+    @Override
+    public void checkCollision(float delta, Matrix3x3f viewport)
+    {
+        //not needed
+    }
 }
