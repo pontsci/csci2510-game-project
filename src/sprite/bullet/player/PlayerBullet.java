@@ -44,14 +44,11 @@ public class PlayerBullet extends Bullet{
             //bullet collides with enemy
             if(Collision.checkSpriteCollision(delta, viewport, this, enemies.get(i))){
                 //if the enemy hp = 0 then remove the enemy
+
+                ((Enemy) enemies.get(i)).setHit(true);
                 if(((Enemy)enemies.get(i)).decreaseHP(bulletDamage)){
                     enemies.remove(i);
-                    i--;
                 }
-                if(enemies.isEmpty()){
-                    return true;
-                }
-                ((Enemy) enemies.get(i)).setHit(true);
                 return true;
             }
         }
