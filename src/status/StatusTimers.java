@@ -148,4 +148,18 @@ public class StatusTimers {
 
 		return ret;
 	}
+	
+	//Determines if any status effect is active
+	public boolean anyStatusActive() {
+		boolean ret = false;
+		
+		for (int i = 0; i < statusList.size(); i++) {
+			if (statusList.get(i).active) {
+				ret = true;
+				break;
+			}
+		}
+		
+		return ret;
+	}
 }

@@ -1,18 +1,20 @@
 package sprite.character.enemy;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.ArrayList;
+
 import bounding.BoundingBox;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
+import status.VulnStatus;
 import util.Collision;
 import util.Matrix3x3f;
 import util.Vector2f;
 
-import java.awt.*;
-import java.util.ArrayList;
-
-public abstract class Enemy extends CharacterSprite{
+public abstract class Enemy extends CharacterSprite implements VulnStatus{
     protected BoundingBox footBox = new BoundingBox(new Vector2f(-1.1f, -2.4f), new Vector2f(-.9f, -1.8f), Color.GREEN);
     private float walkRate = 1.5f;
     protected float regenTimer;

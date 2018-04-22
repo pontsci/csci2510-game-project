@@ -150,13 +150,16 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     }
 
     private void checkPowerupCollision(float delta, Matrix3x3f viewport){
-        //Checks powerups collision, activate status effect with the same name in VulnStatus's conditions.
-        for(int i = 0; i < powerups.size(); i++){
-            if(Collision.checkSpriteCollision(delta, viewport, this, powerups.get(i))){
-                conditions.activateStatus(((PowerUp)(powerups.get(i))).getEffect().name);
-                powerups.remove(i);
-                i--;
-            }
+        //Checks powerups collision if no statuses are active, activate status effect with the same name in VulnStatus's conditions.
+    	
+    	if(!conditions.anyStatusActive()) {
+    		for(int i = 0; i < powerups.size(); i++){
+            	if(Collision.checkSpriteCollision(delta, viewport, this, powerups.get(i))){
+                	conditions.activateStatus(((PowerUp)(powerups.get(i))).getEffect().name);
+                	powerups.remove(i);
+                	i--;
+            	}
+    		}
         }
     }
 
