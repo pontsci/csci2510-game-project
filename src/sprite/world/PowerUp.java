@@ -25,11 +25,12 @@ public class PowerUp extends Sprite{
 	public PowerUp(float startX, float startY, Vector2f scale, int spriteImg, Status statusEffect) {
 		super(startX, startY, scale);
 		BufferedImage sprSheet = loadFile("src/resources/world/pickups/PickupObjects.png");
-
+		BufferedImage healImg = loadFile("src/resources/world/pickups/health.png");
+		
 		switch(spriteImg){
 			case HEALTH_IMG:
 				//Using key as a stand in image
-				setCurrentSpriteFrame(sprSheet.getSubimage(150, 0, 50, 50));
+				setCurrentSpriteFrame(healImg);
 				break;
 			case FR_IMG:
 				setCurrentSpriteFrame(sprSheet.getSubimage(50, 0, 50, 50));
