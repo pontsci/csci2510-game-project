@@ -76,7 +76,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     @Override
     protected void processGravity(float delta){
         //Set animation to falling if the character is falling.
-        if(velocityY < -.5f){
+        if(velocityY < -1f){
             currentAnimation = FALL_ANIMATION;
         }
 

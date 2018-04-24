@@ -133,6 +133,7 @@ public class SteamHuntDriver extends SimpleFramework{
             processSKeyInput();
             processJKeyInput();
             processTestLevelChange();
+
         }
         for(Manager manager : managers){
             manager.process(delta);
