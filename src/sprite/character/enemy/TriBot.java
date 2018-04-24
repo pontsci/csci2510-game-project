@@ -19,9 +19,9 @@ public class TriBot extends Enemy {
 	private int currentAnimation = 0;
 	private int dmgTicks = 0;
 
-	public TriBot(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls,
+	public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> walls,
 			ArrayList<Sprite> platforms, MainCharacter player) {
-		super(startX, startY, scale, floor, walls, platforms, player);
+		super(startX, startY, scale, floors, walls, platforms, player);
 		// get the animations for the tri bot - follow the main character
 		BufferedImage spriteSheet = loadFile(
 				"src/resources/character/enemy/tribot/Enemy_WH_237x356_EnemyMove_EnemyAttack.png");

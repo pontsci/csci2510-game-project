@@ -1,11 +1,7 @@
 package sprite.screens;
 
-import sprite.world.*;
 import sprite.Sprite;
 import util.Vector2f;
-
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 //If anything special were to happen to the background, such as sliding, it would occur here
 public class Pause extends Sprite {

@@ -13,19 +13,19 @@ import java.util.ArrayList;
 
 public class EnemyManager extends Manager
 {
-    private Floor floor;
+    private ArrayList<Sprite> floors;
     private ArrayList<Sprite> walls;
     private ArrayList<Sprite> platforms;
     private MainCharacter player;
 
-    public EnemyManager(Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player)
+    public EnemyManager(ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player)
     {
-        this.floor = floor;
+        this.floors = floors;
         this.walls = walls;
         this.platforms = platforms;
         this.player = player;
-        getSprites().add(new TriBot(5, 0, new Vector2f(.3f, .3f), floor, walls, platforms, player));
-        getSprites().add(new TriBot(5, -3, new Vector2f(.3f, .3f), floor, walls, platforms, player));
+        getSprites().add(new TriBot(5, 0, new Vector2f(.3f, .3f), floors, walls, platforms, player));
+        getSprites().add(new TriBot(5, -3, new Vector2f(.3f, .3f), floors, walls, platforms, player));
 
     }
 
@@ -43,7 +43,7 @@ public class EnemyManager extends Manager
 
     public void addTriBot(Vector2f pos)
     {
-        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f), floor, walls, platforms, player));
+        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f), floors, walls, platforms, player));
     }
 
     public void checkCollision(float delta, Matrix3x3f viewport){

@@ -20,7 +20,6 @@ public class Platform extends Sprite{
     public void initializeHitboxes(){
         hitboxes.add(new BoundingBox(new Vector2f(-2.2f, -.5f), new Vector2f( 2.2f, .4f),  Color.BLUE));
         hitboxes.add(new BoundingBox(new Vector2f(-2.2f, -.5f), new Vector2f( 2.2f, .4f), Color.RED));
-
     }
 
     @Override

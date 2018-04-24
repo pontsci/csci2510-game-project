@@ -33,7 +33,7 @@ public class SteamHuntDriver extends SimpleFramework{
     private int level = 2;
 
 
-    public SteamHuntDriver(){
+    private SteamHuntDriver(){
         appBackground = Color.BLACK;
         appBorder = Color.BLACK;
         appWidth = 1920;
@@ -96,16 +96,13 @@ public class SteamHuntDriver extends SimpleFramework{
         powerUpManager = (PowerUpManager)managers[POWERUP.i];
         spawner = (Spawner) managers[SPAWNER.i];
 
-        //shorten calls
-        Floor floor = (Floor)floorManager.getSprites().get(0);
-
         //main character
-        managers[MAINCHAR.i] = new MainCharacterManager(floor, wallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites());
+        managers[MAINCHAR.i] = new MainCharacterManager(floorManager.getSprites(), wallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites());
         mainCharManager = (MainCharacterManager)managers[MAINCHAR.i];
         MainCharacter player = (MainCharacter) mainCharManager.getSprites().get(0);
 
         //enemy
-        managers[ENEMY.i] = new EnemyManager(floor, wallManager.getSprites(), platformManager.getSprites(), player);
+        managers[ENEMY.i] = new EnemyManager(floorManager.getSprites(), wallManager.getSprites(), platformManager.getSprites(), player);
         enemyManager = (EnemyManager) managers[ENEMY.i];
 
         //bullet
