@@ -22,8 +22,6 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private int currentDirection = 1;
     private int GOING_RIGHT = 0;
     private int GOING_LEFT = 1;
-    protected int hp;
-    protected int maxHp;
     private boolean footboxCollision = true;
     private boolean wallCollision = false;
     private boolean damaged = false;

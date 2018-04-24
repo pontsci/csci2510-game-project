@@ -15,9 +15,8 @@ public abstract class CharacterSprite extends Sprite{
     protected ArrayList<Sprite> walls;
     protected ArrayList<Sprite> platforms;
     private float gravity = -10;
-    int health;
-    boolean onFire = false;
-    boolean dotHeal = false;
+    protected int hp;
+    protected int maxHp;
 
     public CharacterSprite(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms){
         super(startX, startY, scale);
