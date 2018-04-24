@@ -118,7 +118,6 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
                 regenTimer = 0;
                 hp = maxHp;
                 damaged = false;
-                System.out.println("REGEN!");
             }
         }
     }

@@ -18,16 +18,16 @@ import managers.ScreenManager.ScreenType;
 //It does not deal with individual sprites, that is footBox for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
     private Manager[] managers = new Manager[10];
-    BackgroundManager backgroundManager;
-    FloorManager floorManager;
-    PlatformManager platformManager;
-    WallManager wallManager;
-    PowerUpManager powerUpManager;
-    MainCharacterManager mainCharManager;
-    Spawner spawner;
-    BulletManager bulletManager;
-    EnemyManager enemyManager;
-    ScreenManager screenManager;
+    private BackgroundManager backgroundManager;
+    private FloorManager floorManager;
+    private PlatformManager platformManager;
+    private WallManager wallManager;
+    private PowerUpManager powerUpManager;
+    private MainCharacterManager mainCharManager;
+    private Spawner spawner;
+    private BulletManager bulletManager;
+    private EnemyManager enemyManager;
+    private ScreenManager screenManager;
     private boolean paused = false;
     private boolean renderHitboxes = false;
     private int level = 2;
@@ -47,7 +47,6 @@ public class SteamHuntDriver extends SimpleFramework{
 
     private enum ManagerType{
         BACKGROUND(0), FLOOR(1), PLATFORM(2), MAINCHAR(3), WALL(4), POWERUP(5), ENEMY(6), SPAWNER(7), BULLET(8), SCREEN(9);
-
         private int i;
         ManagerType(int i){
             this.i = i;
@@ -223,7 +222,7 @@ public class SteamHuntDriver extends SimpleFramework{
         powerUpManager.getSprites().clear();
         //Load platforms and spawnranges
         platformManager.getSprites().clear();
-        platformManager.getSprites().addAll(Levels.getLevel(level));
+        Levels.setLevel(level,platformManager.getSprites(), floorManager.getSprites());
         spawner.setSpawnRanges(platformManager.getPlatFormSpawns(getViewportTransform()));
         //Spawn enemies
         for (int i = 0; i < 3; i++){
