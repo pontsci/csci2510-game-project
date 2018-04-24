@@ -202,10 +202,16 @@ public class SteamHuntDriver extends SimpleFramework{
     private void processTestLevelChange(){
         if(keyboard.keyDownOnce(KeyEvent.VK_Z)){
             level--;
+            if(level < 1){
+                level = 3;
+            }
             loadNewLevel();
         }
         else if(keyboard.keyDownOnce(KeyEvent.VK_C)){
             level++;
+            if(level > 3){
+                level = 1;
+            }
             loadNewLevel();
         }
     }
