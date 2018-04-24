@@ -45,7 +45,6 @@ public class BulletManager extends Manager{
         }
     }
 
-
     @Override
     public void process(float delta){
         super.process(delta);

@@ -30,7 +30,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private BulletManager bm;
     private float platformTimer = 2;
     private float velocityY = 0;
-    private ArrayList<Sprite> rats;
     private ArrayList<Sprite> powerups;
     private Animation animation = new Animation();
     private int currentAnimation = 1;
@@ -39,7 +38,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private int healTicks = 0;//Tick values for hp and dmg
     private int dmgTicks = 0;
 
-    public MainCharacter(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> rats, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms){
+    public MainCharacter(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms){
         super(startX, startY, scale, floor, walls, platforms);
         BufferedImage idleAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png");
         BufferedImage jumpAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png");
@@ -53,7 +52,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         animation.addAnimation(jumpAnimation.getSubimage(474, 0, 711, 356), 3);
         //landing part of the jump animation
         animation.addAnimation(jumpAnimation.getSubimage(1185, 0, 474, 356), 2);
-        this.rats = rats;
         this.powerups = powerups;
         initializeHitboxes();
     }
@@ -145,7 +143,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
-        checkRatCollision(delta, viewport);
         checkPowerupCollision(delta, viewport);
     }
 
@@ -160,16 +157,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                 	i--;
             	}
     		}
-        }
-    }
-
-    private void checkRatCollision(float delta, Matrix3x3f viewport){
-        //check rat collision
-        for(int i = 0; i < rats.size(); i++){
-            if(Collision.checkSpriteCollision(delta, viewport, this, rats.get(i))){
-                rats.remove(i);
-                i--;
-            }
         }
     }
 
