@@ -7,10 +7,8 @@ import java.awt.event.KeyEvent;
 import managers.*;
 import spawning.Spawner;
 import sprite.character.player.MainCharacter;
-import sprite.world.Floor;
 import status.StatusArchive;
 import util.SimpleFramework;
-import util.Vector2f;
 import managers.ScreenManager.ScreenType;
 
 
@@ -123,11 +121,11 @@ public class SteamHuntDriver extends SimpleFramework{
         
         // If we are paused we do not want to allow processing of normal "Play" buttons.
         if (!isPaused()) { 
-            processSpaceKeyInput();
+            processWKeyInput();
             processMovementInput(delta);
             processBKeyInput();
             processSKeyInput();
-            processJKeyInput();
+            processSpaceKeyInput();
             processTestLevelChange();
 
         }
@@ -149,8 +147,8 @@ public class SteamHuntDriver extends SimpleFramework{
     }
     
     //Process what happens when space is pressed
-    private void processSpaceKeyInput(){
-        if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
+    private void processWKeyInput(){
+        if(keyboard.keyDownOnce(KeyEvent.VK_W)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processJump();
         }
     }
@@ -189,8 +187,8 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     //Process what happens when S is pressed
-    private void processJKeyInput(){
-        if(keyboard.keyDownOnce(KeyEvent.VK_J)){
+    private void processSpaceKeyInput(){
+        if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
             ((MainCharacterManager)managers[3]).processShoot();
         }
     }
