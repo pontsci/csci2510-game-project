@@ -68,6 +68,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         this.hp = hp;
         maxHp = hp;
         regenTimer = 0;
+        gravity = -1;
     }
 
     @Override
