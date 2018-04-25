@@ -26,7 +26,7 @@ public class DoorManager extends Manager{
 
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
-        /*getSprites().clear();
+        getSprites().clear();
         switch(level){
             case 1:
                 getSprites().add(new Door(7.25f,-3.47f ,new Vector2f(.35f, .35f), enemies));
@@ -37,7 +37,7 @@ public class DoorManager extends Manager{
             case 3:
                 getSprites().add(new Door(3.25f,-3.47f ,new Vector2f(.35f, .35f), enemies));
                 break;
-        }*/
+        }
     }
 
 }
