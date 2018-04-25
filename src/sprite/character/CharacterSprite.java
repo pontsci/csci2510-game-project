@@ -13,7 +13,7 @@ public abstract class CharacterSprite extends Sprite{
     protected ArrayList<Sprite> floors;
     protected ArrayList<Sprite> walls;
     protected ArrayList<Sprite> platforms;
-    private float gravity = -10;
+    protected float gravity = -10;
     protected int hp;
     protected int maxHp;
 
