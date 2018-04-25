@@ -65,6 +65,11 @@ public abstract class BoundingShape implements Drawable{
         this.yTranslation = yTranslation;
     }
 
+    public void setObjectColor(Color objectColor)
+    {
+        this.objectColor = objectColor;
+    }
+
     Vector2f getScale(){
         return scale;
     }

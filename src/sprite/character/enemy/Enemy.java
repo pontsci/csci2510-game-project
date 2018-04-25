@@ -28,6 +28,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private boolean wallCollision = false;
     private boolean damaged = false;
     private boolean hit = false;
+    private boolean playerDetected = false;
     private MainCharacter player;
 
 
@@ -80,6 +81,13 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     @Override
     public void update(float delta, Matrix3x3f viewport){
         super.update(delta,viewport);
+        updateDetectionHitboxes(viewport);
+
+        setViewport(viewport);
+    }
+
+    private void updateDetectionHitboxes(Matrix3x3f viewport)
+    {
         footBox.setxTranslation(getxTranslation());
         footBox.setyTranslation(getyTranslation());
         footBox.setScale(getScale());
@@ -88,8 +96,6 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         detectionBox.setyTranslation(getyTranslation());
         detectionBox.setScale(getScale());
         detectionBox.updateWorld(viewport);
-
-        setViewport(viewport);
     }
 
     //For each hitbox, render the hitbox
@@ -104,8 +110,12 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     public void process(float delta)
     {
         super.process(delta);
-        processMovement(delta);
+
         processRegeneration(delta);
+    }
+
+    private void processShooting(float delta){
+        //shoot stuff
     }
 
     private void processRegeneration(float delta)
@@ -166,6 +176,15 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         }
         if(wallCollision)
             footboxCollision = false;
+
+        playerDetected = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
+        if(!playerDetected){
+            detectionBox.setObjectColor(Color.CYAN);
+            processMovement(delta);
+        }else{
+            detectionBox.setObjectColor(Color.RED);
+            processShooting(delta);
+        }
     }
 
     @Override
