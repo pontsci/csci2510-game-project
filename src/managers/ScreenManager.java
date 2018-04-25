@@ -24,7 +24,7 @@ public class ScreenManager extends Manager{
     
     //Get the background's sprite sheet and make a background.
     public ScreenManager(){
-        getSprites().add(new Pause(0, 0, new Vector2f(1,1)));
+        getSprites().add(new Pause(0, 0, new Vector2f(1,.87f)));
     }
     
     // Allow setting the screenType externally

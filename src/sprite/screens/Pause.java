@@ -7,7 +7,8 @@ import util.Vector2f;
 public class Pause extends Sprite {
     public Pause(float startX, float startY, Vector2f scale){
         super(startX, startY, scale);
-        setCurrentSpriteFrame(loadFile("src/resources/world/background/skyboxresized.png"));
+        setCurrentSpriteFrame(loadFile("src/resources/world/background/PauseScreen.png"));
+        
     }
 
     @Override
