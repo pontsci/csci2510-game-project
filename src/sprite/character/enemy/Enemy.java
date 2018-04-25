@@ -42,10 +42,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      */
     Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player){
         super(startX, startY, scale, floors, walls, platforms);
-        this.player = player;
-        this.hp = 10;
-        maxHp = hp;
-        regenTimer = 0;
+        initialize(player, 10);
     }
 
     /**
@@ -61,9 +58,13 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      */
     Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player, int hp){
         super(startX, startY, scale, floors, walls, platforms);
+        initialize(player, hp);
+    }
+
+    private void initialize(MainCharacter player, int hp){
         this.player = player;
         this.hp = hp;
-        maxHp = this.hp;
+        maxHp = hp;
         regenTimer = 0;
     }
 
