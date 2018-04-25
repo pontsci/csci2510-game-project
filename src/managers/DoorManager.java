@@ -20,25 +20,19 @@ public class DoorManager extends Manager{
 
     }
 
-    @Override
-    public void update(float delta, Matrix3x3f viewport) {
-        super.update(delta, viewport);
-        if(enemies.isEmpty()){
-            ((Door)getSprites().get(0)).setOpen();
-        }
-        else{
-            ((Door)getSprites().get(0)).setClose();
-        }
-    }
 
     public void addDoor(Vector2f pos)
     {
         getSprites().clear();
-        getSprites().add(new Door(pos.x,pos.y,new Vector2f(.3f, .3f)));
+        getSprites().add(new Door(pos.x,pos.y,new Vector2f(.3f, .3f), enemies));
     }
 
     public void checkCollision(float delta, Matrix3x3f viewport){
         
+    }
+
+    public void switchLevel(int level){
+
     }
 
 }
