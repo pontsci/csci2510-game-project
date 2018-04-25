@@ -5,12 +5,13 @@ import util.Vector2f;
 
 import java.awt.*;
 import sprite.screens.Pause;
+import sprite.screens.Start;
 import util.Matrix3x3f;
 
 //Could be used to handle which background to play on each level of the game
 public class ScreenManager extends Manager{
     public enum ScreenType {
-        NONE(-1), PAUSE(0);
+        NONE(-1), PAUSE(0), START(1);
         
         private int i;
         ScreenType(int i) {
@@ -25,7 +26,9 @@ public class ScreenManager extends Manager{
     
     //Get the background's sprite sheet and make a background.
     public ScreenManager(){
-        getSprites().add(new Pause(0, 0, new Vector2f(1,.87f)));
+        getSprites().add(new Pause(0, .2f, new Vector2f(1,.87f)));
+        getSprites().add(new Start(0, 0, new Vector2f(1,.87f)));
+        currentScreen = ScreenType.START;
     }
     
     // Allow setting the screenType externally

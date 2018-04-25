@@ -27,7 +27,8 @@ public class SteamHuntDriver extends SimpleFramework{
     private EnemyManager enemyManager;
     private ScreenManager screenManager;
     private DoorManager doorManager;
-    private boolean paused = false;
+    private boolean paused = true;
+    private boolean hasStarted = false;
     private boolean renderHitboxes = false;
     private int level = 2;
 
@@ -126,8 +127,12 @@ public class SteamHuntDriver extends SimpleFramework{
         // Allow Pauses to happen through the P key
         processPKeyInput();
         
+         //if we havent started we want to read the space input
+        if(!hasStarted){
+            processSpaceKeyInput();
+        }
         // If we are paused we do not want to allow processing of normal "Play" buttons.
-        if (!isPaused()) { 
+        else if (!isPaused()) { 
             processWKeyInput();
             processMovementInput(delta);
             processBKeyInput();
@@ -144,11 +149,17 @@ public class SteamHuntDriver extends SimpleFramework{
     // Process a P key as the pause
     private void processPKeyInput() {
         if(keyboard.keyDownOnce(KeyEvent.VK_P)){
+            
             paused = !paused;
+            
             if (paused) {
                 screenManager.SetScreen(ScreenType.PAUSE);
             } else {
-                screenManager.SetScreen(ScreenType.NONE);
+                if(!hasStarted){
+                    screenManager.SetScreen(ScreenType.START);
+                }else{
+                    screenManager.SetScreen(ScreenType.NONE);
+                }
             }
         }
     }
@@ -196,7 +207,13 @@ public class SteamHuntDriver extends SimpleFramework{
     //Process what happens when S is pressed
     private void processSpaceKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
-            ((MainCharacterManager)managers[MAINCHAR.i]).processShoot();
+            if(!hasStarted){
+                hasStarted = true;
+                screenManager.SetScreen(ScreenType.NONE);
+                paused = false;
+            }else{
+                ((MainCharacterManager)managers[MAINCHAR.i]).processShoot();
+            }
         }
     }
 
