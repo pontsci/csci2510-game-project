@@ -46,6 +46,11 @@ public class BulletManager extends Manager{
     }
 
     @Override
+    public void switchLevel(int level){
+
+    }
+
+    @Override
     public void process(float delta){
         super.process(delta);
         if(!getSprites().isEmpty()){

@@ -27,4 +27,9 @@ public class PlatformManager extends Manager{
     {
         //not needed
     }
+
+    @Override
+    public void switchLevel(int level){
+
+    }
 }

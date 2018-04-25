@@ -42,5 +42,10 @@ public class ScreenManager extends Manager{
     {
         //no collision needed
     }
-  
+
+    @Override
+    public void switchLevel(int level){
+
+    }
+
 }
