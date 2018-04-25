@@ -15,7 +15,7 @@ import managers.ScreenManager.ScreenType;
 //The driver's job is to direct information between managers.
 //It does not deal with individual sprites, that is footBox for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
-    private Manager[] managers = new Manager[10];
+    private Manager[] managers = new Manager[11];
     private BackgroundManager backgroundManager;
     private FloorManager floorManager;
     private PlatformManager platformManager;
@@ -45,7 +45,7 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private enum ManagerType{
-        BACKGROUND(0), FLOOR(1), PLATFORM(2), MAINCHAR(3), WALL(4), POWERUP(5), ENEMY(6), SPAWNER(7), BULLET(8), SCREEN(9);
+        BACKGROUND(0), FLOOR(1), PLATFORM(2), DOOR(3), MAINCHAR(4), WALL(5), POWERUP(6), ENEMY(7), SPAWNER(8), BULLET(9), SCREEN(10);
         private int i;
         ManagerType(int i){
             this.i = i;
@@ -55,6 +55,7 @@ public class SteamHuntDriver extends SimpleFramework{
     //easier enum usage declarations
     private final ManagerType BACKGROUND = ManagerType.BACKGROUND;
     private final ManagerType FLOOR = ManagerType.FLOOR;
+    private final ManagerType DOOR = ManagerType.DOOR;
     private final ManagerType PLATFORM = ManagerType.PLATFORM;
     private final ManagerType MAINCHAR = ManagerType.MAINCHAR;
     private final ManagerType WALL = ManagerType.WALL;
@@ -90,6 +91,7 @@ public class SteamHuntDriver extends SimpleFramework{
         floorManager = (FloorManager)managers[FLOOR.i];
         platformManager = (PlatformManager)managers[PLATFORM.i];
         wallManager = (WallManager)managers[WALL.i];
+        mainCharManager = (MainCharacterManager)managers[MAINCHAR.i];
 
         //spawning/item managers
         powerUpManager = (PowerUpManager)managers[POWERUP.i];
@@ -103,6 +105,10 @@ public class SteamHuntDriver extends SimpleFramework{
         //enemy
         managers[ENEMY.i] = new EnemyManager(floorManager.getSprites(), wallManager.getSprites(), platformManager.getSprites(), player);
         enemyManager = (EnemyManager) managers[ENEMY.i];
+
+        //door
+        managers[DOOR.i] = new DoorManager(enemyManager.getSprites(), (MainCharacter)mainCharManager.getSprites().get(0));
+        doorManager = (DoorManager)managers[DOOR.i];
 
         //bullet
         managers[BULLET.i] = new BulletManager(player, enemyManager.getSprites());
@@ -190,7 +196,7 @@ public class SteamHuntDriver extends SimpleFramework{
     //Process what happens when S is pressed
     private void processSpaceKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
-            ((MainCharacterManager)managers[3]).processShoot();
+            ((MainCharacterManager)managers[MAINCHAR.i]).processShoot();
         }
     }
 
@@ -242,6 +248,7 @@ public class SteamHuntDriver extends SimpleFramework{
         for(Manager manager : managers){
             manager.render(g);
         }
+
         if(renderHitboxes){
             for(Manager manager : managers){
                 manager.renderHitboxes(g);

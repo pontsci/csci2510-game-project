@@ -17,14 +17,7 @@ public class DoorManager extends Manager{
     {
         this.enemies = enemies;
         this.player = player;
-
-    }
-
-
-    public void addDoor(Vector2f pos)
-    {
-        getSprites().clear();
-        getSprites().add(new Door(pos.x,pos.y,new Vector2f(.3f, .3f), enemies));
+        getSprites().add(new Door(7.25f,-3.47f ,new Vector2f(.35f, .35f), enemies));
     }
 
     public void checkCollision(float delta, Matrix3x3f viewport){
@@ -33,7 +26,18 @@ public class DoorManager extends Manager{
 
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
-
+        /*getSprites().clear();
+        switch(level){
+            case 1:
+                getSprites().add(new Door(7.25f,-3.47f ,new Vector2f(.35f, .35f), enemies));
+                break;
+            case 2:
+                getSprites().add(new Door(5.25f,-3.47f ,new Vector2f(.35f, .35f), enemies));
+                break;
+            case 3:
+                getSprites().add(new Door(3.25f,-3.47f ,new Vector2f(.35f, .35f), enemies));
+                break;
+        }*/
     }
 
 }
