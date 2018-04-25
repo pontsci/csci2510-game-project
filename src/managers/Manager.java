@@ -48,4 +48,7 @@ public abstract class Manager{
     public ArrayList<Sprite> getSprites(){
         return sprites;
     }
+
+    //Given an int, set a new level
+    public abstract void switchLevel(int level);
 }

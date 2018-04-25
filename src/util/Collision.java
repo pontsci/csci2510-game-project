@@ -21,15 +21,6 @@ public class Collision {
         return Intersect.intersectAABB(characterMin, characterMax, spriteMin, spriteMax) && checkInnerCollision(thisSprite.getHitboxes(), otherSprite.getHitboxes(), 1);
     }
 
-    //Given a sprite and a list of sprites, if they collide, push the single sprite.
-    public static void checkSpriteCollision(float delta, Matrix3x3f viewport, CharacterSprite thisSprite, ArrayList<Sprite> otherSprites){
-        for(Sprite otherSprite : otherSprites){
-            while(Collision.checkSpriteCollision(thisSprite, otherSprite)){
-                thisSprite.pushCharacter(delta, viewport, 'y', ONE_PIXEL/2);
-            }
-        }
-    }
-
     //given two sets of hitboxes, return if they collide
     //start indicates where to start in the array, typically 1
     public static boolean checkInnerCollision(ArrayList<BoundingShape> thisHitboxes, ArrayList<BoundingShape> otherHitboxes, int start){

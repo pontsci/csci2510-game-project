@@ -39,4 +39,10 @@ public class Spawner extends Manager
         //not needed
     }
 
+    @Override
+    public void switchLevel(int level)
+    {
+        //for levels
+    }
+
 }

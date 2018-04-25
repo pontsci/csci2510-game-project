@@ -17,6 +17,7 @@ import util.Vector2f;
 
 public abstract class Enemy extends CharacterSprite implements VulnStatus{
     protected BoundingBox footBox = new BoundingBox(new Vector2f(-1.1f, -2.4f), new Vector2f(-.9f, -1.8f), Color.GREEN);
+    protected BoundingBox detectionBox = new BoundingBox(new Vector2f(-40f,-2f), new Vector2f(0f,4f), Color.CYAN);
     private float walkRate = 1.5f;
     protected float regenTimer;
     private final float REGEN_TIME = 10;
@@ -27,6 +28,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private boolean wallCollision = false;
     private boolean damaged = false;
     private boolean hit = false;
+    private boolean playerDetected = false;
     private MainCharacter player;
 
 
@@ -79,12 +81,21 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     @Override
     public void update(float delta, Matrix3x3f viewport){
         super.update(delta,viewport);
+        updateDetectionHitboxes(viewport);
+
+        setViewport(viewport);
+    }
+
+    private void updateDetectionHitboxes(Matrix3x3f viewport)
+    {
         footBox.setxTranslation(getxTranslation());
         footBox.setyTranslation(getyTranslation());
         footBox.setScale(getScale());
         footBox.updateWorld(viewport);
-
-        setViewport(viewport);
+        detectionBox.setxTranslation(getxTranslation());
+        detectionBox.setyTranslation(getyTranslation());
+        detectionBox.setScale(getScale());
+        detectionBox.updateWorld(viewport);
     }
 
     //For each hitbox, render the hitbox
@@ -92,14 +103,19 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     public void renderHitboxes(Graphics g){
         super.renderHitboxes(g);
         footBox.render(g);
+        detectionBox.render(g);
     }
 
     @Override
     public void process(float delta)
     {
         super.process(delta);
-        processMovement(delta);
+
         processRegeneration(delta);
+    }
+
+    private void processShooting(float delta){
+        //shoot stuff
     }
 
     private void processRegeneration(float delta)
@@ -160,6 +176,15 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         }
         if(wallCollision)
             footboxCollision = false;
+
+        playerDetected = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
+        if(!playerDetected){
+            detectionBox.setObjectColor(Color.CYAN);
+            processMovement(delta);
+        }else{
+            detectionBox.setObjectColor(Color.RED);
+            processShooting(delta);
+        }
     }
 
     @Override
