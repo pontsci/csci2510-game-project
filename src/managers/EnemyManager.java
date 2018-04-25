@@ -1,5 +1,6 @@
 package managers;
 
+import spawning.Spawner;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.character.enemy.Enemy;
@@ -53,7 +54,11 @@ public class EnemyManager extends Manager
     }
 
     @Override
-    public void switchLevel(int level){
-
+    public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
+        getSprites().clear();
+        //Spawn enemies
+        for (int i = 0; i < 3; i++){
+            addTriBot(spawner.getSpawnPoint());
+        }
     }
 }

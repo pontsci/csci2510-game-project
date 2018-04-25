@@ -1,11 +1,14 @@
 package sprite.world;
 
+import bounding.BoundingBox;
+import bounding.BoundingCircle;
 import bounding.BoundingShape;
 import sprite.Sprite;
 import sprite.character.enemy.Enemy;
 import util.Matrix3x3f;
 import util.Vector2f;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -13,28 +16,25 @@ import java.util.ArrayList;
 
 public class Door extends Sprite{
     protected boolean open;
-    protected ArrayList<BoundingShape> hitboxes = new ArrayList<>();
     protected ArrayList<Sprite> enemies;
     BufferedImage spriteSheet;
 
     public Door(float startX, float startY, Vector2f scale, ArrayList<Sprite> enemies){
         super(startX, startY, scale);
-        spriteSheet = loadFile("src/resources/foreground/door/door.png");
+        spriteSheet = loadFile("src/resources/world/foreground/door/door.png");
         setCurrentSpriteFrame(spriteSheet.getSubimage(0, 0, spriteSheet.getWidth()/2, spriteSheet.getHeight()));
         this.enemies = enemies;
+        initializeHitboxes();
     }
 
     public  void initializeHitboxes(){
-
+        //Hitboxes are in the sprite class so you did not need to have a hitboxes variable in here.
+        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -1.8f), new Vector2f( .9f, 1.3f),  Color.BLUE));
+        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -1.8f), new Vector2f( .9f, 1.3f), Color.RED));
     }
 
     public void process(float delta){
-    // not needed
-    }
-
-    @Override
-    public void update(float delta, Matrix3x3f viewport) {
-        super.update(delta, viewport);
+        //Process whether the door is open or closed
         if (enemies.isEmpty()){
             setOpen();
         }

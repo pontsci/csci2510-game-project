@@ -40,9 +40,7 @@ public class Spawner extends Manager
     }
 
     @Override
-    public void switchLevel(int level)
-    {
-        //for levels
-    }
+    public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
 
+    }
 }

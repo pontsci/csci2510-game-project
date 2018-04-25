@@ -1,5 +1,6 @@
 package managers;
 
+import spawning.Spawner;
 import sprite.world.PowerUp;
 import status.Status;
 import util.Matrix3x3f;
@@ -51,7 +52,7 @@ public class PowerUpManager extends Manager{
 	}
 
 	@Override
-	public void switchLevel(int level){
-
+	public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
+		getSprites().clear();
 	}
 }

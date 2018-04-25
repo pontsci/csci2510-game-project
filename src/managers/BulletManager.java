@@ -1,5 +1,6 @@
 package managers;
 
+import spawning.Spawner;
 import sprite.Sprite;
 import sprite.character.player.MainCharacter;
 import sprite.bullet.Bullet;
@@ -46,7 +47,7 @@ public class BulletManager extends Manager{
     }
 
     @Override
-    public void switchLevel(int level){
+    public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
 
     }
 

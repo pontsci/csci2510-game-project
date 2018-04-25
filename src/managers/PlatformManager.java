@@ -1,9 +1,11 @@
 package managers;
 
 import spawning.SpawnRange;
+import spawning.Spawner;
 import sprite.Sprite;
 import sprite.world.Platform;
 import util.Matrix3x3f;
+import util.Vector2f;
 
 import java.util.ArrayList;
 
@@ -29,7 +31,29 @@ public class PlatformManager extends Manager{
     }
 
     @Override
-    public void switchLevel(int level){
-
+    public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
+        getSprites().clear();
+        if(level == 1){
+            getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
+            getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
+            getSprites().add(new Platform(3.5f, -1.5f, new Vector2f(.75f, .5f)));
+            getSprites().add(new Platform(5.5f, 1.0f, new Vector2f(.75f,.5f)));
+            getSprites().add(new Platform(3.5f, 1.0f, new Vector2f(.75f, .5f)));
+            getSprites().add(new Platform(-4, 1.0f, new Vector2f(.75f, .5f)));
+        }
+        else if( level == 2){
+            getSprites().add(new Platform(0.0f, -1.5f, new Vector2f(.75f,.5f)));
+            getSprites().add(new Platform(0.0f, 1.0f, new Vector2f(.75f,.5f)));
+            getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
+            getSprites().add(new Platform(-6.5f, -1.5f, new Vector2f(.75f,.5f)));
+        }
+        else if( level == 3){
+            getSprites().add(new Platform(-6.5f, -1.5f, new Vector2f(.75f,.5f)));
+            getSprites().add(new Platform(-3.25f, -1.5f, new Vector2f(.75f,.5f)));
+            getSprites().add(new Platform(0.0f, -1.5f, new Vector2f(.75f,.5f)));
+            getSprites().add(new Platform(3.25f, -1.5f, new Vector2f(.75f,.5f)));
+            getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
+        }
+        spawner.setSpawnRanges(getPlatFormSpawns(viewport));
     }
 }

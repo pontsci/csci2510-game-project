@@ -1,5 +1,6 @@
 package managers;
 
+import spawning.Spawner;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.bullet.Bullet;
@@ -50,5 +51,5 @@ public abstract class Manager{
     }
 
     //Given an int, set a new level
-    public abstract void switchLevel(int level);
+    public abstract void switchLevel(int level, Spawner spawner, Matrix3x3f viewport);
 }

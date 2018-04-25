@@ -1,5 +1,6 @@
 package managers;
 
+import spawning.Spawner;
 import util.Vector2f;
 
 import java.awt.*;
@@ -44,8 +45,7 @@ public class ScreenManager extends Manager{
     }
 
     @Override
-    public void switchLevel(int level){
+    public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
 
     }
-
 }
