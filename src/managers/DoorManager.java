@@ -1,5 +1,6 @@
 package managers;
 
+import spawning.Spawner;
 import sprite.Sprite;
 import sprite.character.enemy.Enemy;
 import sprite.character.player.MainCharacter;
@@ -39,6 +40,11 @@ public class DoorManager extends Manager{
 
     public void checkCollision(float delta, Matrix3x3f viewport){
         
+    }
+
+    @Override
+    public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
+
     }
 
 }

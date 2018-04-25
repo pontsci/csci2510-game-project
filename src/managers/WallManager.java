@@ -1,5 +1,6 @@
 package managers;
 
+import spawning.Spawner;
 import sprite.world.Wall;
 import util.Matrix3x3f;
 import util.Vector2f;
@@ -18,8 +19,8 @@ public class WallManager extends Manager{
     }
 
     @Override
-    public void switchLevel(int level){
-        
+    public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
+
     }
 }
 

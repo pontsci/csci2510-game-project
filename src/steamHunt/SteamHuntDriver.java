@@ -26,6 +26,7 @@ public class SteamHuntDriver extends SimpleFramework{
     private BulletManager bulletManager;
     private EnemyManager enemyManager;
     private ScreenManager screenManager;
+    private DoorManager doorManager;
     private boolean paused = false;
     private boolean renderHitboxes = false;
     private int level = 2;
@@ -211,25 +212,10 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private void loadNewLevel(){
-        //clear level
-        platformManager.getSprites().clear();
-        enemyManager.getSprites().clear();
-        powerUpManager.getSprites().clear();
-        //Load platforms and spawnranges
-        platformManager.getSprites().clear();
-        Levels.setLevel(level,platformManager.getSprites(), floorManager.getSprites());
-        spawner.setSpawnRanges(platformManager.getPlatFormSpawns(getViewportTransform()));
-        //Spawn enemies
-        for (int i = 0; i < 3; i++){
-            enemyManager.addTriBot(spawner.getSpawnPoint());
+        //create a new level.
+        for(Manager manager : managers){
+            manager.switchLevel(level, spawner, getViewportTransform());
         }
-        //Spawn powerups.
-        powerUpManager.addPowerUp(StatusArchive.getHealthStatus(), spawner.getSpawnPoint());
-        powerUpManager.addPowerUp(StatusArchive.getFireRateStatus(), spawner.getSpawnPoint());
-        powerUpManager.addPowerUp(StatusArchive.getDmgStatus(), spawner.getSpawnPoint());
-        powerUpManager.addPowerUp(StatusArchive.getShieldStatus(), spawner.getSpawnPoint());
-        powerUpManager.addPowerUp(StatusArchive.getTaserStatus(), spawner.getSpawnPoint());
-        powerUpManager.addPowerUp(StatusArchive.getDoTStatus(), spawner.getSpawnPoint());
     }
 
     @Override
