@@ -49,4 +49,9 @@ public class PowerUpManager extends Manager{
 	{
 		//not needed
 	}
+
+	@Override
+	public void switchLevel(int level){
+
+	}
 }

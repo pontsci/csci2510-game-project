@@ -1,9 +1,7 @@
 package managers;
 
-import sprite.character.CharacterSprite;
 import sprite.character.player.MainCharacter;
 import sprite.Sprite;
-import sprite.world.Floor;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -19,6 +17,11 @@ public class MainCharacterManager extends Manager{
         for(Sprite sprite : getSprites()){
             ((MainCharacter)sprite).checkCollision(delta, viewport);
         }
+    }
+
+    @Override
+    public void switchLevel(int level){
+
     }
 
     //Tell all main characters to jump - Note, there should only be one

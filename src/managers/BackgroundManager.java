@@ -16,4 +16,9 @@ public class BackgroundManager extends Manager{
     {
         //no collision needed
     }
+
+    @Override
+    public void switchLevel(int level){
+
+    }
 }

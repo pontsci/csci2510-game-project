@@ -51,4 +51,9 @@ public class EnemyManager extends Manager
             ((Enemy)sprite).checkCollision(delta, viewport);
         }
     }
+
+    @Override
+    public void switchLevel(int level){
+
+    }
 }
