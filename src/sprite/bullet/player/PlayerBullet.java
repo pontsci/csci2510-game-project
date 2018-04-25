@@ -17,15 +17,15 @@ public class PlayerBullet extends Bullet{
     public PlayerBullet(float startX, float startY, Vector2f scale, ArrayList<Sprite> enemies){
         super(startX, startY, scale);
         BufferedImage spriteSheet = loadFile("src/resources/character/player/MainCharBullet_WH_237x356_Bullet.png");
-        setCurrentSpriteFrame(spriteSheet.getSubimage(711,0,237,356));
+        setCurrentSpriteFrame(spriteSheet.getSubimage(671,0,197,306));
         this.enemies = enemies;
         initializeHitboxes();
     }
 
     @Override
     public void initializeHitboxes(){
-        hitboxes.add(new BoundingBox(new Vector2f(-.9f, .4f), new Vector2f(-.7f, .6f), Color.BLUE));
-        hitboxes.add(new BoundingBox(new Vector2f(-.9f, .4f), new Vector2f(-.7f, .6f), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.3f, .2f), new Vector2f(-.1f, .4f), Color.BLUE));
+        hitboxes.add(new BoundingBox(new Vector2f(-.3f, .2f), new Vector2f(-.1f, .4f), Color.RED));
     }
 
     @Override
@@ -42,9 +42,8 @@ public class PlayerBullet extends Bullet{
     public boolean checkCollision(float delta, Matrix3x3f viewport){
         for(int i = 0; i < enemies.size(); i++){
             //bullet collides with enemy
-            if(Collision.checkSpriteCollision(delta, viewport, this, enemies.get(i))){
+            if(Collision.checkSpriteCollision(this, enemies.get(i))){
                 //if the enemy hp = 0 then remove the enemy
-
                 ((Enemy) enemies.get(i)).setHit(true);
                 if(((Enemy)enemies.get(i)).decreaseHP(bulletDamage)){
                     enemies.remove(i);

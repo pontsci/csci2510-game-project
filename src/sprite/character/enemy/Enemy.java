@@ -9,6 +9,7 @@ import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
+import sprite.world.Platform;
 import status.VulnStatus;
 import util.Collision;
 import util.Matrix3x3f;
@@ -22,8 +23,6 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private int currentDirection = 1;
     private int GOING_RIGHT = 0;
     private int GOING_LEFT = 1;
-    protected int hp;
-    protected int maxHp;
     private boolean footboxCollision = true;
     private boolean wallCollision = false;
     private boolean damaged = false;
@@ -36,17 +35,14 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      * @param startX starting x coord
      * @param startY starting y coord
      * @param scale starting scale
-     * @param floor the floor
+     * @param floors the floor
      * @param walls the walls
      * @param platforms the platforms
      * @param player the player
      */
-    Enemy(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player){
-        super(startX, startY, scale, floor, walls, platforms);
-        this.player = player;
-        this.hp = 10;
-        maxHp = hp;
-        regenTimer = 0;
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player){
+        super(startX, startY, scale, floors, walls, platforms);
+        initialize(player, 10);
     }
 
     /**
@@ -54,17 +50,21 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      * @param startX starting x coord
      * @param startY starting y coord
      * @param scale starting scale
-     * @param floor the floor
+     * @param floors the floor
      * @param walls the walls
      * @param platforms the platforms
      * @param player the player
      * @param hp starting hp
      */
-    Enemy(float startX, float startY, Vector2f scale, Floor floor, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player, int hp){
-        super(startX, startY, scale, floor, walls, platforms);
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player, int hp){
+        super(startX, startY, scale, floors, walls, platforms);
+        initialize(player, hp);
+    }
+
+    private void initialize(MainCharacter player, int hp){
         this.player = player;
         this.hp = hp;
-        maxHp = this.hp;
+        maxHp = hp;
         regenTimer = 0;
     }
 
@@ -120,7 +120,6 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
                 regenTimer = 0;
                 hp = maxHp;
                 damaged = false;
-                System.out.println("REGEN!");
             }
         }
     }
@@ -167,7 +166,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     protected void checkWallCollision(float delta, Matrix3x3f viewport){
         wallCollision = false;
         for(int i = 0; i < walls.size(); i++){
-            while(Collision.checkSpriteCollision(delta, viewport, this, walls.get(i))){
+            while(Collision.checkSpriteCollision(this, walls.get(i))){
                 if(i == 0){
                     pushCharacter(delta, viewport, 'x', ONE_PIXEL);
                     wallCollision = true;
@@ -182,9 +181,8 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     }
 
     private boolean footboxCollidesWithPlatform(){
-
-        for(int i = 0; i < platforms.size(); i++){
-            if(Collision.checkCollision(footBox, platforms.get(i).getHitboxes())){
+        for(Sprite platform : platforms){
+            if(Collision.checkCollision(footBox, platform.getHitboxes())){
                 return true;
             }
         }

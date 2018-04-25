@@ -4,19 +4,30 @@ import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import bounding.BoundingShape;
 import sprite.Sprite;
+import sprite.character.CharacterSprite;
 
 import java.util.ArrayList;
 
 public class Collision {
+    protected static final float ONE_PIXEL = .00833333f;
 
     //Given two sprites, return if they collide
-    public static boolean checkSpriteCollision(float delta, Matrix3x3f viewport, Sprite thisSprite, Sprite otherSprite){
+    public static boolean checkSpriteCollision(Sprite thisSprite, Sprite otherSprite){
         Vector2f spriteMin = ((BoundingBox)otherSprite.getHitboxes().get(0)).getCurrentMin();
         Vector2f spriteMax = ((BoundingBox)otherSprite.getHitboxes().get(0)).getCurrentMax();
         Vector2f characterMin = ((BoundingBox)thisSprite.getHitboxes().get(0)).getCurrentMin();
         Vector2f characterMax = ((BoundingBox)thisSprite.getHitboxes().get(0)).getCurrentMax();
 
         return Intersect.intersectAABB(characterMin, characterMax, spriteMin, spriteMax) && checkInnerCollision(thisSprite.getHitboxes(), otherSprite.getHitboxes(), 1);
+    }
+
+    //Given a sprite and a list of sprites, if they collide, push the single sprite.
+    public static void checkSpriteCollision(float delta, Matrix3x3f viewport, CharacterSprite thisSprite, ArrayList<Sprite> otherSprites){
+        for(Sprite otherSprite : otherSprites){
+            while(Collision.checkSpriteCollision(thisSprite, otherSprite)){
+                thisSprite.pushCharacter(delta, viewport, 'y', ONE_PIXEL/2);
+            }
+        }
     }
 
     //given two sets of hitboxes, return if they collide
