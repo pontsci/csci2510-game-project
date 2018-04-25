@@ -71,3 +71,7 @@ fabric.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
+.idea/csci2510-game-project.iml
+.idea/modules.xml
+.idea/misc.xml
+csci2510-game-project.iml
