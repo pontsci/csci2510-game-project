@@ -17,6 +17,7 @@ import util.Vector2f;
 
 public abstract class Enemy extends CharacterSprite implements VulnStatus{
     protected BoundingBox footBox = new BoundingBox(new Vector2f(-1.1f, -2.4f), new Vector2f(-.9f, -1.8f), Color.GREEN);
+    protected BoundingBox detectionBox = new BoundingBox(new Vector2f(-40f,-2f), new Vector2f(0f,4f), Color.CYAN);
     private float walkRate = 1.5f;
     protected float regenTimer;
     private final float REGEN_TIME = 10;
@@ -83,6 +84,10 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         footBox.setyTranslation(getyTranslation());
         footBox.setScale(getScale());
         footBox.updateWorld(viewport);
+        detectionBox.setxTranslation(getxTranslation());
+        detectionBox.setyTranslation(getyTranslation());
+        detectionBox.setScale(getScale());
+        detectionBox.updateWorld(viewport);
 
         setViewport(viewport);
     }
@@ -92,6 +97,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     public void renderHitboxes(Graphics g){
         super.renderHitboxes(g);
         footBox.render(g);
+        detectionBox.render(g);
     }
 
     @Override
