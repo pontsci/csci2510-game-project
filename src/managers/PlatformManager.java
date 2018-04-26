@@ -33,26 +33,28 @@ public class PlatformManager extends Manager{
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         getSprites().clear();
-        if(level == 1){
-            getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
-            getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
-            getSprites().add(new Platform(3.5f, -1.5f, new Vector2f(.75f, .5f)));
-            getSprites().add(new Platform(5.5f, 1.0f, new Vector2f(.75f,.5f)));
-            getSprites().add(new Platform(3.5f, 1.0f, new Vector2f(.75f, .5f)));
-            getSprites().add(new Platform(-4, 1.0f, new Vector2f(.75f, .5f)));
-        }
-        else if( level == 2){
-            getSprites().add(new Platform(0.0f, -1.5f, new Vector2f(.75f,.5f)));
-            getSprites().add(new Platform(0.0f, 1.0f, new Vector2f(.75f,.5f)));
-            getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
-            getSprites().add(new Platform(-6.5f, -1.5f, new Vector2f(.75f,.5f)));
-        }
-        else if( level == 3){
-            getSprites().add(new Platform(-6.5f, -1.5f, new Vector2f(.75f,.5f)));
-            getSprites().add(new Platform(-3.25f, -1.5f, new Vector2f(.75f,.5f)));
-            getSprites().add(new Platform(0.0f, -1.5f, new Vector2f(.75f,.5f)));
-            getSprites().add(new Platform(3.25f, -1.5f, new Vector2f(.75f,.5f)));
-            getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
+        switch(level){
+            case 1:
+                getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(3.5f, -1.5f, new Vector2f(.75f, .5f)));
+                getSprites().add(new Platform(5.5f, 1.0f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(3.5f, 1.0f, new Vector2f(.75f, .5f)));
+                getSprites().add(new Platform(-4, 1.0f, new Vector2f(.75f, .5f)));
+            break;
+            case 2:
+                getSprites().add(new Platform(0.0f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(0.0f, 1.0f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(-6.5f, -1.5f, new Vector2f(.75f,.5f)));
+            break;
+            case 3:
+                getSprites().add(new Platform(-6.5f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(-3.25f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(0.0f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(3.25f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
+            break;
         }
         spawner.setSpawnRanges(getPlatFormSpawns(viewport));
     }

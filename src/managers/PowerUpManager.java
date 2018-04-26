@@ -3,6 +3,7 @@ package managers;
 import spawning.Spawner;
 import sprite.world.PowerUp;
 import status.Status;
+import status.StatusArchive;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -54,5 +55,19 @@ public class PowerUpManager extends Manager{
 	@Override
 	public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
 		getSprites().clear();
+		switch(level){
+			case 1:
+				addPowerUp(StatusArchive.getHealthStatus(), spawner.getSpawnPoint());
+				addPowerUp(StatusArchive.getFireRateStatus(), spawner.getSpawnPoint());
+				break;
+			case 2:
+				addPowerUp(StatusArchive.getDmgStatus(), spawner.getSpawnPoint());
+				addPowerUp(StatusArchive.getShieldStatus(), spawner.getSpawnPoint());
+				break;
+			case 3:
+				addPowerUp(StatusArchive.getTaserStatus(), spawner.getSpawnPoint());
+				addPowerUp(StatusArchive.getDoTStatus(), spawner.getSpawnPoint());
+				break;
+		}
 	}
 }
