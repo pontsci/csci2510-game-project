@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class MainCharacterManager extends Manager{
     //Get the MainCharacter's sprite sheets and make the main character.
     public MainCharacterManager(ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms){
-        getSprites().add(new MainCharacter(-7, -4, new Vector2f(.3f,.3f), floors, walls, powerups, platforms));
+        getSprites().add(new MainCharacter(0, 0, new Vector2f(.3f,.3f), floors, walls, powerups, platforms));
     }
 
     public void checkCollision(float delta, Matrix3x3f viewport){
@@ -22,7 +22,20 @@ public class MainCharacterManager extends Manager{
 
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
-
+        switch(level){
+            case 1:
+                getSprites().get(0).setxTranslation(-4);
+                getSprites().get(0).setyTranslation(1.75f);
+                break;
+            case 2:
+                getSprites().get(0).setxTranslation(-3);
+                getSprites().get(0).setyTranslation(-4);
+                break;
+            case 3:
+                getSprites().get(0).setxTranslation(-2);
+                getSprites().get(0).setyTranslation(-4);
+                break;
+        }
     }
 
     //Tell all main characters to jump - Note, there should only be one
