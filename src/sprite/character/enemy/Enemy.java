@@ -3,6 +3,7 @@ package sprite.character.enemy;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Random;
 
 import bounding.BoundingBox;
 import sprite.Sprite;
@@ -18,7 +19,6 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     protected BoundingBox detectionBox = new BoundingBox(new Vector2f(-40f,-2f), new Vector2f(0f,4f), Color.CYAN);
     protected Vector2f bulletLine = new Vector2f(0,0);
     private float walkRate = 1.5f;
-    protected float regenTimer;
     private final float REGEN_TIME = 10;
     private int currentDirection = 1;
     private int GOING_RIGHT = 0;
@@ -32,7 +32,9 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private MainCharacter player;
     private Vector2f playerPos;
     private Vector2f bulletSpawn;
-    private float visionTimer = 0;
+    private float maxVisionTime;
+    protected float regenTimer;
+    protected float visionTimer = 0;
 
     /**
      * Creates a new enemy with references to objects it collides with and position data
@@ -73,6 +75,9 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         gravity = -1;
         playerPos = player.getPos();
         bulletSpawn = new Vector2f(getPos().x, getPos().y);
+
+        Random rand = new Random();
+        maxVisionTime = (rand.nextFloat()*2)+1;
     }
 
     @Override
@@ -156,6 +161,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private void processShooting(float delta){
         //shoot stuff
 
+        //detect if the player walks behind the enemy, turning the enemy around
         if(playerPos.x > getPos().x){
             currentDirection = GOING_RIGHT;
             setScale(new Vector2f(-Math.abs(getScale().x), Math.abs(getScale().y)));
@@ -171,8 +177,6 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
             bulletSpawn.x = getPos().x - .2f;
         }
         bulletSpawn.y = getPos().y - .08f;
-
-
     }
 
     private void processRegeneration(float delta)
@@ -239,18 +243,23 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
             detectionBox.setObjectColor(Color.CYAN);
 
             visionTimer += delta;
-            if(visionTimer > 3){
+            if(visionTimer > maxVisionTime){
                 vision = false;
             }
             if(vision){
-                playerPos = player.getPos();
+                updatePlayerPos(delta);
             }
         }else{
             detectionBox.setObjectColor(Color.RED);
             visionTimer = delta;
             vision = true;
-            playerPos = player.getPos();
+            updatePlayerPos(delta);
         }
+    }
+
+    private void updatePlayerPos(float delta)
+    {
+            playerPos = player.getPos();
     }
 
     @Override
