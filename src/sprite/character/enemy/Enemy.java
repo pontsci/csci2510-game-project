@@ -28,10 +28,11 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private boolean damaged = false;
     private boolean hit = false;
     private boolean playerDetected = false;
+    private boolean vision = false;
     private MainCharacter player;
     private Vector2f playerPos;
     private Vector2f bulletSpawn;
-
+    private float visionTimer = 0;
 
     /**
      * Creates a new enemy with references to objects it collides with and position data
@@ -108,7 +109,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         super.renderHitboxes(g);
         footBox.render(g);
         detectionBox.render(g);
-        if(playerDetected){
+        if(vision){
             Vector2f pPos = playerPos;
             Vector2f thisPos = bulletSpawn;
 
@@ -144,7 +145,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     public void process(float delta)
     {
         super.process(delta);
-        if(!playerDetected){
+        if(!vision){
             processMovement(delta);
         }else{
             processShooting(delta);
@@ -154,6 +155,24 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
 
     private void processShooting(float delta){
         //shoot stuff
+
+        if(playerPos.x > getPos().x){
+            currentDirection = GOING_RIGHT;
+            setScale(new Vector2f(-Math.abs(getScale().x), Math.abs(getScale().y)));
+        }else{
+            currentDirection = GOING_LEFT;
+            setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
+        }
+
+        //where to spawn the bullets when shot
+        if(currentDirection == GOING_LEFT){
+            bulletSpawn.x = getPos().x + .2f;
+        }else{
+            bulletSpawn.x = getPos().x - .2f;
+        }
+        bulletSpawn.y = getPos().y - .08f;
+
+
     }
 
     private void processRegeneration(float delta)
@@ -201,13 +220,6 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
                 currentDirection = GOING_LEFT;
             }
         }
-
-        if(currentDirection == GOING_LEFT){
-            bulletSpawn.x = getPos().x + .2f;
-        }else{
-            bulletSpawn.x = getPos().x - .2f;
-        }
-        bulletSpawn.y = getPos().y - .08f;
     }
 
     @Override
@@ -225,9 +237,19 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         playerDetected = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
         if(!playerDetected){
             detectionBox.setObjectColor(Color.CYAN);
+
+            visionTimer += delta;
+            if(visionTimer > 3){
+                vision = false;
+            }
+            if(vision){
+                playerPos = player.getPos();
+            }
         }else{
-            playerPos = player.getPos();
             detectionBox.setObjectColor(Color.RED);
+            visionTimer = delta;
+            vision = true;
+            playerPos = player.getPos();
         }
     }
 
