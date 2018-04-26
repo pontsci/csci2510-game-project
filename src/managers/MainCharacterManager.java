@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class MainCharacterManager extends Manager{
     //Get the MainCharacter's sprite sheets and make the main character.
     public MainCharacterManager(ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms){
-        getSprites().add(new MainCharacter(0, 0, new Vector2f(.3f,.3f), floors, walls, powerups, platforms));
+        getSprites().add(new MainCharacter(0, 0, new Vector2f(-.3f,.3f), floors, walls, powerups, platforms));
     }
 
     public void checkCollision(float delta, Matrix3x3f viewport){

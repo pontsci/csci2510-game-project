@@ -8,8 +8,9 @@ import util.Vector2f;
 public class WallManager extends Manager{
     //Get the wall's sprite sheet and make two walls on either side of the screen
     public WallManager(){
-        getSprites().add(new Wall(-7.9f, 1, new Vector2f(14,14)));
-        getSprites().add(new Wall(7.9f, 1, new Vector2f(-14,14)));
+        //No more than two outer walls can be added, walls use a very specific collision method that only pushes one direction
+        getSprites().add(new Wall(-7.8f, 0f, new Vector2f(.55f,.55f)));
+        getSprites().add(new Wall(7.8f, 0f, new Vector2f(-.55f,.55f)));
     }
 
     @Override

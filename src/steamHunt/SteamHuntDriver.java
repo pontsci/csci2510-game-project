@@ -46,7 +46,7 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private enum ManagerType{
-        BACKGROUND(0), FLOOR(1), PLATFORM(2), DOOR(3), MAINCHAR(4), WALL(5), POWERUP(6), ENEMY(7), SPAWNER(8), BULLET(9), SCREEN(10);
+        BACKGROUND(0), FLOOR(1), PLATFORM(2), DOOR(3), WALL(4), MAINCHAR(5), POWERUP(6), ENEMY(7), SPAWNER(8), BULLET(9), SCREEN(10);
         private int i;
         ManagerType(int i){
             this.i = i;

@@ -59,9 +59,9 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     // Initialize the main character's hitboxes, the first box is the outer hitbox
     public void initializeHitboxes(){
         // Create the hitboxes
-        hitboxes.add(new BoundingBox(new Vector2f(-.7f, -2), new Vector2f(.7f, 1.9f), Color.BLUE));
+        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -2), new Vector2f(.7f, 1.9f), Color.BLUE));
         hitboxes.add(new BoundingCircle(.4f, -.1f, 1.4f, Color.RED));
-        hitboxes.add(new BoundingBox(new Vector2f(-.7f, -1.9f), new Vector2f(.7f, 1.1f), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.9f, -1.9f), new Vector2f(.7f, 1.1f), Color.RED));
     }
 
     // Process functions of the main character
