@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public abstract class Sprite{
     private BufferedImage currentSpriteFrame;
-    private Matrix3x3f viewport;
+    protected Matrix3x3f viewport;
     private float rotation = 0;
     private Vector2f scale;
     private float xTranslation;
@@ -116,6 +116,9 @@ public abstract class Sprite{
     }
     public void setScale(Vector2f scale){
         this.scale = scale;
+    }
+    public Vector2f getPos(){
+        return new Vector2f(getxTranslation(), getyTranslation());
     }
     public void setRotation(float rotation){
         this.rotation = rotation;
