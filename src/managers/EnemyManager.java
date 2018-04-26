@@ -19,7 +19,7 @@ public class EnemyManager extends Manager
     private ArrayList<Sprite> platforms;
     private MainCharacter player;
 
-    public EnemyManager(ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player)
+    public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player)
     {
         this.floors = floors;
         this.walls = walls;

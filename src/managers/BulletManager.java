@@ -15,7 +15,7 @@ public class BulletManager extends Manager{
     private MainCharacter player;
     private ArrayList<Sprite> enemies;
 
-    public BulletManager(MainCharacter player, ArrayList<Sprite> enemies){
+    public void initialize(MainCharacter player, ArrayList<Sprite> enemies){
         this.player = player;
         this.enemies = enemies;
     }

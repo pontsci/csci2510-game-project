@@ -14,7 +14,7 @@ public class Spawner extends Manager
     // The first spawnRange will always be the player spawn.
     ArrayList<SpawnRange> spawnRanges= new ArrayList<SpawnRange>();
     private Random random;
-    public Spawner(){
+    public void initialize(){
         random = new Random();
     }
 

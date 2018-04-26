@@ -10,7 +10,7 @@ import util.Vector2f;
 import java.util.ArrayList;
 
 public class PlatformManager extends Manager{
-    public PlatformManager(){
+    public void initialize(){
 
     }
 

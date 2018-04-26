@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MainCharacterManager extends Manager{
     //Get the MainCharacter's sprite sheets and make the main character.
-    public MainCharacterManager(ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms){
+    public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms){
         getSprites().add(new MainCharacter(0, 0, new Vector2f(-.3f,.3f), floors, walls, powerups, platforms));
     }
 

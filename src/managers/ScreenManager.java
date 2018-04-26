@@ -25,7 +25,7 @@ public class ScreenManager extends Manager{
     private ScreenType currentScreen = ScreenType.NONE; 
     
     //Get the background's sprite sheet and make a background.
-    public ScreenManager(){
+    public void initialize(){
         getSprites().add(new Pause(0, .2f, new Vector2f(1,.87f)));
         getSprites().add(new Start(0, 0, new Vector2f(1,.87f)));
         currentScreen = ScreenType.START;

@@ -10,15 +10,15 @@ import util.Vector2f;
 import java.util.ArrayList;
 
 public class DoorManager extends Manager{
-    private MainCharacter player;
+    private ArrayList<Sprite> players;
     private ArrayList<Sprite> enemies;
 
-    public DoorManager(ArrayList<Sprite> enemies, MainCharacter player)
-    {
+    public void initialize(ArrayList<Sprite> enemies, ArrayList<Sprite> players){
         this.enemies = enemies;
-        this.player = player;
+        this.players = players;
         getSprites().add(new Door(7.25f,-3.47f ,new Vector2f(.35f, .35f), enemies));
     }
+
 
     public void checkCollision(float delta, Matrix3x3f viewport){
         

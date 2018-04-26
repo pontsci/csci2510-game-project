@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import managers.*;
 import spawning.Spawner;
+import sprite.character.enemy.Enemy;
 import sprite.character.player.MainCharacter;
 import util.SimpleFramework;
 import managers.ScreenManager.ScreenType;
@@ -14,22 +15,31 @@ import managers.ScreenManager.ScreenType;
 //The driver's job is to direct information between managers.
 //It does not deal with individual sprites, that is footBox for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
+    //Used for looping
     private Manager[] managers = new Manager[12];
-    private BackgroundManager backgroundManager;
-    private FloorManager floorManager;
-    private PlatformManager platformManager;
-    private ScreenWallManager screenWallManager;
-    private WallManager wallManager;
-    private PowerUpManager powerUpManager;
-    private MainCharacterManager mainCharManager;
-    private Spawner spawner;
-    private BulletManager bulletManager;
-    private EnemyManager enemyManager;
-    private ScreenManager screenManager;
-    private DoorManager doorManager;
+
+    //Used for easy calling
+    private BackgroundManager backgroundManager = new BackgroundManager();
+    private FloorManager floorManager = new FloorManager();
+    private WallManager wallManager = new WallManager();
+    private PlatformManager platformManager = new PlatformManager();
+    private DoorManager doorManager = new DoorManager();
+    private ScreenWallManager screenWallManager= new ScreenWallManager();
+    private MainCharacterManager mainCharManager = new MainCharacterManager();
+    private PowerUpManager powerUpManager = new PowerUpManager();
+    private EnemyManager enemyManager = new EnemyManager();
+    private Spawner spawner = new Spawner();
+    private BulletManager bulletManager = new BulletManager();
+    private ScreenManager screenManager = new ScreenManager();
+
+    //Screen state
     private boolean paused = true;
     private boolean hasStarted = false;
+
+    //Hitbox rendering
     private boolean renderHitboxes = false;
+
+    //Level
     private int level = 2;
 
 
@@ -56,10 +66,10 @@ public class SteamHuntDriver extends SimpleFramework{
     //easier enum usage declarations
     private final ManagerType BACKGROUND = ManagerType.BACKGROUND;
     private final ManagerType FLOOR = ManagerType.FLOOR;
-    private final ManagerType DOOR = ManagerType.DOOR;
-    private final ManagerType PLATFORM = ManagerType.PLATFORM;
-    private final ManagerType SCREENWALL = ManagerType.SCREENWALL;
     private final ManagerType WALL = ManagerType.WALL;
+    private final ManagerType PLATFORM = ManagerType.PLATFORM;
+    private final ManagerType DOOR = ManagerType.DOOR;
+    private final ManagerType SCREENWALL = ManagerType.SCREENWALL;
     private final ManagerType MAINCHAR = ManagerType.MAINCHAR;
     private final ManagerType POWERUP = ManagerType.POWERUP;
     private final ManagerType ENEMY = ManagerType.ENEMY;
@@ -71,55 +81,44 @@ public class SteamHuntDriver extends SimpleFramework{
     //Initialize the sprites each manager starts with
     protected void initialize(){
         super.initialize();
-        //The i of these is display ordering: For example
-        //In the very back is the background, ontop of that is the floor and platforms
-        //After that is the the walls... and so on so forth.
-        managers[BACKGROUND.i] = new BackgroundManager();
-        managers[FLOOR.i] = new FloorManager();
-        managers[PLATFORM.i] = new PlatformManager();
-        managers[SCREENWALL.i] = new ScreenWallManager();
-        managers[POWERUP.i] = new PowerUpManager();
-        managers[SPAWNER.i] = new Spawner();
-        managers[SCREEN.i] = new ScreenManager();
-        managers[WALL.i] = new WallManager();
 
-        /*
-         * The following declarations are for ease of use whilst
-         * maintaining the ability to loop through managers
-        */
+        //Sync the array list and individual managers together
+        managers[BACKGROUND.i] = backgroundManager;
+        managers[FLOOR.i] = floorManager;
+        managers[WALL.i] = wallManager;
+        managers[PLATFORM.i] = platformManager;
+        managers[DOOR.i] = doorManager;
+        managers[SCREENWALL.i] = screenWallManager;
+        managers[MAINCHAR.i] = mainCharManager;
+        managers[POWERUP.i] = powerUpManager;
+        managers[ENEMY.i] = enemyManager;
+        managers[SPAWNER.i] = spawner;
+        managers[BULLET.i] = bulletManager;
+        managers[SCREEN.i] = screenManager;
 
-        //world managers
-        screenManager = (ScreenManager) managers[SCREEN.i];
-        backgroundManager = (BackgroundManager) managers[BACKGROUND.i];
-        floorManager = (FloorManager)managers[FLOOR.i];
-        platformManager = (PlatformManager)managers[PLATFORM.i];
-        screenWallManager = (ScreenWallManager)managers[SCREENWALL.i];
-        mainCharManager = (MainCharacterManager)managers[MAINCHAR.i];
-
-        //spawning/item managers
-        powerUpManager = (PowerUpManager)managers[POWERUP.i];
-        spawner = (Spawner) managers[SPAWNER.i];
-
-        //main character
-        managers[MAINCHAR.i] = new MainCharacterManager(floorManager.getSprites(), screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites());
-        mainCharManager = (MainCharacterManager)managers[MAINCHAR.i];
-        MainCharacter player = (MainCharacter) mainCharManager.getSprites().get(0);
-
-        //enemy
-        managers[ENEMY.i] = new EnemyManager(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(), player);
-        enemyManager = (EnemyManager) managers[ENEMY.i];
-
-        //door
-        managers[DOOR.i] = new DoorManager(enemyManager.getSprites(), (MainCharacter)mainCharManager.getSprites().get(0));
-        doorManager = (DoorManager)managers[DOOR.i];
-
-        //bullet
-        managers[BULLET.i] = new BulletManager(player, enemyManager.getSprites());
-        bulletManager = (BulletManager) managers[BULLET.i];
+        backgroundManager.initialize();
+        floorManager.initialize();
+        wallManager.initialize();
+        platformManager.initialize();
+        doorManager.initialize(enemyManager.getSprites(), mainCharManager.getSprites());
+        screenWallManager.initialize();
+        mainCharManager.initialize(floorManager.getSprites(),screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites());
         mainCharManager.setBulletManager(bulletManager);
+        //power ups don't initialize?
+        enemyManager.initialize(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0));
+        spawner.initialize();
+        bulletManager.initialize((MainCharacter) mainCharManager.getSprites().get(0), enemyManager.getSprites());
+        screenManager.initialize();
 
         //load level and spawner
         loadNewLevel();
+    }
+
+    private void loadNewLevel(){
+        //create a new level.
+        for(Manager manager : managers){
+            manager.switchLevel(level, spawner, getViewportTransform());
+        }
     }
 
     @Override
@@ -233,13 +232,6 @@ public class SteamHuntDriver extends SimpleFramework{
                 level = 1;
             }
             loadNewLevel();
-        }
-    }
-
-    private void loadNewLevel(){
-        //create a new level.
-        for(Manager manager : managers){
-            manager.switchLevel(level, spawner, getViewportTransform());
         }
     }
 
