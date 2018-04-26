@@ -93,4 +93,25 @@ public class Collision {
         return checkInnerCollision(thisHitboxes, otherHitboxes, 1);
     }
 
+    public static boolean intersectSegment(Vector2f origin, Vector2f destination, Sprite object, float xPadding, float yPadding){
+        BoundingBox box = ((BoundingBox)(object.getHitboxes().get(0)));
+
+        float boxHalfX = (box.getCurrentMax().x - box.getCurrentMin().x)/2;
+        float boxHalfY = (box.getCurrentMax().y - box.getCurrentMin().y)/2;
+        Vector2f pos = object.getPos();
+
+
+        float scaleX = 1.0f / destination.x;
+        float scaleY = 1.0f / destination.y;
+        float signX = Integer.signum((int)scaleX);
+        float signY = Integer.signum((int)scaleY);
+        float nearTimeX = (origin.x - signX * (boxHalfX + xPadding) - pos.x) * scaleX;
+        float nearTimeY = (origin.y - signY * (boxHalfY + yPadding) - pos.y) * scaleY;
+        float farTimeX = (origin.x + signX * (boxHalfX + xPadding) - pos.x) * scaleX;
+        float farTimeY = (origin.y + signY * (boxHalfY + yPadding) - pos.y) * scaleY;
+
+
+        return false;
+    }
+
 }

@@ -115,34 +115,14 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         footBox.render(g);
         detectionBox.render(g);
         if(vision){
-            Vector2f pPos = playerPos;
-            Vector2f thisPos = bulletSpawn;
-
-            float playerY = pPos.y;     //player y
-            float thisY = thisPos.y;    //enemy Y
-            Vector2f min;
-            Vector2f max;
-            g.setColor(Color.GREEN);
-
-            //check for which point is the starting point
-            if(pPos.x < thisPos.x){
-                float maxX = thisPos.x;
-                float minX = pPos.x;
-                min = new Vector2f(minX, playerY);
-                max = new Vector2f(maxX, thisY);
-            }else{
-                float maxX = pPos.x;
-                float minX = thisPos.x;
-                min = new Vector2f(minX, thisY);
-                max = new Vector2f(maxX, playerY);
-            }
-
-            //set to screen
-            Vector2f minScreen = viewport.mul(min);
-            Vector2f maxScreen = viewport.mul(max);
+            Vector2f origin = bulletSpawn;
+            Vector2f direction  = playerPos;
+            Vector2f originScreen = viewport.mul(origin);
+            Vector2f directionScreen = viewport.mul(direction);
 
             //draw
-            g.drawLine((int)minScreen.x, (int)minScreen.y, (int)maxScreen.x, (int)maxScreen.y);
+            g.setColor(Color.GREEN);
+            g.drawLine((int)originScreen.x, (int)originScreen.y, (int)directionScreen.x, (int)directionScreen.y);
         }
     }
 
