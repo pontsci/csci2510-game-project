@@ -110,7 +110,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         detectionBox.render(g);
         if(playerDetected){
             Vector2f pPos = playerPos;
-            Vector2f thisPos = getPos();
+            Vector2f thisPos = bulletSpawn;
 
             float playerY = pPos.y;     //player y
             float thisY = thisPos.y;    //enemy Y
@@ -201,6 +201,13 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
                 currentDirection = GOING_LEFT;
             }
         }
+
+        if(currentDirection == GOING_LEFT){
+            bulletSpawn.x = getPos().x + .2f;
+        }else{
+            bulletSpawn.x = getPos().x - .2f;
+        }
+        bulletSpawn.y = getPos().y - .08f;
     }
 
     @Override
