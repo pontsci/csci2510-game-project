@@ -4,8 +4,8 @@ import sprite.Sprite;
 import util.Vector2f;
 
 //If anything special were to happen to the background, such as sliding, it would occur here
-public class End extends Sprite {
-    public End(float startX, float startY, Vector2f scale){
+public class Die extends Sprite {
+    public Die(float startX, float startY, Vector2f scale){
         super(startX, startY, scale);
         setCurrentSpriteFrame(loadFile("src/resources/world/background/EndScreen.png"));
         

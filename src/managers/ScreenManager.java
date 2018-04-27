@@ -4,7 +4,8 @@ import spawning.Spawner;
 import util.Vector2f;
 
 import java.awt.*;
-import sprite.screens.End;
+import sprite.screens.Die;
+import sprite.screens.Ending;
 import sprite.screens.Pause;
 import sprite.screens.Start;
 import util.Matrix3x3f;
@@ -12,7 +13,7 @@ import util.Matrix3x3f;
 //Could be used to handle which background to play on each level of the game
 public class ScreenManager extends Manager{
     public enum ScreenType {
-        NONE(-1), PAUSE(0), START(1), END (2);
+        NONE(-1), PAUSE(0), START(1), DIE (2), END(3);
         
         private int i;
         ScreenType(int i) {
@@ -29,7 +30,8 @@ public class ScreenManager extends Manager{
     public void initialize(){
         getSprites().add(new Pause(0, .2f, new Vector2f(1,.87f)));
         getSprites().add(new Start(0, 0, new Vector2f(1,.87f)));
-        getSprites().add(new End(0, 0, new Vector2f(1,.87f)));
+        getSprites().add(new Die(0, 0, new Vector2f(1,.87f)));
+        getSprites().add(new Ending(0, 0, new Vector2f(1,.87f)));
         currentScreen = ScreenType.START;
     }
     

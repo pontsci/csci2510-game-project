@@ -122,9 +122,10 @@ public class SteamHuntDriver extends SimpleFramework{
         screenManager.SetScreen(ScreenType.END);
         
         //re initialize character and set level = 1
-        //mainCharManager.reset();
-        //level = 2;
-        //loadNewLevel();
+        mainCharManager.reset();
+        // how do I reset the levels?
+        // loadNewLevel();
+        
     }
 
 
@@ -167,7 +168,7 @@ public class SteamHuntDriver extends SimpleFramework{
     }
     // Process a P key as the pause
     private void processPKeyInput() {
-        if(keyboard.keyDownOnce(KeyEvent.VK_P)){
+        if(keyboard.keyDownOnce(KeyEvent.VK_P) || keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)){
             
             paused = !paused;
             
