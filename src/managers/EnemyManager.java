@@ -25,6 +25,7 @@ public class EnemyManager extends Manager
     {
         this.floors = floors;
         this.screenWalls = screenWalls;
+        this.walls = walls;
         this.platforms = platforms;
         this.player = player;
         getSprites().add(new TriBot(5, 0, new Vector2f(.3f, .3f), floors, screenWalls, platforms, player, walls));

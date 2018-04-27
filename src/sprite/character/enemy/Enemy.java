@@ -260,6 +260,50 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         }
     }
 
+    @Override
+    protected void checkWallCollision(float delta, Matrix3x3f viewport){
+        float xStartState = getxTranslation();
+        float yStartState = getyTranslation();
+        int magnitude = 1;
+        if(!(walls == null)){
+            for(Sprite wall : walls){
+                while(Collision.checkSpriteCollision(this, wall)){
+                    pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setyTranslation(yStartState);
+                    }
+                    else{
+                        break;
+                    }
+                    pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setxTranslation(xStartState);
+                    }
+                    else{
+                        wallCollision = true;
+                        break;
+                    }
+                    pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setxTranslation(xStartState);
+                    }
+                    else{
+                        wallCollision = true;
+                        break;
+                    }
+                    pushCharacter(delta, viewport, 'y', -ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setyTranslation(yStartState);
+                    }
+                    else{
+                        break;
+                    }
+                    magnitude++;
+                }
+            }
+        }
+    }
+
     private boolean footboxCollidesWithPlatform(){
         for(Sprite platform : platforms){
             if(Collision.checkCollision(footBox, platform.getHitboxes())){

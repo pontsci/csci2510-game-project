@@ -168,9 +168,9 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
             float yStartState = getyTranslation();
             int magnitude = 1;
             for(Sprite platform : platforms){
-                while(Collision.checkSpriteCollision(this, platform)){
+                while(Collision.checkOuterCollision(this, platform)){
                     pushCharacter(delta, viewport, 'y', ONE_PIXEL*magnitude);
-                    if(Collision.checkSpriteCollision(this, platform)){
+                    if(Collision.checkOuterCollision(this, platform)){
                         setyTranslation(yStartState);
                     }
                     else{
@@ -178,13 +178,13 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                         break;
                     }
                     pushCharacter(delta, viewport, 'x', ONE_PIXEL*magnitude);
-                    if(Collision.checkSpriteCollision(this, platform)){
+                    if(Collision.checkOuterCollision(this, platform)){
                         setxTranslation(xStartState);
                     }
                     else
                         break;
                     pushCharacter(delta, viewport, 'x', -ONE_PIXEL*magnitude);
-                    if(Collision.checkSpriteCollision(this, platform)){
+                    if(Collision.checkOuterCollision(this, platform)){
                         setxTranslation(xStartState);
                     }
                     else
@@ -202,32 +202,42 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         int magnitude = 1;
         if(!(walls == null)){
             for(Sprite wall : walls){
-                while(Collision.checkSpriteCollision(this, wall)){
+                while(Collision.checkOuterCollision(this, wall)){
+                    //Push character and check if it's colliding.
                     pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, wall)){
+                    if(Collision.checkOuterCollision(this, wall)){
                         setyTranslation(yStartState);
                     }
                     else{
                         onAPlatform = true;
+                        System.out.println(Math.abs(Math.abs(xStartState) - Math.abs(getxTranslation())));
+                        System.out.println("Pushed up");
                         break;
                     }
                     pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, wall)){
+                    if(Collision.checkOuterCollision(this, wall)){
                         setxTranslation(xStartState);
                     }
-                    else
+                    else{
+                        System.out.println(Math.abs(Math.abs(xStartState) - Math.abs(getxTranslation())));
+                        System.out.println("Pushed right");
                         break;
+                    }
                     pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, wall)){
+                    if(Collision.checkOuterCollision(this, wall)){
                         setxTranslation(xStartState);
                     }
-                    else
-                        break;
+                    else{
+                        System.out.println(Math.abs(Math.abs(xStartState) - Math.abs(getxTranslation())));
+                        System.out.println("Pushed left");
+                        break;}
                     pushCharacter(delta, viewport, 'y', -ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, wall)){
+                    if(Collision.checkOuterCollision(this, wall)){
                         setyTranslation(yStartState);
                     }
                     else{
+                        System.out.println(Math.abs(Math.abs(xStartState) - Math.abs(getxTranslation())));
+                        System.out.println("Pushed down");
                         velocityY = 0;
                         break;
                     }

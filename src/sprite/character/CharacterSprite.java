@@ -85,6 +85,7 @@ public abstract class CharacterSprite extends Sprite{
                         setyTranslation(yStartState);
                     }
                     else{
+                        System.out.println(Math.abs(Math.abs(xStartState) - Math.abs(getxTranslation())));
                         break;
                     }
                     pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);

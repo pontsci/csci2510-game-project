@@ -21,6 +21,15 @@ public class Collision {
         return Intersect.intersectAABB(characterMin, characterMax, spriteMin, spriteMax) && checkInnerCollision(thisSprite.getHitboxes(), otherSprite.getHitboxes(), 1);
     }
 
+    //Given two sprites, if their outer hitboxes collide, return true
+    public static boolean checkOuterCollision(Sprite thisSprite, Sprite otherSprite){
+        Vector2f spriteMin = ((BoundingBox)otherSprite.getHitboxes().get(0)).getCurrentMin();
+        Vector2f spriteMax = ((BoundingBox)otherSprite.getHitboxes().get(0)).getCurrentMax();
+        Vector2f characterMin = ((BoundingBox)thisSprite.getHitboxes().get(0)).getCurrentMin();
+        Vector2f characterMax = ((BoundingBox)thisSprite.getHitboxes().get(0)).getCurrentMax();
+        return Intersect.intersectAABB(characterMin, characterMax, spriteMin, spriteMax);
+    }
+
     //given two sets of hitboxes, return if they collide
     //start indicates where to start in the array, typically 1
     public static boolean checkInnerCollision(ArrayList<BoundingShape> thisHitboxes, ArrayList<BoundingShape> otherHitboxes, int start){
