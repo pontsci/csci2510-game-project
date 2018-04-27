@@ -7,7 +7,7 @@ import util.Vector2f;
 public class Die extends Sprite {
     public Die(float startX, float startY, Vector2f scale){
         super(startX, startY, scale);
-        setCurrentSpriteFrame(loadFile("src/resources/world/background/EndScreen.png"));
+        setCurrentSpriteFrame(loadFile("src/resources/world/background/DeathScreen.png"));
         
     }
 

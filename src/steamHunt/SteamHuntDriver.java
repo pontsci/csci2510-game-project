@@ -40,7 +40,7 @@ public class SteamHuntDriver extends SimpleFramework{
     private boolean renderHitboxes = false;
 
     //Level
-    private int level = 2;
+    private int level = 1;
 
 
     private SteamHuntDriver(){
@@ -119,7 +119,7 @@ public class SteamHuntDriver extends SimpleFramework{
         //give the player the "You have died screen"
         paused = true;
         hasStarted = false;
-        screenManager.SetScreen(ScreenType.END);
+        screenManager.SetScreen(ScreenType.DIE);
         
         //re initialize character and set level = 1
         mainCharManager.reset();
