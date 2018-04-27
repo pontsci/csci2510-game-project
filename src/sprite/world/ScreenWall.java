@@ -17,8 +17,8 @@ public class ScreenWall extends Sprite {
 
     //Initialize the wall's hitboxes, the first box is the outer hitbox
     public void initializeHitboxes(){
-        hitboxes.add(new BoundingBox(new Vector2f(-5f, -24f), new Vector2f( 1.4f, 24f),  Color.BLUE));
-        hitboxes.add(new BoundingBox(new Vector2f(-5f, -24f), new Vector2f( 1.4f, 24f), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-5f, -24f), new Vector2f( 1.5f, 24f),  Color.BLUE));
+        hitboxes.add(new BoundingBox(new Vector2f(-5f, -24f), new Vector2f( 1.5f, 24f), Color.RED));
     }
 
     @Override
