@@ -210,8 +210,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                     }
                     else{
                         onAPlatform = true;
-                        System.out.println(Math.abs(Math.abs(xStartState) - Math.abs(getxTranslation())));
-                        System.out.println("Pushed up");
                         break;
                     }
                     pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
@@ -219,8 +217,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                         setxTranslation(xStartState);
                     }
                     else{
-                        System.out.println(Math.abs(Math.abs(xStartState) - Math.abs(getxTranslation())));
-                        System.out.println("Pushed right");
                         break;
                     }
                     pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
@@ -228,16 +224,12 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                         setxTranslation(xStartState);
                     }
                     else{
-                        System.out.println(Math.abs(Math.abs(xStartState) - Math.abs(getxTranslation())));
-                        System.out.println("Pushed left");
                         break;}
                     pushCharacter(delta, viewport, 'y', -ONE_PIXEL * magnitude);
                     if(Collision.checkOuterCollision(this, wall)){
                         setyTranslation(yStartState);
                     }
                     else{
-                        System.out.println(Math.abs(Math.abs(xStartState) - Math.abs(getxTranslation())));
-                        System.out.println("Pushed down");
                         velocityY = 0;
                         break;
                     }
