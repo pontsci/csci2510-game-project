@@ -155,23 +155,16 @@ public class SteamHuntDriver extends SimpleFramework{
             processSKeyInput();
             processSpaceKeyInput();
             processTestLevelChange();
-            processKKeyInput();
         }
         for(Manager manager : managers){
             manager.process(delta);
         }
     }
-    private void processKKeyInput() {
-         if(keyboard.keyDownOnce(KeyEvent.VK_K)){
-             mainCharManager.die();
-         }
-    }
+
     // Process a P key as the pause
     private void processPKeyInput() {
         if(keyboard.keyDownOnce(KeyEvent.VK_P) || keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)){
-            
             paused = !paused;
-            
             if (paused) {
                 screenManager.SetScreen(ScreenType.PAUSE);
             } else {
@@ -238,7 +231,15 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private void processTestLevelChange(){
-        if(keyboard.keyDownOnce(KeyEvent.VK_Z)){
+        if(keyboard.keyDownOnce(KeyEvent.VK_K)){
+            mainCharManager.die();
+        }
+        if(mainCharManager.isDead()){
+            restart();
+            level = 1;
+            loadNewLevel();
+        }
+        else if(keyboard.keyDownOnce(KeyEvent.VK_Z)){
             level--;
             if(level < 1){
                 level = 3;
@@ -261,9 +262,6 @@ public class SteamHuntDriver extends SimpleFramework{
             manager.update(delta, getViewportTransform());
         }
         checkCollision(delta);
-        if(mainCharManager.isDead()){
-            restart();
-        }
     }
 
     //Check sprite collision
