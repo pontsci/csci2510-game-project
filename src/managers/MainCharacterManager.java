@@ -91,13 +91,18 @@ public class MainCharacterManager extends Manager{
         }
     }
     
-    public boolean isDead(){
+    public boolean isDead(float xBound, float yBound){
+        boolean dead = false;
         for(Sprite mainCharacter : getSprites()){
             if(((MainCharacter)mainCharacter).getHp() < 1){
-                return true;
+                dead = true;
+            }
+            if(((MainCharacter)mainCharacter).getxTranslation() > xBound ||((MainCharacter)mainCharacter).getxTranslation() < -xBound ||
+                    ((MainCharacter)mainCharacter).getyTranslation() > yBound || ((MainCharacter)mainCharacter).getyTranslation() < -yBound){
+                dead = true;
             }
         }
-        return false;
+        return dead;
     }
     
     public void reset(){

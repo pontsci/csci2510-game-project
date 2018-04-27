@@ -239,7 +239,7 @@ public class SteamHuntDriver extends SimpleFramework{
 
     private void processTestLevelChange(){
       
-        if(mainCharManager.isDead()){
+        if(mainCharManager.isDead(appWorldWidth, appWorldHeight)){
             restart();
             level = 1;
             loadNewLevel();
