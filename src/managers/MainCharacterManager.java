@@ -90,4 +90,25 @@ public class MainCharacterManager extends Manager{
             ((MainCharacter)mainCharacter).setBulletManager(bm);
         }
     }
+    
+    public boolean isDead(){
+        for(Sprite mainCharacter : getSprites()){
+            if(((MainCharacter)mainCharacter).getHp() < 1){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void reset(){
+         for(Sprite mainCharacter : getSprites()){
+             ((MainCharacter)mainCharacter).setHp(3);
+         }
+    }
+    
+    public void die(){
+        for(Sprite mainCharacter : getSprites()){
+             ((MainCharacter)mainCharacter).setHp(0);
+         }
+    }
 }

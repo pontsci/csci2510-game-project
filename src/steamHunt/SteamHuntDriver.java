@@ -114,6 +114,19 @@ public class SteamHuntDriver extends SimpleFramework{
         //load level and spawner
         loadNewLevel();
     }
+    
+     private void restart() {
+        //give the player the "You have died screen"
+        paused = true;
+        hasStarted = false;
+        screenManager.SetScreen(ScreenType.END);
+        
+        //re initialize character and set level = 1
+        //mainCharManager.reset();
+        //level = 2;
+        //loadNewLevel();
+    }
+
 
     private void loadNewLevel(){
         //create a new level.
@@ -141,13 +154,17 @@ public class SteamHuntDriver extends SimpleFramework{
             processSKeyInput();
             processSpaceKeyInput();
             processTestLevelChange();
-
+            processKKeyInput();
         }
         for(Manager manager : managers){
             manager.process(delta);
         }
     }
-
+    private void processKKeyInput() {
+         if(keyboard.keyDownOnce(KeyEvent.VK_K)){
+             mainCharManager.die();
+         }
+    }
     // Process a P key as the pause
     private void processPKeyInput() {
         if(keyboard.keyDownOnce(KeyEvent.VK_P)){
@@ -243,6 +260,9 @@ public class SteamHuntDriver extends SimpleFramework{
             manager.update(delta, getViewportTransform());
         }
         checkCollision(delta);
+        if(mainCharManager.isDead()){
+            restart();
+        }
     }
 
     //Check sprite collision
@@ -260,7 +280,6 @@ public class SteamHuntDriver extends SimpleFramework{
         for(Manager manager : managers){
             manager.render(g);
         }
-
         if(renderHitboxes){
             for(Manager manager : managers){
                 manager.renderHitboxes(g);
