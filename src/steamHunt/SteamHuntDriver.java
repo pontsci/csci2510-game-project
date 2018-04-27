@@ -96,16 +96,17 @@ public class SteamHuntDriver extends SimpleFramework{
         managers[BULLET.i] = bulletManager;
         managers[SCREEN.i] = screenManager;
 
+        //Be careful with the enemy and bullet manager, I think they still need to be initialized AFTER main character.
         backgroundManager.initialize();
         floorManager.initialize();
         wallManager.initialize();
         platformManager.initialize();
         doorManager.initialize(enemyManager.getSprites(), mainCharManager.getSprites());
         screenWallManager.initialize();
-        mainCharManager.initialize(floorManager.getSprites(),screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites());
+        mainCharManager.initialize(floorManager.getSprites(),screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites(), wallManager.getSprites());
         mainCharManager.setBulletManager(bulletManager);
         //power ups don't initialize?
-        enemyManager.initialize(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0));
+        enemyManager.initialize(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0), wallManager.getSprites());
         spawner.initialize();
         bulletManager.initialize((MainCharacter) mainCharManager.getSprites().get(0), enemyManager.getSprites());
         screenManager.initialize();

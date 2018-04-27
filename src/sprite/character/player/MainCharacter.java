@@ -38,8 +38,8 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private int healTicks = 0;//Tick values for hp and dmg
     private int dmgTicks = 0;
 
-    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> walls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms){
-        super(startX, startY, scale, floor, walls, platforms);
+    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls){
+        super(startX, startY, scale, floor, screenWalls, platforms, walls);
         BufferedImage idleAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png");
         BufferedImage jumpAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png");
 
@@ -196,6 +196,48 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     }
 
     @Override
+    protected void checkWallCollision(float delta, Matrix3x3f viewport){
+        float xStartState = getxTranslation();
+        float yStartState = getyTranslation();
+        int magnitude = 1;
+        if(!(walls == null)){
+            for(Sprite wall : walls){
+                while(Collision.checkSpriteCollision(this, wall)){
+                    pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setyTranslation(yStartState);
+                    }
+                    else{
+                        onAPlatform = true;
+                        break;
+                    }
+                    pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setxTranslation(xStartState);
+                    }
+                    else
+                        break;
+                    pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setxTranslation(xStartState);
+                    }
+                    else
+                        break;
+                    pushCharacter(delta, viewport, 'y', -ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setyTranslation(yStartState);
+                    }
+                    else{
+                        velocityY = 0;
+                        break;
+                    }
+                    magnitude++;
+                }
+            }
+        }
+    }
+
+    @Override
     protected void checkFloorCollision(float delta, Matrix3x3f viewport){
         onTheFloor = false;
         for(Sprite floor : floors){
@@ -251,7 +293,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     public void ignorePlatformCollision(){
         //If on a platform, ignore Platform collision and reset the timer.
         if(onAPlatform){
-            System.out.println("Ignoring Platforms.");
             ignorePlatforms = true;
             platformTimer = 0;
         }
@@ -262,7 +303,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     public void allowPlatformCollision(){
         //Allow platform collision after .70 seconds
-        if(platformTimer >= .70f)
+        if(platformTimer >= .70f || onAPlatform)
             ignorePlatforms = false;
     }
 

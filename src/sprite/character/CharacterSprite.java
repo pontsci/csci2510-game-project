@@ -11,15 +11,17 @@ public abstract class CharacterSprite extends Sprite{
     protected final int TERMINAL_VELOCITY = -5;
     protected final float ONE_PIXEL = .00833333f;
     protected ArrayList<Sprite> floors;
+    protected ArrayList<Sprite> screenWalls;
     protected ArrayList<Sprite> walls;
     protected ArrayList<Sprite> platforms;
     protected float gravity = -10;
     protected int hp;
     protected int maxHp;
 
-    public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> platforms){
+    public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, ArrayList<Sprite> walls){
         super(startX, startY, scale);
         this.floors = floors;
+        this.screenWalls = screenWalls;
         this.walls = walls;
         this.platforms = platforms;
     }
@@ -35,9 +37,10 @@ public abstract class CharacterSprite extends Sprite{
 
     //begin checking collision with floor and wall
     public void checkCollision(float delta, Matrix3x3f viewport){
-        checkWallCollision(delta, viewport);
+        checkScreenWallCollision(delta, viewport);
         checkFloorCollision(delta, viewport);
         checkPlatformCollision(delta, viewport);
+        checkWallCollision(delta, viewport);
     }
 
     protected void checkPlatformCollision(float delta, Matrix3x3f viewport){
@@ -56,15 +59,54 @@ public abstract class CharacterSprite extends Sprite{
         }
     }
 
-    protected void checkWallCollision(float delta, Matrix3x3f viewport){
-        for(int i = 0; i < walls.size(); i++){
-            while(Collision.checkSpriteCollision(this, walls.get(i))){
+    protected void checkScreenWallCollision(float delta, Matrix3x3f viewport){
+        for(int i = 0; i < screenWalls.size(); i++){
+            while(Collision.checkSpriteCollision(this, screenWalls.get(i))){
                 if(i == 0){
                     pushCharacter(delta, viewport, 'x', ONE_PIXEL);
                 }
                 //Right wall is being hit, move mouse footBox;
                 else if(i == 1){
                     pushCharacter(delta, viewport, 'x', -ONE_PIXEL);
+                }
+            }
+        }
+    }
+
+    protected void checkWallCollision(float delta, Matrix3x3f viewport){
+        float xStartState = getxTranslation();
+        float yStartState = getyTranslation();
+        int magnitude = 1;
+        if(!(walls == null)){
+            for(Sprite wall : walls){
+                while(Collision.checkSpriteCollision(this, wall)){
+                    pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setyTranslation(yStartState);
+                    }
+                    else{
+                        break;
+                    }
+                    pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setxTranslation(xStartState);
+                    }
+                    else
+                        break;
+                    pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setxTranslation(xStartState);
+                    }
+                    else
+                        break;
+                    pushCharacter(delta, viewport, 'y', -ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, wall)){
+                        setyTranslation(yStartState);
+                    }
+                    else{
+                        break;
+                    }
+                    magnitude++;
                 }
             }
         }

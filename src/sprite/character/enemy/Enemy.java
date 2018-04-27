@@ -42,12 +42,12 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      * @param startY starting y coord
      * @param scale starting scale
      * @param floors the floor
-     * @param walls the walls
+     * @param screenWalls the walls
      * @param platforms the platforms
      * @param player the player
      */
-    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player){
-        super(startX, startY, scale, floors, walls, platforms);
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls){
+        super(startX, startY, scale, floors, screenWalls, platforms, walls);
         initialize(player, 10);
     }
 
@@ -57,13 +57,13 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      * @param startY starting y coord
      * @param scale starting scale
      * @param floors the floor
-     * @param walls the walls
+     * @param screenWalls the walls
      * @param platforms the platforms
      * @param player the player
      * @param hp starting hp
      */
-    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> walls, ArrayList<Sprite> platforms, MainCharacter player, int hp){
-        super(startX, startY, scale, floors, walls, platforms);
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, int hp){
+        super(startX, startY, scale, floors, screenWalls, platforms, walls);
         initialize(player, hp);
     }
 
@@ -243,10 +243,10 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     }
 
     @Override
-    protected void checkWallCollision(float delta, Matrix3x3f viewport){
+    protected void checkScreenWallCollision(float delta, Matrix3x3f viewport){
         wallCollision = false;
-        for(int i = 0; i < walls.size(); i++){
-            while(Collision.checkSpriteCollision(this, walls.get(i))){
+        for(int i = 0; i < screenWalls.size(); i++){
+            while(Collision.checkSpriteCollision(this, screenWalls.get(i))){
                 if(i == 0){
                     pushCharacter(delta, viewport, 'x', ONE_PIXEL);
                     wallCollision = true;
