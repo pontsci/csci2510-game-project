@@ -20,8 +20,8 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //Used for easy calling
     private BackgroundManager backgroundManager = new BackgroundManager();
-    private FloorManager floorManager = new FloorManager();
     private WallManager wallManager = new WallManager();
+    private FloorManager floorManager = new FloorManager();
     private PlatformManager platformManager = new PlatformManager();
     private DoorManager doorManager = new DoorManager();
     private ScreenWallManager screenWallManager= new ScreenWallManager();
@@ -56,7 +56,7 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private enum ManagerType{
-        BACKGROUND(0), FLOOR(1), WALL(2), PLATFORM(3), DOOR(4), SCREENWALL(5), MAINCHAR(6), POWERUP(7), ENEMY(8), SPAWNER(9), BULLET(10), SCREEN(11);
+        BACKGROUND(0), WALL(1), FLOOR(2), PLATFORM(3), DOOR(4), SCREENWALL(5), MAINCHAR(6), POWERUP(7), ENEMY(8), SPAWNER(9), BULLET(10), SCREEN(11);
         private int i;
         ManagerType(int i){
             this.i = i;
@@ -65,8 +65,8 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //easier enum usage declarations
     private final ManagerType BACKGROUND = ManagerType.BACKGROUND;
-    private final ManagerType FLOOR = ManagerType.FLOOR;
     private final ManagerType WALL = ManagerType.WALL;
+    private final ManagerType FLOOR = ManagerType.FLOOR;
     private final ManagerType PLATFORM = ManagerType.PLATFORM;
     private final ManagerType DOOR = ManagerType.DOOR;
     private final ManagerType SCREENWALL = ManagerType.SCREENWALL;
@@ -84,8 +84,8 @@ public class SteamHuntDriver extends SimpleFramework{
 
         //Sync the array list and individual managers together
         managers[BACKGROUND.i] = backgroundManager;
-        managers[FLOOR.i] = floorManager;
         managers[WALL.i] = wallManager;
+        managers[FLOOR.i] = floorManager;
         managers[PLATFORM.i] = platformManager;
         managers[DOOR.i] = doorManager;
         managers[SCREENWALL.i] = screenWallManager;
@@ -98,8 +98,8 @@ public class SteamHuntDriver extends SimpleFramework{
 
         //Be careful with the enemy and bullet manager, I think they still need to be initialized AFTER main character.
         backgroundManager.initialize();
-        floorManager.initialize();
         wallManager.initialize();
+        floorManager.initialize();
         platformManager.initialize();
         doorManager.initialize(enemyManager.getSprites(), mainCharManager.getSprites());
         screenWallManager.initialize();
