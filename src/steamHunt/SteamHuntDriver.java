@@ -154,10 +154,17 @@ public class SteamHuntDriver extends SimpleFramework{
             processBKeyInput();
             processSKeyInput();
             processSpaceKeyInput();
+            processKKeyInput();
             processTestLevelChange();
         }
         for(Manager manager : managers){
             manager.process(delta);
+        }
+    }
+    
+    private void processKKeyInput(){
+          if(keyboard.keyDownOnce(KeyEvent.VK_K)){
+            mainCharManager.die();
         }
     }
 
@@ -231,9 +238,7 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private void processTestLevelChange(){
-        if(keyboard.keyDownOnce(KeyEvent.VK_K)){
-            mainCharManager.die();
-        }
+      
         if(mainCharManager.isDead()){
             restart();
             level = 1;
