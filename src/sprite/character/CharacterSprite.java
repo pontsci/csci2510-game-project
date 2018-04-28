@@ -17,6 +17,7 @@ public abstract class CharacterSprite extends Sprite{
     protected float gravity = -10;
     protected int hp;
     protected int maxHp;
+    protected boolean hit = false;
 
     public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, ArrayList<Sprite> walls){
         super(startX, startY, scale);
@@ -126,5 +127,19 @@ public abstract class CharacterSprite extends Sprite{
 
     protected float getGravity(){
         return gravity;
+    }
+
+    /**
+     * Takes an amount and subtracts hp by that amount
+     * @param amount amount to decrease hp by
+     * @return whether or not the enemy is dead
+     */
+    public boolean decreaseHP(int amount){
+        hp = hp - amount;
+        return hp == 0;
+    }
+
+    public void setHit(boolean isHit){
+        hit = isHit;
     }
 }

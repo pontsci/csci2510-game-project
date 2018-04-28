@@ -26,7 +26,6 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private boolean footboxCollision = true;
     private boolean wallCollision = false;
     private boolean damaged = false;
-    private boolean hit = false;
     private boolean playerDetected = false;
     private boolean vision = false;
     private boolean shotColliding = false;
@@ -343,18 +342,5 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         setxTranslation(getxTranslation() - (walkRate * delta));
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
     }
-
-    /**
-     * Takes an amount and subtracts hp by that amount
-     * @param amount amount to decrease hp by
-     * @return whether or not the enemy is dead
-     */
-    public boolean decreaseHP(int amount){
-        hp = hp - amount;
-        return hp == 0;
-    }
-
-    public void setHit(boolean isHit){
-        hit = isHit;
-    }
+    
 }

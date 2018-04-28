@@ -103,8 +103,6 @@ public class Collision {
         return checkInnerCollision(thisHitboxes, otherHitboxes, 1);
     }
 
-    //public static
-
     public static boolean intersectSegment(Vector2f origin, Vector2f destination, Sprite sprite, boolean horizontal){
         BoundingBox box = ((BoundingBox)(sprite.getHitboxes().get(0)));
 

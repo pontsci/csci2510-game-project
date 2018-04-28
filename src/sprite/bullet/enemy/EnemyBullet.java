@@ -3,6 +3,7 @@ package sprite.bullet.enemy;
 import bounding.BoundingBox;
 import sprite.character.player.MainCharacter;
 import sprite.bullet.Bullet;
+import util.Collision;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -27,7 +28,10 @@ public class EnemyBullet extends Bullet{
     }
 
     public boolean checkCollision(float delta, Matrix3x3f viewport){
-        //Collision.
+        if(Collision.checkSpriteCollision(this, player)){
+            player.decreaseHP(bulletDamage);
+            return true;
+        }
         return false;
     }
 }
