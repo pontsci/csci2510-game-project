@@ -27,7 +27,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private boolean onTheFloor = true;
     private boolean onAPlatform = false;
     private boolean ignorePlatforms = false;
-    private BulletManager bm;
     private float platformTimer = 2;
     private float velocityY = 0;
     private ArrayList<Sprite> powerups;
@@ -387,10 +386,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     public void dmgOverTime(){
         //System.out.println("DoT!!!");
         hp--;
-    }
-
-    public void setBulletManager(BulletManager bm){
-        this.bm = bm;
     }
 
     public int getHp()

@@ -168,13 +168,19 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
             }
         }
 
-        for(Sprite w:walls){
-            if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
-                shotColliding = true;
-                return;
-            }else{
-                shotColliding = false;
+        if(!shotColliding){
+            for(Sprite w : walls){
+                if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
+                    shotColliding = true;
+                    return;
+                }else{
+                    shotColliding = false;
+                }
             }
+        }
+
+        if(!shotColliding){
+            
         }
 
     }
@@ -342,5 +348,5 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         setxTranslation(getxTranslation() - (walkRate * delta));
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
     }
-    
+
 }

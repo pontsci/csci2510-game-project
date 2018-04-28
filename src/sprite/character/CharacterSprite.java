@@ -1,5 +1,6 @@
 package sprite.character;
 
+import managers.BulletManager;
 import util.Collision;
 import sprite.Sprite;
 import util.Matrix3x3f;
@@ -18,6 +19,7 @@ public abstract class CharacterSprite extends Sprite{
     protected int hp;
     protected int maxHp;
     protected boolean hit = false;
+    protected BulletManager bm;
 
     public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, ArrayList<Sprite> walls){
         super(startX, startY, scale);
@@ -141,5 +143,9 @@ public abstract class CharacterSprite extends Sprite{
 
     public void setHit(boolean isHit){
         hit = isHit;
+    }
+
+    public void setBulletManager(BulletManager bm){
+        this.bm = bm;
     }
 }

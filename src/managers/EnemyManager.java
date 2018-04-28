@@ -64,4 +64,10 @@ public class EnemyManager extends Manager
             addTriBot(spawner.getSpawnPoint());
         }
     }
+
+    public void setBulletManager(BulletManager bm){
+        for(Sprite enemy : getSprites()){
+            ((Enemy)enemy).setBulletManager(bm);
+        }
+    }
 }
