@@ -30,6 +30,7 @@ public class EnemyBullet extends Bullet{
     public boolean checkCollision(float delta, Matrix3x3f viewport){
         if(Collision.checkSpriteCollision(this, player)){
             player.decreaseHP(bulletDamage);
+            System.out.println(player.getHp());
             return true;
         }
         return false;

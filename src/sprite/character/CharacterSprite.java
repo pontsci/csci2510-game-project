@@ -25,12 +25,13 @@ public abstract class CharacterSprite extends Sprite{
     protected float bulletTimer;
     protected boolean canShoot;
 
-    public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, ArrayList<Sprite> walls){
+    public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm){
         super(startX, startY, scale);
         this.floors = floors;
         this.screenWalls = screenWalls;
         this.walls = walls;
         this.platforms = platforms;
+        this.bm = bm;
         bulletWaitTime = 1;
         bulletTimer = 1;
         canShoot = true;
