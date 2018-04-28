@@ -7,6 +7,7 @@ import sprite.Sprite;
 import sprite.character.CharacterSprite;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Collision {
     protected static final float ONE_PIXEL = .00833333f;
@@ -87,11 +88,11 @@ public class Collision {
 
     //given two hitboxes, return whether they collide
     public static boolean checkCollision(BoundingShape thisHitbox, BoundingShape otherHitbox){
-        ArrayList<BoundingShape> thisHitboxes = new ArrayList<>();
-        ArrayList<BoundingShape> otherHitboxes = new ArrayList<>();
-        thisHitboxes.add(thisHitbox);
-        otherHitboxes.add(otherHitbox);
-        return checkInnerCollision(thisHitboxes,otherHitboxes,0);
+        Vector2f thisHBMin = ((BoundingBox)thisHitbox).getCurrentMin();
+        Vector2f thisHBMax = ((BoundingBox)thisHitbox).getCurrentMax();
+        Vector2f otherHBMin = ((BoundingBox)otherHitbox).getCurrentMin();
+        Vector2f otherHBMax = ((BoundingBox)otherHitbox).getCurrentMax();
+        return Intersect.intersectAABB(otherHBMin, otherHBMax, thisHBMin, thisHBMax);
     }
 
     //given a hitbox, check it against a list of hitboxes
@@ -102,25 +103,31 @@ public class Collision {
         return checkInnerCollision(thisHitboxes, otherHitboxes, 1);
     }
 
-    public static boolean intersectSegment(Vector2f origin, Vector2f destination, Sprite object, float xPadding, float yPadding){
-        BoundingBox box = ((BoundingBox)(object.getHitboxes().get(0)));
+    public static boolean intersectSegment(Vector2f origin, Vector2f destination, Sprite sprite, boolean horizontal){
+        BoundingBox box = ((BoundingBox)(sprite.getHitboxes().get(0)));
 
-        float boxHalfX = (box.getCurrentMax().x - box.getCurrentMin().x)/2;
-        float boxHalfY = (box.getCurrentMax().y - box.getCurrentMin().y)/2;
-        Vector2f pos = object.getPos();
-
-
-        float scaleX = 1.0f / destination.x;
-        float scaleY = 1.0f / destination.y;
-        float signX = Integer.signum((int)scaleX);
-        float signY = Integer.signum((int)scaleY);
-        float nearTimeX = (origin.x - signX * (boxHalfX + xPadding) - pos.x) * scaleX;
-        float nearTimeY = (origin.y - signY * (boxHalfY + yPadding) - pos.y) * scaleY;
-        float farTimeX = (origin.x + signX * (boxHalfX + xPadding) - pos.x) * scaleX;
-        float farTimeY = (origin.y + signY * (boxHalfY + yPadding) - pos.y) * scaleY;
+        if(horizontal){
+            List<Vector2f> upperLine = box.getUpperLine();
+            List<Vector2f> lowerLine = box.getLowerLine();
+            Vector2f upperA = upperLine.get(0);
+            Vector2f upperB = upperLine.get(1);
+            Vector2f lowerA = lowerLine.get(0);
+            Vector2f lowerB = lowerLine.get(1);
 
 
-        return false;
+            return Intersect.lineIntersect(origin, destination, upperA, upperB)
+                    || Intersect.lineIntersect(origin, destination, lowerA, lowerB);
+        }else{
+            List<Vector2f> leftLine = box.getLeftLine();
+            List<Vector2f> rightLine = box.getRightLine();
+            Vector2f leftA = leftLine.get(0);
+            Vector2f leftB = leftLine.get(1);
+            Vector2f rightA = rightLine.get(0);
+            Vector2f rightB = rightLine.get(1);
+
+            return Intersect.lineIntersect(origin, destination, leftA, leftB)
+                    || Intersect.lineIntersect(origin, destination, rightA, rightB);
+        }
+
     }
-
 }

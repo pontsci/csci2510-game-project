@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import bounding.BoundingBox;
+import managers.BulletManager;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.character.player.MainCharacter;
@@ -26,9 +27,9 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private boolean footboxCollision = true;
     private boolean wallCollision = false;
     private boolean damaged = false;
-    private boolean hit = false;
-    private boolean playerDetected = false;
+    private boolean playerInDetectionBox = false;
     private boolean vision = false;
+    private boolean shotValid = false;
     private MainCharacter player;
     private Vector2f playerPos;
     private Vector2f bulletSpawn;
@@ -46,8 +47,8 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      * @param platforms the platforms
      * @param player the player
      */
-    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls){
-        super(startX, startY, scale, floors, screenWalls, platforms, walls);
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm){
+        super(startX, startY, scale, floors, screenWalls, platforms, walls, bm);
         initialize(player, 10);
     }
 
@@ -62,8 +63,8 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      * @param player the player
      * @param hp starting hp
      */
-    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, int hp){
-        super(startX, startY, scale, floors, screenWalls, platforms, walls);
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, int hp){
+        super(startX, startY, scale, floors, screenWalls, platforms, walls, bm);
         initialize(player, hp);
     }
 
@@ -121,7 +122,11 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
             Vector2f directionScreen = viewport.mul(direction);
 
             //draw
-            g.setColor(Color.GREEN);
+            if(!shotValid){
+                g.setColor(Color.RED);
+            }else{
+                g.setColor(Color.GREEN);
+            }
             g.drawLine((int)originScreen.x, (int)originScreen.y, (int)directionScreen.x, (int)directionScreen.y);
         }
     }
@@ -151,12 +156,38 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         }
 
         //where to spawn the bullets when shot
-        if(currentDirection == GOING_LEFT){
-            bulletSpawn.x = getPos().x + .2f;
-        }else{
-            bulletSpawn.x = getPos().x - .2f;
-        }
+        bulletSpawn.x = currentDirection == GOING_LEFT ? getPos().x + .2f : getPos().x - .2f;
+
         bulletSpawn.y = getPos().y - .08f;
+
+        for(Sprite p : platforms){
+            if(Collision.intersectSegment(bulletSpawn, playerPos, p, true)){
+                shotValid = false;
+                return;
+            }else{
+                shotValid = true;
+            }
+        }
+
+        if(shotValid){
+            for(Sprite w : walls){
+                if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
+                    shotValid = false;
+                    return;
+                }else{
+                    shotValid = true;
+                }
+            }
+        }
+
+        if(shotValid){
+            if(canShoot){
+                canShoot = false;
+                bulletTimer = 0;
+                bm.addEnemyBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
+            }
+        }
+
     }
 
     private void processRegeneration(float delta)
@@ -218,10 +249,14 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         if(wallCollision)
             footboxCollision = false;
 
-        playerDetected = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
-        if(!playerDetected){
-            detectionBox.setObjectColor(Color.CYAN);
+        playerInDetectionBox = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
 
+
+        if(!playerInDetectionBox){
+            detectionBox.setObjectColor(Color.CYAN);
+            if(!shotValid){
+                visionTimer += 10;
+            }
             visionTimer += delta;
             if(visionTimer > maxVisionTime){
                 vision = false;
@@ -323,17 +358,4 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
     }
 
-    /**
-     * Takes an amount and subtracts hp by that amount
-     * @param amount amount to decrease hp by
-     * @return whether or not the enemy is dead
-     */
-    public boolean decreaseHP(int amount){
-        hp = hp - amount;
-        return hp == 0;
-    }
-
-    public void setHit(boolean isHit){
-        hit = isHit;
-    }
 }

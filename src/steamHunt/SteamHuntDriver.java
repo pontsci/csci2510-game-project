@@ -106,10 +106,9 @@ public class SteamHuntDriver extends SimpleFramework{
         platformManager.initialize();
         doorManager.initialize(enemyManager.getSprites(), mainCharManager.getSprites());
         screenWallManager.initialize();
-        mainCharManager.initialize(floorManager.getSprites(),screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites(), wallManager.getSprites());
-        mainCharManager.setBulletManager(bulletManager);
+        mainCharManager.initialize(floorManager.getSprites(),screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites(), wallManager.getSprites(), bulletManager);
         //power ups don't initialize?
-        enemyManager.initialize(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0), wallManager.getSprites());
+        enemyManager.initialize(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0), wallManager.getSprites(), bulletManager);
         spawner.initialize();
         bulletManager.initialize((MainCharacter)mainCharManager.getSprites().get(0), enemyManager.getSprites());
         healthManager.initialize((MainCharacter)mainCharManager.getSprites().get(0));

@@ -27,19 +27,18 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private boolean onTheFloor = true;
     private boolean onAPlatform = false;
     private boolean ignorePlatforms = false;
-    private BulletManager bm;
     private float platformTimer = 2;
     private float velocityY = 0;
     private ArrayList<Sprite> powerups;
     private Animation animation = new Animation();
     private int currentAnimation = 1;
     private float walkRate = 2.5f;// Walk rate per second. (The world is 16 by 9)
-    private int hp = 3;
+    //private int hp = 3;
     private int healTicks = 0;//Tick values for hp and dmg
     private int dmgTicks = 0;
 
-    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls){
-        super(startX, startY, scale, floor, screenWalls, platforms, walls);
+    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm){
+        super(startX, startY, scale, floor, screenWalls, platforms, walls, bm);
         BufferedImage idleAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png");
         BufferedImage jumpAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png");
 
@@ -53,6 +52,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         //landing part of the jump animation
         animation.addAnimation(jumpAnimation.getSubimage(1185, 0, 474, 356), 2);
         this.powerups = powerups;
+        this.hp = 3;
         initializeHitboxes();
     }
 
@@ -388,10 +388,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     public void dmgOverTime(){
         //System.out.println("DoT!!!");
         hp--;
-    }
-
-    public void setBulletManager(BulletManager bm){
-        this.bm = bm;
     }
 
     public int getHp()

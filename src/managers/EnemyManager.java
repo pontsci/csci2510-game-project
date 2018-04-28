@@ -20,17 +20,16 @@ public class EnemyManager extends Manager
     private ArrayList<Sprite> platforms;
     private ArrayList<Sprite> walls;
     private MainCharacter player;
+    private BulletManager bm;
 
-    public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls)
+    public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm)
     {
         this.floors = floors;
         this.screenWalls = screenWalls;
         this.walls = walls;
         this.platforms = platforms;
         this.player = player;
-        getSprites().add(new TriBot(5, 0, new Vector2f(.3f, .3f), floors, screenWalls, platforms, player, walls));
-        getSprites().add(new TriBot(5, -3, new Vector2f(.3f, .3f), floors, screenWalls, platforms, player, walls));
-
+        this.bm = bm;
     }
 
     public void addTriBot()
@@ -47,7 +46,7 @@ public class EnemyManager extends Manager
 
     public void addTriBot(Vector2f pos)
     {
-        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f), floors, screenWalls, platforms, player, walls));
+        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f), floors, screenWalls, platforms, player, walls, bm));
     }
 
     public void checkCollision(float delta, Matrix3x3f viewport){
@@ -62,6 +61,12 @@ public class EnemyManager extends Manager
         //Spawn enemies
         for (int i = 0; i < 3; i++){
             addTriBot(spawner.getSpawnPoint());
+        }
+    }
+
+    public void setBulletManager(BulletManager bm){
+        for(Sprite enemy : getSprites()){
+            ((Enemy)enemy).setBulletManager(bm);
         }
     }
 }

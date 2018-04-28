@@ -2,6 +2,7 @@ package sprite.character.enemy;
 
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
+import managers.BulletManager;
 import sprite.Sprite;
 import sprite.character.player.MainCharacter;
 import sprite.world.Floor;
@@ -19,8 +20,8 @@ public class TriBot extends Enemy {
 	private int currentAnimation = 0;
 	private int dmgTicks = 0;
 
-	public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls) {
-		super(startX, startY, scale, floors, screenWalls, platforms, player, walls);
+	public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm) {
+		super(startX, startY, scale, floors, screenWalls, platforms, player, walls, bm);
 		// get the animations for the tri bot - follow the main character
 		BufferedImage spriteSheet = loadFile(
 				"src/resources/character/enemy/tribot/Enemy_WH_237x356_EnemyMove_EnemyAttack.png");

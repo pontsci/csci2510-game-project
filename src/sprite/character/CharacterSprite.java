@@ -1,5 +1,7 @@
 package sprite.character;
 
+import managers.BulletManager;
+import sprite.character.enemy.Enemy;
 import util.Collision;
 import sprite.Sprite;
 import util.Matrix3x3f;
@@ -17,22 +19,42 @@ public abstract class CharacterSprite extends Sprite{
     protected float gravity = -10;
     protected int hp;
     protected int maxHp;
+    protected boolean hit = false;
+    protected BulletManager bm;
+    protected float bulletWaitTime;
+    protected float bulletTimer;
+    protected boolean canShoot;
 
-    public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, ArrayList<Sprite> walls){
+    public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm){
         super(startX, startY, scale);
         this.floors = floors;
         this.screenWalls = screenWalls;
         this.walls = walls;
         this.platforms = platforms;
+        this.bm = bm;
+        bulletWaitTime = 1;
+        bulletTimer = 1;
+        canShoot = true;
     }
 
     @Override
     public void process(float delta){
         processGravity(delta);
+        processBulletTime(delta);
     }
 
     protected void processGravity(float delta){
         setyTranslation(getyTranslation() + ((getGravity()) * delta));
+    }
+
+    protected void processBulletTime(float delta){
+        if(bulletTimer < bulletWaitTime){
+            bulletTimer += delta;
+            canShoot = false;
+        }
+        if(bulletTimer > bulletWaitTime){
+            canShoot = true;
+        }
     }
 
     //begin checking collision with floor and wall
@@ -126,5 +148,23 @@ public abstract class CharacterSprite extends Sprite{
 
     protected float getGravity(){
         return gravity;
+    }
+
+    /**
+     * Takes an amount and subtracts hp by that amount
+     * @param amount amount to decrease hp by
+     * @return whether or not the enemy is dead
+     */
+    public boolean decreaseHP(int amount){
+        hp = hp - amount;
+        return hp == 0;
+    }
+
+    public void setHit(boolean isHit){
+        hit = isHit;
+    }
+
+    public void setBulletManager(BulletManager bm){
+        this.bm = bm;
     }
 }

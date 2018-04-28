@@ -31,6 +31,23 @@ public class Intersect {
         return d < r * r;
     }
 
+    public static boolean lineIntersect(Vector2f origin, Vector2f destination, Vector2f boxPointA, Vector2f boxPointB)
+    {
+        float denominator = ((destination.x - origin.x) * (boxPointB.y - boxPointA.y)) - ((destination.y - origin.y) * (boxPointB.x - boxPointA.x));
+        float numerator1 = ((origin.y - boxPointA.y) * (boxPointB.x - boxPointA.x)) - ((origin.x - boxPointA.x) * (boxPointB.y - boxPointA.y));
+        float numerator2 = ((origin.y - boxPointA.y) * (destination.x - origin.x)) - ((origin.x - boxPointA.x) * (destination.y - origin.y));
+
+        // Detect coincident lines
+        if (denominator == 0){
+            return numerator1 == 0 && numerator2 == 0;
+        }
+
+        float r = numerator1 / denominator;
+        float s = numerator2 / denominator;
+
+        return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
+    }
+
     //Unused code from book - May be needed for something later
     public static boolean pointInAABB(Vector2f p, Vector2f min, Vector2f max){
         return p.x > min.x && p.x < max.x && p.y > min.y && p.y < max.y;
