@@ -29,7 +29,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private boolean hit = false;
     private boolean playerDetected = false;
     private boolean vision = false;
-    private boolean shotCollding = false;
+    private boolean shotColliding = false;
     private MainCharacter player;
     private Vector2f playerPos;
     private Vector2f bulletSpawn;
@@ -122,7 +122,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
             Vector2f directionScreen = viewport.mul(direction);
 
             //draw
-            if(shotCollding){
+            if(shotColliding){
                 g.setColor(Color.RED);
             }else{
                 g.setColor(Color.GREEN);
@@ -162,19 +162,19 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
 
         for(Sprite p : platforms){
             if(Collision.intersectSegment(bulletSpawn, playerPos, p, true)){
-                shotCollding = true;
+                shotColliding = true;
                 return;
             }else{
-                shotCollding = false;
+                shotColliding = false;
             }
         }
 
         for(Sprite w:walls){
             if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
-                shotCollding = true;
+                shotColliding = true;
                 return;
             }else{
-                shotCollding = false;
+                shotColliding = false;
             }
         }
 
