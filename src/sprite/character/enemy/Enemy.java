@@ -169,6 +169,15 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
             }
         }
 
+        for(Sprite w:walls){
+            if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
+                shotCollding = true;
+                return;
+            }else{
+                shotCollding = false;
+            }
+        }
+
     }
 
     private void processRegeneration(float delta)
