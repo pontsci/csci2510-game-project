@@ -43,6 +43,7 @@ public abstract class Manager{
         }
     }
 
+    //Check sprite collision
     public abstract void checkCollision(float delta, Matrix3x3f viewport);
 
     //Getter for the sprites

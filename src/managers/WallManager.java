@@ -25,15 +25,15 @@ public class WallManager extends Manager{
             case 1:
                 break;
             case 2:
-                getSprites().add(new Wall(0, -.28f, new Vector2f(.5f,.57f)));
+                getSprites().add(new Wall(0, -.27f, new Vector2f(.5f,.58f)));
                 break;
             case 3:
-                getSprites().add(new Wall(-4.64f, 1f, new Vector2f(.5f,.57f)));
-                getSprites().add(new Wall(0.87f, -.28f, new Vector2f(.5f,.57f)));
-                getSprites().add(new Wall(0.87f, -2.78f, new Vector2f(.5f,.57f)));
-                getSprites().add(new Wall(4.64f, 2.59f, new Vector2f(.5f,.57f)));
-                getSprites().add(new Wall(4.64f, -0.28f, new Vector2f(.5f,.57f)));
-                getSprites().add(new Wall(4.64f, 5.1f, new Vector2f(.5f,.57f)));
+                getSprites().add(new Wall(-4.74f, 1f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(0.87f, -.28f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(0.87f, -2.78f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(4.44f, 2.59f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(4.44f, -0.28f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(4.44f, 5.1f, new Vector2f(.5f,.58f)));
                 break;
         }
     }

@@ -66,6 +66,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     // Process functions of the main character
     public void process(float delta){
+        System.out.println(hp);
         processGravity(delta);
         processAnimations(delta);
         conditions.updateObjects(delta);

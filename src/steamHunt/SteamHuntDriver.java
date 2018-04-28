@@ -16,7 +16,7 @@ import managers.ScreenManager.ScreenType;
 //It does not deal with individual sprites, that is footBox for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
     //Used for looping
-    private Manager[] managers = new Manager[12];
+    private Manager[] managers = new Manager[13];
 
     //Used for easy calling
     private BackgroundManager backgroundManager = new BackgroundManager();
@@ -30,6 +30,7 @@ public class SteamHuntDriver extends SimpleFramework{
     private EnemyManager enemyManager = new EnemyManager();
     private Spawner spawner = new Spawner();
     private BulletManager bulletManager = new BulletManager();
+    private HealthManager healthManager = new HealthManager();
     private ScreenManager screenManager = new ScreenManager();
 
     //Screen state
@@ -56,7 +57,7 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private enum ManagerType{
-        BACKGROUND(0), WALL(1), FLOOR(2), PLATFORM(3), DOOR(4), SCREENWALL(5), MAINCHAR(6), POWERUP(7), ENEMY(8), SPAWNER(9), BULLET(10), SCREEN(11);
+        BACKGROUND(0), WALL(1), FLOOR(2), PLATFORM(3), DOOR(4), SCREENWALL(5), MAINCHAR(6), POWERUP(7), ENEMY(8), SPAWNER(9), BULLET(10), HEALTH(11), SCREEN(12);
         private int i;
         ManagerType(int i){
             this.i = i;
@@ -75,6 +76,7 @@ public class SteamHuntDriver extends SimpleFramework{
     private final ManagerType ENEMY = ManagerType.ENEMY;
     private final ManagerType SPAWNER = ManagerType.SPAWNER;
     private final ManagerType BULLET = ManagerType.BULLET;
+    private final ManagerType HEALTH = ManagerType.HEALTH;
     private final ManagerType SCREEN = ManagerType.SCREEN;
 
     @Override
@@ -94,6 +96,7 @@ public class SteamHuntDriver extends SimpleFramework{
         managers[ENEMY.i] = enemyManager;
         managers[SPAWNER.i] = spawner;
         managers[BULLET.i] = bulletManager;
+        managers[HEALTH.i] = healthManager;
         managers[SCREEN.i] = screenManager;
 
         //Be careful with the enemy and bullet manager, I think they still need to be initialized AFTER main character.
@@ -108,7 +111,8 @@ public class SteamHuntDriver extends SimpleFramework{
         //power ups don't initialize?
         enemyManager.initialize(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0), wallManager.getSprites());
         spawner.initialize();
-        bulletManager.initialize((MainCharacter) mainCharManager.getSprites().get(0), enemyManager.getSprites());
+        bulletManager.initialize((MainCharacter)mainCharManager.getSprites().get(0), enemyManager.getSprites());
+        healthManager.initialize((MainCharacter)mainCharManager.getSprites().get(0));
         screenManager.initialize();
 
         //load level and spawner
@@ -116,16 +120,13 @@ public class SteamHuntDriver extends SimpleFramework{
     }
     
      private void restart() {
-        //give the player the "You have died screen"
-        paused = true;
-        hasStarted = false;
-        screenManager.SetScreen(ScreenType.DIE);
-        
-        //re initialize character and set level = 1
-        mainCharManager.reset();
-        // how do I reset the levels?
-        // loadNewLevel();
-        
+         //give the player the "You have died screen"
+         paused = true;
+         hasStarted = false;
+         screenManager.SetScreen(ScreenType.DIE);
+         //re initialize character and set level = 1
+         mainCharManager.reset();
+         level = 1;
     }
 
 
@@ -155,6 +156,8 @@ public class SteamHuntDriver extends SimpleFramework{
             processSKeyInput();
             processSpaceKeyInput();
             processKKeyInput();
+            processRKeyInput();//Temporary for damaging the Main Character.
+            processTKeyInput();//Temp
             processTestLevelChange();
         }
         for(Manager manager : managers){
@@ -224,6 +227,18 @@ public class SteamHuntDriver extends SimpleFramework{
             ((MainCharacterManager)managers[MAINCHAR.i]).processAllowPlatformCollision();
     }
 
+    private void processRKeyInput(){
+        if(keyboard.keyDownOnce(KeyEvent.VK_R)){
+            ((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).setHp(((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).getHp() - 1);
+        }
+    }
+
+    private void processTKeyInput(){
+        if(keyboard.keyDownOnce(KeyEvent.VK_T)){
+            ((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).setHp(((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).getHp() + 1);
+        }
+    }
+
     //Process what happens when S is pressed
     private void processSpaceKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
@@ -238,10 +253,8 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private void processTestLevelChange(){
-      
         if(mainCharManager.isDead(appWorldWidth/2, appWorldHeight)){
             restart();
-            level = 1;
             loadNewLevel();
         }
         else if(keyboard.keyDownOnce(KeyEvent.VK_Z)){
