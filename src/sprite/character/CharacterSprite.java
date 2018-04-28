@@ -1,6 +1,7 @@
 package sprite.character;
 
 import managers.BulletManager;
+import sprite.character.enemy.Enemy;
 import util.Collision;
 import sprite.Sprite;
 import util.Matrix3x3f;
@@ -20,6 +21,9 @@ public abstract class CharacterSprite extends Sprite{
     protected int maxHp;
     protected boolean hit = false;
     protected BulletManager bm;
+    protected float bulletWaitTime;
+    protected float bulletTimer;
+    protected boolean canShoot;
 
     public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, ArrayList<Sprite> walls){
         super(startX, startY, scale);
@@ -27,15 +31,29 @@ public abstract class CharacterSprite extends Sprite{
         this.screenWalls = screenWalls;
         this.walls = walls;
         this.platforms = platforms;
+        bulletWaitTime = 1;
+        bulletTimer = 1;
+        canShoot = true;
     }
 
     @Override
     public void process(float delta){
         processGravity(delta);
+        processBulletTime(delta);
     }
 
     protected void processGravity(float delta){
         setyTranslation(getyTranslation() + ((getGravity()) * delta));
+    }
+
+    protected void processBulletTime(float delta){
+        if(bulletTimer < bulletWaitTime){
+            bulletTimer += delta;
+            canShoot = false;
+        }
+        if(bulletTimer > bulletWaitTime){
+            canShoot = true;
+        }
     }
 
     //begin checking collision with floor and wall
