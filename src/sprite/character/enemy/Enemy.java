@@ -122,7 +122,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
             Vector2f directionScreen = viewport.mul(direction);
 
             //draw
-            if(shotValid){
+            if(!shotValid){
                 g.setColor(Color.RED);
             }else{
                 g.setColor(Color.GREEN);
