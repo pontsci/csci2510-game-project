@@ -27,6 +27,7 @@ public class EnemyBullet extends Bullet{
     }
 
     public boolean checkCollision(float delta, Matrix3x3f viewport){
+        //Collision.
         return false;
     }
 }

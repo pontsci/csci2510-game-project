@@ -88,11 +88,11 @@ public class Collision {
 
     //given two hitboxes, return whether they collide
     public static boolean checkCollision(BoundingShape thisHitbox, BoundingShape otherHitbox){
-        ArrayList<BoundingShape> thisHitboxes = new ArrayList<>();
-        ArrayList<BoundingShape> otherHitboxes = new ArrayList<>();
-        thisHitboxes.add(thisHitbox);
-        otherHitboxes.add(otherHitbox);
-        return checkInnerCollision(thisHitboxes,otherHitboxes,0);
+        Vector2f thisHBMin = ((BoundingBox)thisHitbox).getCurrentMin();
+        Vector2f thisHBMax = ((BoundingBox)thisHitbox).getCurrentMax();
+        Vector2f otherHBMin = ((BoundingBox)otherHitbox).getCurrentMin();
+        Vector2f otherHBMax = ((BoundingBox)otherHitbox).getCurrentMax();
+        return Intersect.intersectAABB(otherHBMin, otherHBMax, thisHBMin, thisHBMax);
     }
 
     //given a hitbox, check it against a list of hitboxes
@@ -102,6 +102,8 @@ public class Collision {
         thisHitboxes.add(thisHitbox);
         return checkInnerCollision(thisHitboxes, otherHitboxes, 1);
     }
+
+    //public static
 
     public static boolean intersectSegment(Vector2f origin, Vector2f destination, Sprite sprite, boolean horizontal){
         BoundingBox box = ((BoundingBox)(sprite.getHitboxes().get(0)));
