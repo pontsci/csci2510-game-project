@@ -115,18 +115,27 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         super.renderHitboxes(g);
         footBox.render(g);
         detectionBox.render(g);
-        if(vision){
-            Vector2f origin = bulletSpawn;
-            Vector2f direction  = playerPos;
-            Vector2f originScreen = viewport.mul(origin);
-            Vector2f directionScreen = viewport.mul(direction);
 
-            //draw
+        Vector2f origin;
+        Vector2f direction;
+        Vector2f originScreen;
+        Vector2f directionScreen;
+
+        //if we have vision, draw our shot line
+        if(vision){
+            origin = bulletSpawn;
+            direction  = playerPos;
+            originScreen = viewport.mul(origin);
+            directionScreen = viewport.mul(direction);
+
+            //if shot is valid, draw a green line, if not, draw a red line
             if(!shotValid){
                 g.setColor(Color.RED);
             }else{
                 g.setColor(Color.GREEN);
             }
+
+            //draw
             g.drawLine((int)originScreen.x, (int)originScreen.y, (int)directionScreen.x, (int)directionScreen.y);
         }
     }
@@ -135,11 +144,15 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     public void process(float delta)
     {
         super.process(delta);
+        //if we don't have vision of the player, move
         if(!vision){
             processMovement(delta);
-        }else{
+        }
+        //if we have vision, shoot the player
+        else{
             processShooting(delta);
         }
+        //regenerate HP after 10 seconds of not being hit
         processRegeneration(delta);
     }
 
@@ -160,6 +173,9 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
 
         bulletSpawn.y = getPos().y - .08f;
 
+
+        //if our shot line has not collided, shot is considered valid
+        //for each platform, does our shot line collide
         for(Sprite p : platforms){
             if(Collision.intersectSegment(bulletSpawn, playerPos, p, true)){
                 shotValid = false;
@@ -169,6 +185,8 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
             }
         }
 
+        //if our shot line has not collided, shot is considered valid
+        //for each wall, does our shot line collide
         if(shotValid){
             for(Sprite w : walls){
                 if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
@@ -180,14 +198,18 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
             }
         }
 
+        //if our shot is valid
         if(shotValid){
+            //can we shoot
             if(canShoot){
+                //we just shot, so we no longer can shoot
                 canShoot = false;
                 bulletTimer = 0;
+
+                //add a bullet
                 bm.addEnemyBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
             }
         }
-
     }
 
     private void processRegeneration(float delta)
@@ -249,18 +271,23 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         if(wallCollision)
             footboxCollision = false;
 
+        //is player in the detection box
         playerInDetectionBox = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
 
-
+        //if player is not in detection box start counting seconds
         if(!playerInDetectionBox){
             detectionBox.setObjectColor(Color.CYAN);
+
+            //if our shot is not valid, cut vision immediately
             if(!shotValid){
                 visionTimer += 10;
             }
             visionTimer += delta;
+            //if we go over maxVisionTime, we no longer have vision
             if(visionTimer > maxVisionTime){
                 vision = false;
             }
+            //if we have vision, update player position
             if(vision){
                 updatePlayerPos(delta);
             }
