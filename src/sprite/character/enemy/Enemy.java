@@ -27,7 +27,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private boolean footboxCollision = true;
     private boolean wallCollision = false;
     private boolean damaged = false;
-    private boolean playerDetected = false;
+    private boolean playerInDetectionBox = false;
     private boolean vision = false;
     private boolean shotValid = false;
     private MainCharacter player;
@@ -249,10 +249,14 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         if(wallCollision)
             footboxCollision = false;
 
-        playerDetected = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
-        if(!playerDetected){
-            detectionBox.setObjectColor(Color.CYAN);
+        playerInDetectionBox = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
 
+
+        if(!playerInDetectionBox){
+            detectionBox.setObjectColor(Color.CYAN);
+            if(!shotValid){
+                visionTimer += 10;
+            }
             visionTimer += delta;
             if(visionTimer > maxVisionTime){
                 vision = false;
