@@ -4,6 +4,8 @@ import util.Matrix3x3f;
 import util.Vector2f;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class BoundingBox extends BoundingShape{
     private Vector2f min;
@@ -79,5 +81,29 @@ public class BoundingBox extends BoundingShape{
     }
     public Vector2f getCurrentMax(){
         return currentWorld.mul(max);
+    }
+
+    public List<Vector2f> getUpperLine(){
+        Vector2f min = getCurrentMin();
+        Vector2f max = getCurrentMax();
+        return Arrays.asList(new Vector2f(min.x, max.y), max);
+    }
+
+    public List<Vector2f> getLowerLine(){
+        Vector2f min = getCurrentMin();
+        Vector2f max = getCurrentMax();
+        return Arrays.asList(min, new Vector2f(max.x, min.y));
+    }
+
+    public List<Vector2f> getLeftLine(){
+        Vector2f min = getCurrentMin();
+        Vector2f max = getCurrentMax();
+        return Arrays.asList(min, new Vector2f(min.x, max.y));
+    }
+
+    public List<Vector2f> getRightLine(){
+        Vector2f min = getCurrentMin();
+        Vector2f max = getCurrentMax();
+        return Arrays.asList(new Vector2f(max.x, min.y), max);
     }
 }
