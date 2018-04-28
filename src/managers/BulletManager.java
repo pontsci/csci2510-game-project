@@ -48,7 +48,7 @@ public class BulletManager extends Manager{
 
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
-
+        getSprites().clear();
     }
 
     @Override
