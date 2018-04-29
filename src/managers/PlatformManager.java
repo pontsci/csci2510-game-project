@@ -56,6 +56,13 @@ public class PlatformManager extends Manager{
                 getSprites().add(new Platform(6.5f, 1.0f, new Vector2f(.75f,.5f)));
                 getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
             break;
+            case 4:
+                getSprites().add(new Platform(-7.5f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(-3.72f, 1.0f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(-0.0f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(-0.5f, 1.0f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(7.5f, -1.5f, new Vector2f(.75f,.5f)));
+                break;
         }
         spawner.setSpawnRanges(getPlatFormSpawns(viewport));
     }

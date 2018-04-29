@@ -38,6 +38,13 @@ public class WallManager extends Manager{
                 getSprites().add(new Wall(4.44f, -0.28f, new Vector2f(.5f,.58f)));
                 getSprites().add(new Wall(4.44f, 5.1f, new Vector2f(.5f,.58f)));
                 break;
+            case 4:
+                getSprites().add(new Wall(-3.0f, 3.6f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(-3.0f, 0f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(1.24f, 2.24f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(1.24f, 4.96f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(3.24f, -2.79f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(4.65f, -0.25f, new Vector2f(.5f,.58f)));
         }
     }
 }
