@@ -35,12 +35,12 @@ public class PlatformManager extends Manager{
         getSprites().clear();
         switch(level){
             case 1:
-                getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(3.5f, -1.5f, new Vector2f(.75f, .5f)));
-                getSprites().add(new Platform(5.5f, 1.0f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(3.5f, 1.0f, new Vector2f(.75f, .5f)));
-                getSprites().add(new Platform(-4, 1.0f, new Vector2f(.75f, .5f)));
+                getSprites().add(new Platform(-5.85f, -1.5f, new Vector2f(.75f, .5f)));
+                getSprites().add(new Platform(-2.75f, -1.5f, new Vector2f(.75f, .5f)));
+                getSprites().add(new Platform(-1.18f, 1.0f, new Vector2f(.75f, .5f)));
+                getSprites().add(new Platform(2.05f, 1.0f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(5.86f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(7.0f, 1.0f, new Vector2f(.75f, .5f)));
             break;
             case 2:
                 getSprites().add(new Platform(0.0f, -1.5f, new Vector2f(.75f,.5f)));

@@ -24,8 +24,8 @@ public class MainCharacterManager extends Manager{
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         switch(level){
             case 1:
-                getSprites().get(0).setxTranslation(-4);
-                getSprites().get(0).setyTranslation(1.75f);
+                getSprites().get(0).setxTranslation(-7);
+                getSprites().get(0).setyTranslation(-4);
                 break;
             case 2:
                 getSprites().get(0).setxTranslation(-3);

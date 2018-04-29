@@ -23,6 +23,9 @@ public class WallManager extends Manager{
         getSprites().clear();
         switch(level){
             case 1:
+                getSprites().add(new Wall(3.8f, -0.24f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(3.8f, -2.74f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(5.5f, -0.24f, new Vector2f(.5f,.58f)));
                 break;
             case 2:
                 getSprites().add(new Wall(0, -.27f, new Vector2f(.5f,.58f)));
