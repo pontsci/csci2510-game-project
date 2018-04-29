@@ -6,8 +6,8 @@ import java.awt.event.KeyEvent;
 
 import managers.*;
 import spawning.Spawner;
-import sprite.character.enemy.Enemy;
 import sprite.character.player.MainCharacter;
+import sprite.world.Door;
 import util.SimpleFramework;
 import managers.ScreenManager.ScreenType;
 
@@ -106,7 +106,7 @@ public class SteamHuntDriver extends SimpleFramework{
         platformManager.initialize();
         doorManager.initialize(enemyManager.getSprites(), mainCharManager.getSprites());
         screenWallManager.initialize();
-        mainCharManager.initialize(floorManager.getSprites(),screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites(), wallManager.getSprites(), bulletManager);
+        mainCharManager.initialize(floorManager.getSprites(),screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites(), wallManager.getSprites(), bulletManager, doorManager.getSprites());
         //power ups don't initialize?
         enemyManager.initialize(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0), wallManager.getSprites(), bulletManager);
         spawner.initialize();
@@ -157,6 +157,7 @@ public class SteamHuntDriver extends SimpleFramework{
             processKKeyInput();
             processRKeyInput();//Temporary for damaging the Main Character.
             processTKeyInput();//Temp
+            processEKeyInput();
             processTestLevelChange();
         }
         for(Manager manager : managers){
@@ -238,6 +239,13 @@ public class SteamHuntDriver extends SimpleFramework{
         }
     }
 
+    //Process what happens when E is pressed - go through door to next level.
+    private void processEKeyInput(){
+        if(keyboard.keyDown(KeyEvent.VK_E)){
+            mainCharManager.canGoThroughDoor();
+        }
+    }
+
     //Process what happens when S is pressed
     private void processSpaceKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
@@ -252,7 +260,14 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private void processTestLevelChange(){
-        if(mainCharManager.isDead(appWorldWidth/2, appWorldHeight)){
+        if(((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).isChangingLevel()){
+            level++;
+            if(level > 3){
+                level = 1;
+            }
+            loadNewLevel();
+        }
+        else if(mainCharManager.isDead(appWorldWidth/2, appWorldHeight)){
             restart();
             loadNewLevel();
         }

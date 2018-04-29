@@ -10,7 +10,7 @@ import bounding.BoundingCircle;
 import managers.BulletManager;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
-import sprite.world.Floor;
+import sprite.world.Door;
 import sprite.world.PowerUp;
 import status.VulnStatus;
 import util.Animation;
@@ -27,9 +27,12 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private boolean onTheFloor = true;
     private boolean onAPlatform = false;
     private boolean ignorePlatforms = false;
+    private boolean changingLevel = false;
     private float platformTimer = 2;
     private float velocityY = 0;
     private ArrayList<Sprite> powerups;
+    private ArrayList<Sprite> doors;
+    private boolean canCollideWithDoor = false;
     private Animation animation = new Animation();
     private int currentAnimation = 1;
     private float walkRate = 2.5f;// Walk rate per second. (The world is 16 by 9)
@@ -37,7 +40,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private int healTicks = 0;//Tick values for hp and dmg
     private int dmgTicks = 0;
 
-    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm){
+    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors){
         super(startX, startY, scale, floor, screenWalls, platforms, walls, bm);
         BufferedImage idleAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png");
         BufferedImage jumpAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png");
@@ -52,6 +55,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         //landing part of the jump animation
         animation.addAnimation(jumpAnimation.getSubimage(1185, 0, 474, 356), 2);
         this.powerups = powerups;
+        this.doors = doors;
         this.hp = 3;
         initializeHitboxes();
     }
@@ -66,7 +70,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     // Process functions of the main character
     public void process(float delta){
-        System.out.println(hp);
         processGravity(delta);
         processAnimations(delta);
         conditions.updateObjects(delta);
@@ -145,11 +148,23 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
         checkPowerupCollision(delta, viewport);
+        changingLevel = false;
+        if(canCollideWithDoor){
+            checkDoorCollision(delta, viewport);
+        }
+        canCollideWithDoor = false;
+    }
+
+    private void checkDoorCollision(float delta, Matrix3x3f viewport){
+        for(Sprite door : doors){
+            if(Collision.checkSpriteCollision(this, door)){
+                changingLevel = true;
+            }
+        }
     }
 
     private void checkPowerupCollision(float delta, Matrix3x3f viewport){
         //Checks powerups collision if no statuses are active, activate status effect with the same name in VulnStatus's conditions.
-    	
     	if(!conditions.anyStatusActive()) {
     		for(int i = 0; i < powerups.size(); i++){
             	if(Collision.checkSpriteCollision(this, powerups.get(i))){
@@ -293,6 +308,13 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         bm.addMainCharacterBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
     }
 
+    //Allows checking for door collision by setting 'canCollisdeWithDoor' to true.
+    public void canGoThroughDoor(){
+        if(((Door)doors.get(0)).isOpen()){
+            canCollideWithDoor = true;
+        }
+    }
+
     public void ignorePlatformCollision(){
         //If on a platform, ignore Platform collision and reset the timer.
         if(onAPlatform){
@@ -398,5 +420,9 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     public void setHp(int hp)
     {
         this.hp = hp;
+    }
+
+    public boolean isChangingLevel(){
+        return changingLevel;
     }
 }

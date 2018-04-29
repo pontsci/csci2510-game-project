@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 
 public class Door extends Sprite{
-    protected boolean open;
-    protected ArrayList<Sprite> enemies;
-    BufferedImage spriteSheet;
+    private boolean open;
+    private ArrayList<Sprite> enemies;
+    private BufferedImage spriteSheet;
 
     public Door(float startX, float startY, Vector2f scale, ArrayList<Sprite> enemies){
         super(startX, startY, scale);
@@ -56,6 +56,4 @@ public class Door extends Sprite{
     public boolean isOpen(){
         return open;
     }
-
-
 }

@@ -40,4 +40,10 @@ public class DoorManager extends Manager{
         }
     }
 
+    public void closeDoors(){
+        for(Sprite door : getSprites()){
+            ((Door)door).setClose();
+        }
+    }
+
 }
