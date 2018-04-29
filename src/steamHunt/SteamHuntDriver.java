@@ -262,7 +262,7 @@ public class SteamHuntDriver extends SimpleFramework{
     private void processTestLevelChange(){
         if(((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).isChangingLevel()){
             level++;
-            if(level > 3){
+            if(level > 4){
                 level = 1;
             }
             loadNewLevel();
@@ -274,13 +274,13 @@ public class SteamHuntDriver extends SimpleFramework{
         else if(keyboard.keyDownOnce(KeyEvent.VK_Z)){
             level--;
             if(level < 1){
-                level = 3;
+                level = 4;
             }
             loadNewLevel();
         }
         else if(keyboard.keyDownOnce(KeyEvent.VK_C)){
             level++;
-            if(level > 3){
+            if(level > 4){
                 level = 1;
             }
             loadNewLevel();

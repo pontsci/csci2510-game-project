@@ -58,9 +58,27 @@ public class EnemyManager extends Manager
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         getSprites().clear();
-        //Spawn enemies
-        for (int i = 0; i < 3; i++){
-            addTriBot(spawner.getSpawnPoint());
+        switch(level){
+            case 1:
+                for (int i = 0; i < 3; i++){
+                    addTriBot(spawner.getSpawnPoint());
+                }
+                break;
+            case 2:
+                for (int i = 0; i < 4; i++){
+                    addTriBot(spawner.getSpawnPoint());
+                }
+                break;
+            case 3:
+                for (int i = 0; i < 5; i++){
+                    addTriBot(spawner.getSpawnPoint());
+                }
+                break;
+            case 4:
+                for (int i = 0; i < 6; i++){
+                    addTriBot(spawner.getSpawnPoint());
+                }
+                break;
         }
     }
 
