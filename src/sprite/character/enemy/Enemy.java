@@ -30,6 +30,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private boolean playerInDetectionBox = false;
     private boolean vision = false;
     private boolean shotValid = false;
+    protected boolean playShootAnimation = false;
     private MainCharacter player;
     private Vector2f playerPos;
     private Vector2f bulletSpawn;
@@ -205,9 +206,9 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
                 //we just shot, so we no longer can shoot
                 canShoot = false;
                 bulletTimer = 0;
-
+                //we need to play our shooting animation
+                playShootAnimation = true;
                 //add a bullet
-                bm.addEnemyBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
             }
         }
     }
