@@ -16,8 +16,8 @@ public class Floor extends Sprite {
 
     //Initialize the floor's hitboxes, the first box is the outer hitbox
     public void initializeHitboxes(){
-        hitboxes.add(new BoundingBox(new Vector2f(-2.2f, -5f), new Vector2f( 2.2f, .4f),  Color.BLUE));
-        hitboxes.add(new BoundingBox(new Vector2f(-2.2f, -5f), new Vector2f( 2.2f, .4f), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-2.2f, -10f), new Vector2f( 2.2f, .4f),  Color.BLUE));
+        hitboxes.add(new BoundingBox(new Vector2f(-2.2f, -10f), new Vector2f( 2.2f, .4f), Color.RED));
     }
 
     @Override

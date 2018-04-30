@@ -74,9 +74,7 @@ public abstract class CharacterSprite extends CollidableSprite{
         }
     }
 
-    protected void checkFloorCollision(float delta, Matrix3x3f viewport){
-        Collision.checkAdvancedCollision(delta, viewport, this, floors);
-    }
+    protected abstract void checkFloorCollision(float delta, Matrix3x3f viewport);
 
     protected void checkScreenWallCollision(float delta, Matrix3x3f viewport){
         for(int i = 0; i < screenWalls.size(); i++){

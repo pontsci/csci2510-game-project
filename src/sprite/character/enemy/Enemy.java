@@ -366,6 +366,27 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         }
     }
 
+    @Override
+    //Advanced collision checking which pushes a sprite every direction until it not longer collides with the given object.
+    public void checkFloorCollision(float delta, Matrix3x3f viewport){
+        float yStartState = getyTranslation();
+        int magnitude = 1;
+        if(!(floors == null)){
+            for(Sprite otherSprite : floors){
+                while(Collision.checkSpriteCollision(this, otherSprite)){
+                    pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, otherSprite)){
+                        setyTranslation(yStartState);
+                    }
+                    else{
+                        return;
+                    }
+                    magnitude++;
+                }
+            }
+        }
+    }
+
     private boolean footboxCollidesWithPlatform(){
         for(Sprite platform : platforms){
             if(Collision.checkCollision(footBox, platform.getHitboxes())){
