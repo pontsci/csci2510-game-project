@@ -1,6 +1,7 @@
 package sprite.world;
 
 import bounding.BoundingBox;
+import sprite.CollidableSprite;
 import sprite.Sprite;
 import util.Matrix3x3f;
 import util.Vector2f;
@@ -9,7 +10,7 @@ import spawning.SpawnRange;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Platform extends Sprite{
+public class Platform extends CollidableSprite{
 
     public Platform(float startX, float startY, Vector2f scale, BufferedImage spriteSheet){
         super(startX, startY, scale);
@@ -27,6 +28,7 @@ public class Platform extends Sprite{
     public void process(float delta){
 
     }
+
     public SpawnRange getSpawnRange(Matrix3x3f viewport){
         float ypadding = 0.1f;
         float xpadding = 1.5f;

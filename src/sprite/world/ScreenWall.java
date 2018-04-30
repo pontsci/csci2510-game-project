@@ -1,13 +1,14 @@
 package sprite.world;
 
 import bounding.BoundingBox;
+import sprite.CollidableSprite;
 import sprite.Sprite;
 import util.Vector2f;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class ScreenWall extends Sprite {
+public class ScreenWall extends CollidableSprite {
     public ScreenWall(float startX, float startY, Vector2f scale, BufferedImage spriteSheet){
         super(startX, startY, scale);
         //Starting Frame

@@ -1,5 +1,6 @@
 package sprite.bullet;
 
+import sprite.CollidableSprite;
 import sprite.Sprite;
 import sprite.character.enemy.Enemy;
 import util.Collision;
@@ -8,7 +9,7 @@ import util.Vector2f;
 
 import java.util.ArrayList;
 
-public abstract class Bullet extends Sprite{
+public abstract class Bullet extends CollidableSprite {
     private float bulletSpeed = 4f;
     protected int bulletDamage = 1;
     protected ArrayList<Sprite> walls;

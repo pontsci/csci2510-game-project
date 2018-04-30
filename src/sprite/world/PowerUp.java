@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import bounding.BoundingBox;
+import sprite.CollidableSprite;
 import sprite.Sprite;
 import status.Status;
 import util.Vector2f;
 
-public class PowerUp extends Sprite{
+public class PowerUp extends CollidableSprite {
 	private Status effect;
 	private float bobLen = 0;
 	private boolean bobDown = true;

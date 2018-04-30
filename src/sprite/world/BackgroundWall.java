@@ -12,11 +12,6 @@ public class BackgroundWall extends Sprite {
     }
 
     @Override
-    public void initializeHitboxes(){
-        //Not needed
-    }
-
-    @Override
     public void process(float delta){
         //Not needed unless the background were to slide or something special like that
     }
