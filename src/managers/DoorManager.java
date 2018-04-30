@@ -29,14 +29,22 @@ public class DoorManager extends Manager{
         getSprites().clear();
         switch(level){
             case 1:
-                getSprites().add(new Door(7.25f,-3.47f ,new Vector2f(.35f, .35f), enemies));
+                getSprites().add(new Door(7.12f,-3.47f ,new Vector2f(.35f, .35f), enemies));
                 break;
             case 2:
-                getSprites().add(new Door(5.25f,-3.47f ,new Vector2f(.35f, .35f), enemies));
+                getSprites().add(new Door(-7.14f,1.82f ,new Vector2f(.35f, .35f), enemies));
                 break;
             case 3:
-                getSprites().add(new Door(7.25f,1.82f ,new Vector2f(.35f, .35f), enemies));
+                getSprites().add(new Door(7.12f,1.82f ,new Vector2f(.35f, .35f), enemies));
                 break;
+            case 4:
+                getSprites().add(new Door(7.12f,-.67f ,new Vector2f(.35f, .35f), enemies));
+        }
+    }
+
+    public void closeDoors(){
+        for(Sprite door : getSprites()){
+            ((Door)door).setClose();
         }
     }
 

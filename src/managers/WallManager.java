@@ -23,9 +23,19 @@ public class WallManager extends Manager{
         getSprites().clear();
         switch(level){
             case 1:
+                getSprites().add(new Wall(3.8f, -0.24f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(3.8f, -2.74f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(5.5f, -0.24f, new Vector2f(.5f,.58f)));
                 break;
             case 2:
-                getSprites().add(new Wall(0, -.27f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(-4.67f, 3.35f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(-4.67f, -0.26f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(-2.04f, -0.26f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(-2.04f, -3.11f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(1.74f, 5.14f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(1.74f, 2.24f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(4.35f, -0.24f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(4.35f, -3.11f, new Vector2f(.5f,.58f)));
                 break;
             case 3:
                 getSprites().add(new Wall(-4.74f, 1f, new Vector2f(.5f,.58f)));
@@ -35,6 +45,13 @@ public class WallManager extends Manager{
                 getSprites().add(new Wall(4.44f, -0.28f, new Vector2f(.5f,.58f)));
                 getSprites().add(new Wall(4.44f, 5.1f, new Vector2f(.5f,.58f)));
                 break;
+            case 4:
+                getSprites().add(new Wall(-3.0f, 3.6f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(-3.0f, 0f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(1.24f, 2.24f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(1.24f, 4.96f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(3.24f, -2.79f, new Vector2f(.5f,.58f)));
+                getSprites().add(new Wall(4.25f, -0.25f, new Vector2f(.5f,.58f)));
         }
     }
 }

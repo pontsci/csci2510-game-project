@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class MainCharacterManager extends Manager{
     //Get the MainCharacter's sprite sheets and make the main character.
-    public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm){
-        getSprites().add(new MainCharacter(0, 0, new Vector2f(-.3f,.3f), floors, screenWalls, powerups, platforms, walls, bm));
+    public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors){
+        getSprites().add(new MainCharacter(0, 0, new Vector2f(-.3f,.3f), floors, screenWalls, powerups, platforms, walls, bm, doors));
     }
 
     public void checkCollision(float delta, Matrix3x3f viewport){
@@ -24,16 +24,20 @@ public class MainCharacterManager extends Manager{
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         switch(level){
             case 1:
-                getSprites().get(0).setxTranslation(-4);
-                getSprites().get(0).setyTranslation(1.75f);
+                getSprites().get(0).setxTranslation(-7);
+                getSprites().get(0).setyTranslation(-4);
                 break;
             case 2:
-                getSprites().get(0).setxTranslation(-3);
+                getSprites().get(0).setxTranslation(7);
                 getSprites().get(0).setyTranslation(-4);
                 break;
             case 3:
-                getSprites().get(0).setxTranslation(-2);
+                getSprites().get(0).setxTranslation(-7);
                 getSprites().get(0).setyTranslation(-4);
+                break;
+            case 4:
+                getSprites().get(0).setxTranslation(-7);
+                getSprites().get(0).setyTranslation(-.25f);
                 break;
         }
     }
@@ -85,20 +89,20 @@ public class MainCharacterManager extends Manager{
         }
     }
 
-    public void setBulletManager(BulletManager bm){
-        for(Sprite mainCharacter : getSprites()){
-            ((MainCharacter)mainCharacter).setBulletManager(bm);
+    public void canGoThroughDoor(){
+        for(Sprite player : getSprites()){
+            ((MainCharacter)player).canGoThroughDoor();
         }
     }
-    
+
     public boolean isDead(float xBound, float yBound){
         boolean dead = false;
         for(Sprite mainCharacter : getSprites()){
             if(((MainCharacter)mainCharacter).getHp() < 1){
                 dead = true;
             }
-            if(((MainCharacter)mainCharacter).getxTranslation() > xBound ||((MainCharacter)mainCharacter).getxTranslation() < -xBound ||
-                    ((MainCharacter)mainCharacter).getyTranslation() > yBound || ((MainCharacter)mainCharacter).getyTranslation() < -yBound){
+            if((mainCharacter).getxTranslation() > xBound ||(mainCharacter).getxTranslation() < -xBound ||
+                    (mainCharacter).getyTranslation() > yBound || (mainCharacter).getyTranslation() < -yBound){
                 dead = true;
             }
         }

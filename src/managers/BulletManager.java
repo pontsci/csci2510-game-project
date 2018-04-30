@@ -9,34 +9,31 @@ import sprite.bullet.player.PlayerBullet;
 import util.Matrix3x3f;
 import util.Vector2f;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class BulletManager extends Manager{
     private MainCharacter player;
     private ArrayList<Sprite> enemies;
-    BufferedImage enemyBulletSpriteSheet;
-    BufferedImage playerBulletSpriteSheet;
+    private ArrayList<Sprite> walls;
 
-    public void initialize(MainCharacter player, ArrayList<Sprite> enemies){
-        enemyBulletSpriteSheet = loadFile("src/resources/character/enemy/tribot/Enemy_WH_237x356_EnemyMove_EnemyAttack.png").getSubimage(1422, 356, 237, 356);
-        playerBulletSpriteSheet = loadFile("src/resources/character/player/MainCharBullet_WH_237x356_Bullet.png");
+    public void initialize(MainCharacter player, ArrayList<Sprite> enemies, ArrayList<Sprite> walls){
         this.player = player;
         this.enemies = enemies;
+        this.walls = walls;
     }
 
     public void addMainCharacterBullet(float x, float y, boolean direction){
         if(direction)
-            getSprites().add(new PlayerBullet(x, y, new Vector2f(.8f, .4f), enemies, playerBulletSpriteSheet));
+            getSprites().add(new PlayerBullet(x, y, new Vector2f(.8f, .4f), enemies, walls));
         else
-            getSprites().add(new PlayerBullet(x, y, new Vector2f(-.8f, -.4f), enemies, playerBulletSpriteSheet));
+            getSprites().add(new PlayerBullet(x, y, new Vector2f(-.8f, -.4f), enemies, walls));
     }
 
     public void addEnemyBullet(float x, float y, boolean direction){
         if(direction)
-            getSprites().add(new EnemyBullet(x, y, new Vector2f(.8f, .4f), player, enemyBulletSpriteSheet));
+            getSprites().add(new EnemyBullet(x, y, new Vector2f(.8f, .4f), player, walls));
         else
-            getSprites().add(new EnemyBullet(x, y, new Vector2f(-.8f, -.4f), player, enemyBulletSpriteSheet));
+            getSprites().add(new EnemyBullet(x, y, new Vector2f(-.8f, -.4f), player, walls));
     }
 
     @Override

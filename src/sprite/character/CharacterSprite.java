@@ -74,11 +74,7 @@ public abstract class CharacterSprite extends Sprite{
     }
 
     protected void checkFloorCollision(float delta, Matrix3x3f viewport){
-        for(Sprite floor : floors){
-            while(Collision.checkSpriteCollision(this, floor)){
-                pushCharacter(delta, viewport, 'y', ONE_PIXEL/2);
-            }
-        }
+        Collision.checkAdvancedCollision(delta, viewport, this, floors);
     }
 
     protected void checkScreenWallCollision(float delta, Matrix3x3f viewport){
@@ -96,42 +92,7 @@ public abstract class CharacterSprite extends Sprite{
     }
 
     protected void checkWallCollision(float delta, Matrix3x3f viewport){
-        float xStartState = getxTranslation();
-        float yStartState = getyTranslation();
-        int magnitude = 1;
-        if(!(walls == null)){
-            for(Sprite wall : walls){
-                while(Collision.checkSpriteCollision(this, wall)){
-                    pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, wall)){
-                        setyTranslation(yStartState);
-                    }
-                    else{
-                        break;
-                    }
-                    pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, wall)){
-                        setxTranslation(xStartState);
-                    }
-                    else
-                        break;
-                    pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, wall)){
-                        setxTranslation(xStartState);
-                    }
-                    else
-                        break;
-                    pushCharacter(delta, viewport, 'y', -ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, wall)){
-                        setyTranslation(yStartState);
-                    }
-                    else{
-                        break;
-                    }
-                    magnitude++;
-                }
-            }
-        }
+        Collision.checkAdvancedCollision(delta, viewport, this, walls);
     }
 
     //Push the character
