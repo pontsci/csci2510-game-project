@@ -1,13 +1,14 @@
 package sprite.world;
 
 import bounding.BoundingBox;
+import sprite.CollidableSprite;
 import sprite.Sprite;
 import util.Vector2f;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Wall extends Sprite{
+public class Wall extends CollidableSprite{
 
     public Wall(float startX, float startY, Vector2f scale, BufferedImage spriteSheet){
         super(startX, startY, scale);

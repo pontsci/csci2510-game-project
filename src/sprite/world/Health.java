@@ -13,11 +13,6 @@ public class Health extends Sprite{
     }
 
     @Override
-    public void initializeHitboxes(){
-        //Not needed
-    }
-
-    @Override
     public void process(float delta){
         //Not needed
     }

@@ -1,6 +1,7 @@
 package sprite.character;
 
 import managers.BulletManager;
+import sprite.CollidableSprite;
 import sprite.character.enemy.Enemy;
 import util.Collision;
 import sprite.Sprite;
@@ -9,7 +10,7 @@ import util.Vector2f;
 
 import java.util.ArrayList;
 
-public abstract class CharacterSprite extends Sprite{
+public abstract class CharacterSprite extends CollidableSprite{
     protected final int TERMINAL_VELOCITY = -5;
     protected final float ONE_PIXEL = .00833333f;
     protected ArrayList<Sprite> floors;

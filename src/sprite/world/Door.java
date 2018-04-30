@@ -1,6 +1,7 @@
 package sprite.world;
 
 import bounding.BoundingBox;
+import sprite.CollidableSprite;
 import sprite.Sprite;
 import util.Vector2f;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 
 
-public class Door extends Sprite{
+public class Door extends CollidableSprite {
     private boolean open;
     private ArrayList<Sprite> enemies;
     private BufferedImage spriteSheet;
@@ -23,6 +24,7 @@ public class Door extends Sprite{
         initializeHitboxes();
     }
 
+    @Override
     public  void initializeHitboxes(){
         //Hitboxes are in the sprite class so you did not need to have a hitboxes variable in here.
         hitboxes.add(new BoundingBox(new Vector2f(-.9f, -1.8f), new Vector2f( .9f, 1.3f),  Color.BLUE));

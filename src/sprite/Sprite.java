@@ -27,10 +27,6 @@ public abstract class Sprite{
         this.scale = scale;
     }
 
-    //Each sprite has hitboxes which should be set in subclasses
-    //the first hitbox is the outer hitbox
-    public abstract void initializeHitboxes();
-
     //Process anything that's constantly affecting the sprite
     public abstract void process(float delta);
 
