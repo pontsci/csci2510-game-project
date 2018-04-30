@@ -9,11 +9,9 @@ import java.awt.image.BufferedImage;
 
 public class Wall extends Sprite{
 
-    public Wall(float startX, float startY, Vector2f scale){
+    public Wall(float startX, float startY, Vector2f scale, BufferedImage spriteSheet){
         super(startX, startY, scale);
         //Starting Frame
-        BufferedImage spriteSheet = loadFile(
-				"src/resources/world/foreground/wall/WallBlock_WH_400x467_WallStand.png");
         setCurrentSpriteFrame(spriteSheet.getSubimage(120, 0, 400, 467));
         initializeHitboxes();
     }

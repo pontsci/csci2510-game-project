@@ -83,18 +83,6 @@ public abstract class Sprite{
         return transform;
     }
 
-    //Load an image and return the found image
-    protected BufferedImage loadFile(String fileName) {
-        BufferedImage spriteSheet;
-        try {
-            spriteSheet = ImageIO.read(new File(fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-            spriteSheet = null;
-        }
-        return spriteSheet;
-    }
-
     //Getters and Setters
     public void setCurrentSpriteFrame(BufferedImage currentSpriteFrame){
         this.currentSpriteFrame = currentSpriteFrame;

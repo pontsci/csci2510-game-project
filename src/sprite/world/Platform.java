@@ -7,12 +7,13 @@ import util.Vector2f;
 import spawning.SpawnRange;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Platform extends Sprite{
 
-    public Platform(float startX, float startY, Vector2f scale){
+    public Platform(float startX, float startY, Vector2f scale, BufferedImage spriteSheet){
         super(startX, startY, scale);
-        setCurrentSpriteFrame(loadFile("src/resources/world/foreground/platform/PlatformResized_WH_448x119.png"));
+        setCurrentSpriteFrame(spriteSheet);
         initializeHitboxes();
     }
 

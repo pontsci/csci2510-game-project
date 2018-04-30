@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Collision {
-    protected static final float ONE_PIXEL = .00833333f;
+    private static final float ONE_PIXEL = .00833333f;
 
     //Given two sprites, return if they collide
     public static boolean checkSpriteCollision(Sprite thisSprite, Sprite otherSprite){
@@ -33,7 +33,7 @@ public class Collision {
 
     //given two sets of hitboxes, return if they collide
     //start indicates where to start in the array, typically 1
-    public static boolean checkInnerCollision(ArrayList<BoundingShape> thisHitboxes, ArrayList<BoundingShape> otherHitboxes, int start){
+    private static boolean checkInnerCollision(ArrayList<BoundingShape> thisHitboxes, ArrayList<BoundingShape> otherHitboxes, int start){
         BoundingShape otherHitbox;
         BoundingShape thisHitbox;
 

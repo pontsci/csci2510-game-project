@@ -1,4 +1,4 @@
-package sprite.screens;
+package sprite.screen;
 
 import sprite.Sprite;
 import util.Vector2f;

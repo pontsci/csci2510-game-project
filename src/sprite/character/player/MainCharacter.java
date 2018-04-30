@@ -40,14 +40,12 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private int healTicks = 0;//Tick values for hp and dmg
     private int dmgTicks = 0;
 
-    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors){
+    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors, BufferedImage idleAnimation, BufferedImage jumpAnimation, BufferedImage moveAnimation){
         super(startX, startY, scale, floor, screenWalls, platforms, walls, bm);
-        BufferedImage idleAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png");
-        BufferedImage jumpAnimation = loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png");
 
         //Always set the frame, even if it runs without setting the frame, a null error can occur on animated sprites when you try to create a new one.
         setCurrentSpriteFrame(idleAnimation.getSubimage(0, 0, 237, 356));
-        animation.addAnimation(loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Move.png"), 6);
+        animation.addAnimation(moveAnimation, 6);
         animation.addAnimation(idleAnimation, 5);
         animation.addAnimation(jumpAnimation.getSubimage(0, 0, 474, 356), 2);
         //falling part of the jump animation

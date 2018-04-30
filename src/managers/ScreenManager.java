@@ -1,13 +1,11 @@
 package managers;
 
 import spawning.Spawner;
+import sprite.screen.*;
 import util.Vector2f;
 
 import java.awt.*;
-import sprite.screens.Die;
-import sprite.screens.Ending;
-import sprite.screens.Pause;
-import sprite.screens.Start;
+
 import util.Matrix3x3f;
 
 //Could be used to handle which background to play on each level of the game
@@ -28,10 +26,10 @@ public class ScreenManager extends Manager{
     
     //Get the background's sprite sheet and make a background.
     public void initialize(){
-        getSprites().add(new Pause(0, .2f, new Vector2f(1,.87f)));
-        getSprites().add(new Start(0, 0, new Vector2f(1,.87f)));
-        getSprites().add(new Die(0, 0, new Vector2f(1,.87f)));
-        getSprites().add(new Ending(0, 0, new Vector2f(1,.87f)));
+        getSprites().add(new DisplayScreen(0, .2f, new Vector2f(1,.87f), loadFile("src/resources/world/background/PauseScreen.png")));//Pause
+        getSprites().add(new DisplayScreen(0, 0, new Vector2f(1,.87f), loadFile("src/resources/world/background/StartScreen.png")));//Start
+        getSprites().add(new DisplayScreen(0, 0, new Vector2f(1,.87f), loadFile("src/resources/world/background/DeathScreen.png")));//Die
+        getSprites().add(new DisplayScreen(0, 0, new Vector2f(1,.87f), loadFile("src/resources/world/background/EndingScreen.png")));//Ending
         currentScreen = ScreenType.START;
     }
     
@@ -53,7 +51,7 @@ public class ScreenManager extends Manager{
 
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
-
+        //Not needed
     }
 
 }

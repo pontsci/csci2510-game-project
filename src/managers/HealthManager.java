@@ -6,8 +6,11 @@ import sprite.world.Health;
 import util.Matrix3x3f;
 import util.Vector2f;
 
+import java.awt.image.BufferedImage;
+
 //This is used for the player right now
 public class HealthManager extends Manager{
+    private BufferedImage healthSpriteSheet = loadFile("src/resources/UI/UIElement_WH_131x203_Battery.png");
     private MainCharacter player;
     public void initialize(MainCharacter player){
         this.player = player;
@@ -31,26 +34,26 @@ public class HealthManager extends Manager{
                     getSprites().remove(1);
                 }
                 if(getSprites().size() == 0)
-                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), 1));
+                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(0,0,131,203)));
                 break;
             case 2:
                 if(getSprites().size() == 3)
                     getSprites().remove(2);
                 else if(getSprites().size() == 1)
-                    getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), 2));
+                    getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(131,0,131, 203)));
                 break;
             case 3:
                 if(getSprites().size() == 2){
-                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), 1));
+                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(0,0,131,203)));
                 }
                 else if(getSprites().size() == 1){
-                    getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), 2));
-                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), 1));
+                    getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(131,0,131, 203)));
+                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(0,0,131,203)));
                 }
                 else if(getSprites().size() == 0){
-                    getSprites().add(new Health(7,4, new Vector2f(.5f, .5f), 3));
-                    getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), 2));
-                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), 1));
+                    getSprites().add(new Health(7,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(262,0,131, 203)));
+                    getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(131,0,131, 203)));
+                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(0,0,131,203)));
                 }
                 break;
         }
@@ -61,9 +64,9 @@ public class HealthManager extends Manager{
         switch(level){
             case 1:
                 getSprites().clear();
-                getSprites().add(new Health(7,4, new Vector2f(.5f, .5f), 3));
-                getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), 2));
-                getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), 1));
+                getSprites().add(new Health(7,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(262,0,131, 203)));
+                getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(131,0,131, 203)));
+                getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(0,0,131,203)));
                 break;
         }
     }

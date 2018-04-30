@@ -10,11 +10,13 @@ import sprite.world.Floor;
 import util.Matrix3x3f;
 import util.Vector2f;
 
+import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class EnemyManager extends Manager
 {
+    private BufferedImage tribotSpriteSheet = loadFile("src/resources/character/enemy/tribot/Enemy_WH_237x356_EnemyMove_EnemyAttack.png");
     private ArrayList<Sprite> floors;
     private ArrayList<Sprite> screenWalls;
     private ArrayList<Sprite> platforms;
@@ -32,21 +34,9 @@ public class EnemyManager extends Manager
         this.bm = bm;
     }
 
-    public void addTriBot()
+    private  void addTriBot(Vector2f pos)
     {
-        /* Performance testing
-        getSprites().add(new TriBot(7, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
-        getSprites().add(new TriBot(8, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
-        getSprites().add(new TriBot(4, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
-        getSprites().add(new TriBot(6.5f, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
-        getSprites().add(new TriBot(6.2f, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
-        getSprites().add(new TriBot(6, 0, new Vector2f(.4f, .4f), floor, walls, platforms, player));
-        */
-    }
-
-    public void addTriBot(Vector2f pos)
-    {
-        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f), floors, screenWalls, platforms, player, walls, bm));
+        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f), floors, screenWalls, platforms, player, walls, bm, tribotSpriteSheet));
     }
 
     public void checkCollision(float delta, Matrix3x3f viewport){
@@ -79,12 +69,6 @@ public class EnemyManager extends Manager
                     addTriBot(spawner.getSpawnPoint());
                 }
                 break;
-        }
-    }
-
-    public void setBulletManager(BulletManager bm){
-        for(Sprite enemy : getSprites()){
-            ((Enemy)enemy).setBulletManager(bm);
         }
     }
 }

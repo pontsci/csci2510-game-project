@@ -8,10 +8,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ScreenWall extends Sprite {
-    public ScreenWall(float startX, float startY, Vector2f scale){
+    public ScreenWall(float startX, float startY, Vector2f scale, BufferedImage spriteSheet){
         super(startX, startY, scale);
         //Starting Frame
-        setCurrentSpriteFrame(loadFile("src/resources/world/foreground/wall/TallWall_WH_314_4200.png"));
+        setCurrentSpriteFrame(spriteSheet);
         initializeHitboxes();
     }
 

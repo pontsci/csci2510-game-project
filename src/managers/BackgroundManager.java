@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 public class BackgroundManager extends Manager{
     private BufferedImage skyboxSpriteSheet = loadFile("src/resources/world/background/skyboxresized.png");
     private BufferedImage bgWallSpriteSheet = loadFile("src/resources/world/background/Building_WH_400x467_Wall.png");
+
     public enum BgWallType {
         WINDOWCRACKED(0), WINDOW(1), DIAGONAL(2), MEDIUM (3), BIGHOLE(4), LITTLEHOLE (5), SMALLSEGMENT(6), WALL(7), SCRATCHED(8);  
         private int i;
@@ -21,10 +22,6 @@ public class BackgroundManager extends Manager{
         public int getIndex() {
             return i;
         }
-    }
-    //Get the background's sprite sheet and make a background.
-    public void initialize(){
-        getSprites().add(new Background(0, 0, new Vector2f(1,1), skyboxSpriteSheet));
     }
 
     @Override

@@ -1,11 +1,7 @@
 package sprite.world;
 
 import bounding.BoundingBox;
-import bounding.BoundingCircle;
-import bounding.BoundingShape;
 import sprite.Sprite;
-import sprite.character.enemy.Enemy;
-import util.Matrix3x3f;
 import util.Vector2f;
 
 import java.awt.*;
@@ -19,9 +15,9 @@ public class Door extends Sprite{
     private ArrayList<Sprite> enemies;
     private BufferedImage spriteSheet;
 
-    public Door(float startX, float startY, Vector2f scale, ArrayList<Sprite> enemies){
+    public Door(float startX, float startY, Vector2f scale, ArrayList<Sprite> enemies, BufferedImage spriteSheet){
         super(startX, startY, scale);
-        spriteSheet = loadFile("src/resources/world/foreground/door/door.png");
+        this.spriteSheet = spriteSheet;
         setCurrentSpriteFrame(spriteSheet.getSubimage(0, 0, spriteSheet.getWidth()/2, spriteSheet.getHeight()));
         this.enemies = enemies;
         initializeHitboxes();

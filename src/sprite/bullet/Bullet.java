@@ -9,7 +9,7 @@ import util.Vector2f;
 import java.util.ArrayList;
 
 public abstract class Bullet extends Sprite{
-    protected float bulletSpeed = 3.5f;
+    private float bulletSpeed = 4f;
     protected int bulletDamage = 1;
     protected ArrayList<Sprite> walls;
 
@@ -67,9 +67,9 @@ public abstract class Bullet extends Sprite{
 
     public boolean checkCollision(float delta, Matrix3x3f viewport){
         //Check wall collision and delete bullet if it hits the wall
-        for(int i = 0; i < walls.size(); i++){
+        for(Sprite wall : walls){
             //bullet collides with enemy
-            if(Collision.checkSpriteCollision(this, walls.get(i))){
+            if(Collision.checkSpriteCollision(this, wall)){
                 return true;
             }
         }

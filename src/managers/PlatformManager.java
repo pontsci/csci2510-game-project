@@ -7,14 +7,13 @@ import sprite.world.Platform;
 import util.Matrix3x3f;
 import util.Vector2f;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class PlatformManager extends Manager{
-    public void initialize(){
+    private BufferedImage platformSpriteSheet = loadFile("src/resources/world/foreground/platform/PlatformResized_WH_448x119.png");
 
-    }
-
-    public ArrayList<SpawnRange> getPlatFormSpawns(Matrix3x3f viewport){
+    private ArrayList<SpawnRange> getPlatFormSpawns(Matrix3x3f viewport){
         ArrayList<SpawnRange> spawnRanges = new ArrayList<>();
         //Add floor spawn.
         spawnRanges.add(new SpawnRange(-5,7,-3,viewport));
@@ -35,38 +34,38 @@ public class PlatformManager extends Manager{
         getSprites().clear();
         switch(level){
             case 1:
-                getSprites().add(new Platform(-5.85f, -1.5f, new Vector2f(.75f, .5f)));
-                getSprites().add(new Platform(-2.75f, -1.5f, new Vector2f(.75f, .5f)));
-                getSprites().add(new Platform(-1.18f, 1.0f, new Vector2f(.75f, .5f)));
-                getSprites().add(new Platform(2.05f, 1.0f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(5.86f, -1.5f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(7.0f, 1.0f, new Vector2f(.75f, .5f)));
+                getSprites().add(new Platform(-5.85f, -1.5f, new Vector2f(.75f, .5f), platformSpriteSheet));
+                getSprites().add(new Platform(-2.75f, -1.5f, new Vector2f(.75f, .5f), platformSpriteSheet));
+                getSprites().add(new Platform(-1.18f, 1.0f, new Vector2f(.75f, .5f), platformSpriteSheet));
+                getSprites().add(new Platform(2.05f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(5.86f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(7.0f, 1.0f, new Vector2f(.75f, .5f), platformSpriteSheet));
             break;
             case 2:
-                getSprites().add(new Platform(-6.4f, 1.0f,  new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(-6.4f, -1.5f,  new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(-3.2f, 1.0f,  new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(-3.2f, -1.5f,  new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(0.0f,  1.0f,  new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(0.0f,  -1.5f,  new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(3.2f,  -1.5f,  new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(6.4f,  1.0f,  new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(6.4f,  -1.5f,  new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(-6.4f, 1.0f,  new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-6.4f, -1.5f,  new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-3.2f, 1.0f,  new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-3.2f, -1.5f,  new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(0.0f,  1.0f,  new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(0.0f,  -1.5f,  new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(3.2f,  -1.5f,  new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(6.4f,  1.0f,  new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(6.4f,  -1.5f,  new Vector2f(.75f,.5f), platformSpriteSheet));
             break;
             case 3:
-                getSprites().add(new Platform(-6.5f, 1.0f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(-2.0f, -1.5f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(-0.87f, -1.5f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(0.0f, 1.0f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(6.5f, 1.0f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(-6.5f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-2.0f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-0.87f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(0.0f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(6.5f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
             break;
             case 4:
-                getSprites().add(new Platform(-7.5f, -1.5f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(-3.72f, 1.0f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(-0.0f, -1.5f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(-0.5f, 1.0f, new Vector2f(.75f,.5f)));
-                getSprites().add(new Platform(6.75f, -1.5f, new Vector2f(.75f,.5f)));
+                getSprites().add(new Platform(-7.5f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-3.72f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-0.0f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-0.5f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(6.75f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
                 break;
         }
         spawner.setSpawnRanges(getPlatFormSpawns(viewport));
