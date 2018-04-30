@@ -17,7 +17,7 @@ import util.Vector2f;
 
 public abstract class Enemy extends CharacterSprite implements VulnStatus{
     protected BoundingBox footBox = new BoundingBox(new Vector2f(-1.1f, -2.4f), new Vector2f(-.9f, -1.8f), Color.GREEN);
-    protected BoundingBox detectionBox = new BoundingBox(new Vector2f(-40f,-2f), new Vector2f(0f,4f), Color.CYAN);
+    protected BoundingBox detectionBox = new BoundingBox(new Vector2f(-40f,0f), new Vector2f(0f,2f), Color.CYAN);
     protected Vector2f bulletLine = new Vector2f(0,0);
     private float walkRate = 1.5f;
     private final float REGEN_TIME = 10;
