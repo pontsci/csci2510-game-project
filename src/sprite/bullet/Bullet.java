@@ -1,12 +1,17 @@
 package sprite.bullet;
 
 import sprite.Sprite;
+import sprite.character.enemy.Enemy;
+import util.Collision;
 import util.Matrix3x3f;
 import util.Vector2f;
+
+import java.util.ArrayList;
 
 public abstract class Bullet extends Sprite{
     protected float bulletSpeed = 3.5f;
     protected int bulletDamage = 1;
+    protected ArrayList<Sprite> walls;
 
     /**create a new bullet with starting x and y coords, as well as scale
      * *
@@ -14,8 +19,9 @@ public abstract class Bullet extends Sprite{
      * @param startY y coord
      * @param scale scale
      */
-    public Bullet(float startX, float startY, Vector2f scale){
+    public Bullet(float startX, float startY, Vector2f scale, ArrayList<Sprite> walls){
         super(startX, startY, scale);
+        this.walls = walls;
     }
 
     /**
@@ -26,8 +32,9 @@ public abstract class Bullet extends Sprite{
      * @param scale scale
      * @param bulletDamage bullet damage
      */
-    public Bullet(float startX, float startY, Vector2f scale, int bulletDamage){
+    public Bullet(float startX, float startY, Vector2f scale, int bulletDamage, ArrayList<Sprite> walls){
         super(startX, startY, scale);
+        this.walls = walls;
         this.bulletDamage = bulletDamage;
     }
 
@@ -57,7 +64,17 @@ public abstract class Bullet extends Sprite{
         return getxTranslation() > 8.5 || getxTranslation() < -8.5;
     }
 
-    public abstract boolean checkCollision(float delta, Matrix3x3f viewport);
+
+    public boolean checkCollision(float delta, Matrix3x3f viewport){
+        //Check wall collision and delete bullet if it hits the wall
+        for(int i = 0; i < walls.size(); i++){
+            //bullet collides with enemy
+            if(Collision.checkSpriteCollision(this, walls.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public int getBulletDamage()
     {

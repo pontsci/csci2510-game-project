@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class PlayerBullet extends Bullet{
     private ArrayList<Sprite> enemies;
-    public PlayerBullet(float startX, float startY, Vector2f scale, ArrayList<Sprite> enemies){
-        super(startX, startY, scale);
+    public PlayerBullet(float startX, float startY, Vector2f scale, ArrayList<Sprite> enemies, ArrayList<Sprite> walls){
+        super(startX, startY, scale, walls);
         BufferedImage spriteSheet = loadFile("src/resources/character/player/MainCharBullet_WH_237x356_Bullet.png");
         setCurrentSpriteFrame(spriteSheet.getSubimage(671,0,197,306));
         this.enemies = enemies;
@@ -39,7 +39,12 @@ public class PlayerBullet extends Bullet{
      * @param viewport screen
      * @return true if collision, false if no collision
      */
+    @Override
     public boolean checkCollision(float delta, Matrix3x3f viewport){
+        //if wall hit, delete bullet
+        if(super.checkCollision(delta, viewport))
+            return true;
+        //if enemy hit, decrease enemy hp or delete it if its hp hits 0
         for(int i = 0; i < enemies.size(); i++){
             //bullet collides with enemy
             if(Collision.checkSpriteCollision(this, enemies.get(i))){
