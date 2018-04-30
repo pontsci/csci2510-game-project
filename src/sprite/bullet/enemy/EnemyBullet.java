@@ -25,8 +25,8 @@ public class EnemyBullet extends Bullet{
 
     @Override
     public void initializeHitboxes(){
-        hitboxes.add(new BoundingBox(new Vector2f(-.1f, -.4f), new Vector2f(.6f, -.1f), Color.BLUE));
-        hitboxes.add(new BoundingBox(new Vector2f(-.1f, -.4f), new Vector2f(.6f, -.1f), Color.RED));
+        hitboxes.add(new BoundingBox(new Vector2f(-.1f, -.4f), new Vector2f(.2f, -.1f), Color.BLUE));
+        hitboxes.add(new BoundingBox(new Vector2f(-.1f, -.4f), new Vector2f(.2f, -.1f), Color.RED));
     }
 
     @Override
