@@ -33,7 +33,7 @@ public abstract class CharacterSprite extends CollidableSprite{
         this.walls = walls;
         this.platforms = platforms;
         this.bm = bm;
-        bulletWaitTime = 1;
+        bulletWaitTime = 1.5f;
         bulletTimer = 1;
         canShoot = true;
     }
