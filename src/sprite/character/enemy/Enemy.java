@@ -262,12 +262,9 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
-        footboxCollision = true;
 
-        if(getyTranslation()>-2) {
-            if (!footboxCollidesWithPlatform())
-                footboxCollision = false;
-        }
+        //check if the footbox collides with any ground
+        footboxCollision = footboxCollidesWithGround();
         if(wallCollision)
             footboxCollision = false;
 
@@ -387,9 +384,14 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         }
     }
 
-    private boolean footboxCollidesWithPlatform(){
+    private boolean footboxCollidesWithGround(){
         for(Sprite platform : platforms){
             if(Collision.checkCollision(footBox, platform.getHitboxes())){
+                return true;
+            }
+        }
+        for(Sprite floor: floors){
+            if(Collision.checkCollision(footBox, floor.getHitboxes())){
                 return true;
             }
         }
