@@ -6,7 +6,11 @@ import sprite.character.CharacterSprite;
 import sprite.bullet.Bullet;
 import util.Matrix3x3f;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 //Managers deal with the entire population of sprites and how sprites interact with other sprites.
@@ -53,4 +57,16 @@ public abstract class Manager{
 
     //Given an int, set a new level
     public abstract void switchLevel(int level, Spawner spawner, Matrix3x3f viewport);
+
+    //Load an image and return the found image
+    protected BufferedImage loadFile(String fileName) {
+        BufferedImage spriteSheet;
+        try {
+            spriteSheet = ImageIO.read(new File(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+            spriteSheet = null;
+        }
+        return spriteSheet;
+    }
 }
