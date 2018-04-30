@@ -10,7 +10,7 @@ import util.Vector2f;
 import java.util.ArrayList;
 
 public abstract class Bullet extends CollidableSprite {
-    private float bulletSpeed = 4f;
+    protected float bulletSpeed = 4f;
     protected int bulletDamage = 1;
     protected ArrayList<Sprite> walls;
 

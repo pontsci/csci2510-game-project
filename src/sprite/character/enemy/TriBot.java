@@ -19,13 +19,14 @@ public class TriBot extends Enemy {
 	private final int ATTACK_ANIMATION = 1;
 	private int currentAnimation = 0;
 	private int dmgTicks = 0;
+	private boolean shoot = false;
 
 	public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, BufferedImage spriteSheet) {
 		super(startX, startY, scale, floors, screenWalls, platforms, player, walls, bm);
 		// get the animations for the tri bot - follow the main character
 		setCurrentSpriteFrame(spriteSheet.getSubimage(0, 0, 237, 356));
 		animation.addAnimation(spriteSheet.getSubimage(0, 0, 1659, 356), 7);
-		animation.addAnimation(spriteSheet.getSubimage(0, 356, 1422, 356), 6);
+		animation.addAnimation(spriteSheet.getSubimage(0, 356, 1185, 356), 5);
 		initializeHitboxes();
 	}
 
@@ -39,7 +40,20 @@ public class TriBot extends Enemy {
 	@Override
 	public void process(float delta) {
 		super.process(delta);
+
+		//we need to play our shooting animation, so set it
+		if(playShootAnimation){
+			currentAnimation = ATTACK_ANIMATION;
+			//now that it is playing, we no longer need to set the animation to it.
+			playShootAnimation = false;
+		}
 		processAnimations(delta);
+
+		//shoot is controlled by animation, it is set to true only when the animation is done playing
+		if(shoot){
+			bm.addEnemyBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
+			shoot = false;
+		}
 	}
 
 	// Process which animation is playing, when an animation finishes, it returns
@@ -52,7 +66,11 @@ public class TriBot extends Enemy {
 			break;
 		// idle Animation
 		case ATTACK_ANIMATION:
-			animation.playAnimation(delta, ATTACK_ANIMATION, this);
+			if(animation.playAnimation(delta, ATTACK_ANIMATION, this)){
+				currentAnimation = MOVE_ANIMATION;
+				//now that the charge animation has finished, shoot a bullet
+				shoot = true;
+			}
 			break;
 		// jump Animation
 		}

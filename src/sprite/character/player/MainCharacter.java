@@ -283,13 +283,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                     }
                     else
                         return;
-                    pushCharacter(delta, viewport, 'y', -ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, floor)){
-                        this.setyTranslation(yStartState);
-                    }
-                    else{
-                        return;
-                    }
                     magnitude++;
                 }
             }

@@ -18,6 +18,7 @@ public class PlayerBullet extends Bullet{
         super(startX, startY, scale, walls);
         setCurrentSpriteFrame(spriteSheet.getSubimage(671,0,197,306));
         this.enemies = enemies;
+        bulletSpeed = 7;
         initializeHitboxes();
     }
 

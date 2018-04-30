@@ -17,7 +17,7 @@ import util.Vector2f;
 
 public abstract class Enemy extends CharacterSprite implements VulnStatus{
     protected BoundingBox footBox = new BoundingBox(new Vector2f(-1.1f, -2.4f), new Vector2f(-.9f, -1.8f), Color.GREEN);
-    protected BoundingBox detectionBox = new BoundingBox(new Vector2f(-40f,-2f), new Vector2f(0f,4f), Color.CYAN);
+    protected BoundingBox detectionBox = new BoundingBox(new Vector2f(-40f,0f), new Vector2f(0f,2f), Color.CYAN);
     protected Vector2f bulletLine = new Vector2f(0,0);
     private float walkRate = 1.5f;
     private final float REGEN_TIME = 10;
@@ -30,6 +30,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private boolean playerInDetectionBox = false;
     private boolean vision = false;
     private boolean shotValid = false;
+    protected boolean playShootAnimation = false;
     private MainCharacter player;
     private Vector2f playerPos;
     private Vector2f bulletSpawn;
@@ -205,9 +206,9 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
                 //we just shot, so we no longer can shoot
                 canShoot = false;
                 bulletTimer = 0;
-
+                //we need to play our shooting animation
+                playShootAnimation = true;
                 //add a bullet
-                bm.addEnemyBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
             }
         }
     }
@@ -262,12 +263,9 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
-        footboxCollision = true;
 
-        if(getyTranslation()>-2) {
-            if (!footboxCollidesWithPlatform())
-                footboxCollision = false;
-        }
+        //check if the footbox collides with any ground
+        footboxCollision = footboxCollidesWithGround();
         if(wallCollision)
             footboxCollision = false;
 
@@ -366,9 +364,35 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         }
     }
 
-    private boolean footboxCollidesWithPlatform(){
+    @Override
+    //Advanced collision checking which pushes a sprite every direction until it not longer collides with the given object.
+    public void checkFloorCollision(float delta, Matrix3x3f viewport){
+        float yStartState = getyTranslation();
+        int magnitude = 1;
+        if(!(floors == null)){
+            for(Sprite otherSprite : floors){
+                while(Collision.checkSpriteCollision(this, otherSprite)){
+                    pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, otherSprite)){
+                        setyTranslation(yStartState);
+                    }
+                    else{
+                        return;
+                    }
+                    magnitude++;
+                }
+            }
+        }
+    }
+
+    private boolean footboxCollidesWithGround(){
         for(Sprite platform : platforms){
             if(Collision.checkCollision(footBox, platform.getHitboxes())){
+                return true;
+            }
+        }
+        for(Sprite floor: floors){
+            if(Collision.checkCollision(footBox, floor.getHitboxes())){
                 return true;
             }
         }
