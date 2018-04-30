@@ -256,12 +256,44 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     }
 
     @Override
+    //Push the character every direction, increases how much it pushes each loop until the character is no longer colliding.
     protected void checkFloorCollision(float delta, Matrix3x3f viewport){
         onTheFloor = false;
-        for(Sprite floor : floors){
-            while(Collision.checkSpriteCollision(this, floor)){
-                pushCharacter(delta, viewport, 'y', ONE_PIXEL);
-                onTheFloor = true;
+        float xStartState = getxTranslation();
+        float yStartState = getyTranslation();
+        int magnitude = 1;
+        if(!(floors == null)){
+            for(Sprite floor : floors){
+                while(Collision.checkSpriteCollision(this, floor)){
+                    pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, floor)){
+                        setyTranslation(yStartState);
+                    }
+                    else{
+                        onTheFloor = true;
+                        return;
+                    }
+                    pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, floor)){
+                        setxTranslation(xStartState);
+                    }
+                    else
+                        return;
+                    pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, floor)){
+                        setxTranslation(xStartState);
+                    }
+                    else
+                        return;
+                    pushCharacter(delta, viewport, 'y', -ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(this, floor)){
+                        this.setyTranslation(yStartState);
+                    }
+                    else{
+                        return;
+                    }
+                    magnitude++;
+                }
             }
         }
         onAPlatform = false;

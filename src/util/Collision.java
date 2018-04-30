@@ -130,4 +130,44 @@ public class Collision {
         }
 
     }
+
+    //Advanced collision checking which pushes a sprite every direction until it not longer collides with the given object.
+    public static void checkAdvancedCollision(float delta, Matrix3x3f viewport, CharacterSprite character, ArrayList<Sprite> otherSprites){
+        float xStartState = character.getxTranslation();
+        float yStartState = character.getyTranslation();
+        int magnitude = 1;
+        if(!(otherSprites == null)){
+            for(Sprite otherSprite : otherSprites){
+                while(Collision.checkSpriteCollision(character, otherSprite)){
+                    character.pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(character, otherSprite)){
+                        character.setyTranslation(yStartState);
+                    }
+                    else{
+                        return;
+                    }
+                    character.pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(character, otherSprite)){
+                        character.setxTranslation(xStartState);
+                    }
+                    else
+                        return;
+                    character.pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(character, otherSprite)){
+                        character.setxTranslation(xStartState);
+                    }
+                    else
+                        return;
+                    character.pushCharacter(delta, viewport, 'y', -ONE_PIXEL * magnitude);
+                    if(Collision.checkSpriteCollision(character, otherSprite)){
+                        character.setyTranslation(yStartState);
+                    }
+                    else{
+                        return;
+                    }
+                    magnitude++;
+                }
+            }
+        }
+    }
 }

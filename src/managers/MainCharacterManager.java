@@ -28,11 +28,11 @@ public class MainCharacterManager extends Manager{
                 getSprites().get(0).setyTranslation(-4);
                 break;
             case 2:
-                getSprites().get(0).setxTranslation(-3);
+                getSprites().get(0).setxTranslation(7);
                 getSprites().get(0).setyTranslation(-4);
                 break;
             case 3:
-                getSprites().get(0).setxTranslation(-2);
+                getSprites().get(0).setxTranslation(-7);
                 getSprites().get(0).setyTranslation(-4);
                 break;
             case 4:
