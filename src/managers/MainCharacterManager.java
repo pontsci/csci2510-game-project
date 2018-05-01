@@ -99,7 +99,7 @@ public class MainCharacterManager extends Manager{
     public boolean isDead(float xBound, float yBound){
         boolean dead = false;
         for(Sprite mainCharacter : getSprites()){
-            if(((MainCharacter)mainCharacter).getHp() < 1){
+            if(((MainCharacter)mainCharacter).getHp() < 0){
                 dead = true;
             }
             if((mainCharacter).getxTranslation() > xBound ||(mainCharacter).getxTranslation() < -xBound ||
