@@ -10,10 +10,6 @@ public class BackgroundWall extends Sprite {
         super(startX, startY, scale);
         setCurrentSpriteFrame(spriteSheet); 
     }
-    public BackgroundWall(float startX, float startY, Vector2f scale, int whichWall, BufferedImage spriteSheet){
-        super(startX, startY, scale);
-        setCurrentSpriteFrame(spriteSheet.getSubimage(whichWall *400, 0, 400, 467)); 
-    }
 
     @Override
     public void process(float delta){

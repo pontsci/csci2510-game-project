@@ -55,6 +55,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         this.powerups = powerups;
         this.doors = doors;
         this.hp = 3;
+        bulletWaitTime = .25f;
         initializeHitboxes();
     }
 
@@ -68,7 +69,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     // Process functions of the main character
     public void process(float delta){
-        processGravity(delta);
+        super.process(delta);
         processAnimations(delta);
         
         processEffects(delta);
@@ -333,14 +334,11 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     // Shoot a bullet
     public void shoot(){
-    	if(isFireRateActive()) {
-    		bm.addMainCharacterBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
-    		bm.addMainCharacterBullet(getxTranslation()+.1f, getyTranslation()+.1f, getScale().x > 0);
-    		bm.addMainCharacterBullet(getxTranslation()-.1f, getyTranslation()-.1f, getScale().x > 0);
-    	}
-    	else{
-    		bm.addMainCharacterBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
-    	}
+        if(canShoot){
+            bm.addMainCharacterBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
+            canShoot = false;
+            bulletTimer = 0;
+        }
     }
 
     //Allows checking for door collision by setting 'canCollisdeWithDoor' to true.
