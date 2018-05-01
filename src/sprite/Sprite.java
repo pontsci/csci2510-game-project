@@ -53,7 +53,7 @@ public abstract class Sprite{
     public void render(Graphics g){
         Graphics2D g2d = (Graphics2D)g;
         //Set antialias
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //Set nearest neighbor
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         doAffineTransform(g2d);
