@@ -172,7 +172,6 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //End screen... currently can't restart the game.
     private void processEndInput(){
-        System.out.println(((MainCharacter)mainCharManager.getSprites().get(0)).isEnd());
         if(((MainCharacter)mainCharManager.getSprites().get(0)).isEnd()){
             paused = !paused;
             screenManager.SetScreen(ScreenType.END);
