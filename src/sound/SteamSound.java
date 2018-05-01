@@ -30,7 +30,7 @@ public class SteamSound
     }
 
     private static void loadMusic(byte[] rawData){
-        musicLoopClip = new LoopEvent(new BlockingDataLine(rawData));
+        musicLoopClip = new LoopEvent(new BlockingClip(rawData));
         musicLoopClip.initialize();
     }
 
