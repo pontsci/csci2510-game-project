@@ -248,7 +248,7 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //Process what happens when S is pressed
     private void processSpaceKeyInput(){
-        if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
+        if(keyboard.keyDown(KeyEvent.VK_SPACE)){
             if(!hasStarted){
                 hasStarted = true;
                 screenManager.SetScreen(ScreenType.NONE);
