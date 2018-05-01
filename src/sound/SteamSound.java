@@ -21,7 +21,7 @@ public class SteamSound
         InputStream in = ResourceLoader.load(SteamSound.class,
                 "src/resources/sound/levelmusic.wav", "asdf");
         musicBytes = readBytes(in);
-        in = ResourceLoader.load(SteamSound.class, "src/resources/sound/WeaponFire.wav", "asdf");
+        in = ResourceLoader.load(SteamSound.class, "src/resources/sound/PlayerFire.wav", "asdf");
         playerWeaponBytes = readBytes(in);
         in = ResourceLoader.load(SteamSound.class, "src/resources/sound/WeaponFire.wav", "asdf");
         enemyWeaponBytes = readBytes(in);
