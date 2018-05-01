@@ -8,6 +8,7 @@ import java.awt.*;
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import managers.BulletManager;
+import sound.SteamSound;
 import sprite.Sprite;
 import sprite.character.player.MainCharacter;
 import sprite.world.StatusIcon;
@@ -64,6 +65,7 @@ public class TriBot extends Enemy
 
 		//shoot is controlled by animation, it is set to true only when the animation is done playing
 		if(shoot){
+            SteamSound.enemyWeaponFire();
 			bm.addEnemyBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
 			shoot = false;
 		}
