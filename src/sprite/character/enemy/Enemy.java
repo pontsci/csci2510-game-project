@@ -10,12 +10,12 @@ import managers.BulletManager;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.character.player.MainCharacter;
-import status.VulnStatus;
+import sprite.world.StatusIcon;
 import util.Collision;
 import util.Matrix3x3f;
 import util.Vector2f;
 
-public abstract class Enemy extends CharacterSprite implements VulnStatus{
+public abstract class Enemy extends CharacterSprite{
     protected BoundingBox footBox = new BoundingBox(new Vector2f(-1.1f, -2.4f), new Vector2f(-.9f, -1.8f), Color.GREEN);
     protected BoundingBox detectionBox = new BoundingBox(new Vector2f(-40f,0f), new Vector2f(0f,2f), Color.CYAN);
     protected Vector2f bulletLine = new Vector2f(0,0);
@@ -39,6 +39,10 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     protected float regenTimer;
     protected float visionTimer = 0;
     private int dmgTicks = 0;
+    private float tickTimer = 0;
+    private float tickInterval = .5f;
+    private boolean tasered = false;
+    private StatusIcon taserEffect;
     
     /**
      * Creates a new enemy with references to objects it collides with and position data
@@ -50,9 +54,10 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      * @param platforms the platforms
      * @param player the player
      */
-    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm){
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, StatusIcon lightning){
         super(startX, startY, scale, floors, screenWalls, platforms, walls, bm);
         initialize(player, 5);
+        taserEffect = lightning;
     }
 
     /**
@@ -66,9 +71,10 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      * @param player the player
      * @param hp starting hp
      */
-    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, int hp){
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, int hp, StatusIcon lightning){
         super(startX, startY, scale, floors, screenWalls, platforms, walls, bm);
         initialize(player, hp);
+        taserEffect = lightning;
     }
 
     private void initialize(MainCharacter player, int hp){
@@ -96,10 +102,10 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     public void update(float delta, Matrix3x3f viewport){
         super.update(delta,viewport);
         updateDetectionHitboxes(viewport);
-
+        taserEffect.update(delta, viewport);
         setViewport(viewport);
     }
-
+    
     private void updateDetectionHitboxes(Matrix3x3f viewport)
     {
         footBox.setxTranslation(getxTranslation());
@@ -112,6 +118,14 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         detectionBox.updateWorld(viewport);
     }
 
+    //Renders lightning effect when tasered
+    @Override
+    public void render(Graphics g) {
+    	super.render(g);
+    	if(tasered)
+    		renderDoT(g);
+    }
+    
     //For each hitbox, render the hitbox
     @Override
     public void renderHitboxes(Graphics g){
@@ -164,6 +178,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         }
         //regenerate HP after 10 seconds of not being hit
         processRegeneration(delta);
+        processEffects(delta);
     }
 
     private void processShooting(float delta){
@@ -409,31 +424,41 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
     }
     
+    //Decrements enemy health when tasered
     public void processEffects(float delta) {
 		// DoT check
-		if (conditions.getStatus(5).active) {
-			// At 3,2,and 1 on the timer, if the player is above 1 health, damage the player
-			if ((conditions.getTimer(5) > 2.0 && dmgTicks < 1)
-					|| (conditions.getTimer(5) > 1.0 && conditions.getTimer(5) < 2.0 && dmgTicks < 2)
-					|| (conditions.getTimer(5) > 0.0 && conditions.getTimer(5) < 1.0 && dmgTicks < 3)) {
-				if (hp > 1) {
-					dmgOverTime();
-					dmgTicks++;
+		if(tasered) {
+			if(dmgTicks > 0) {
+				tickTimer += delta;
+				if(tickTimer >= tickInterval) {
+					tickTimer -= tickInterval;
+					hp--;
+					dmgTicks--;
 				}
 			}
-		} else {
-			dmgTicks = 0;
+			else {
+				tickTimer = 0;
+				tasered = false;
+			}
 		}
+		
 	}
 
-	// DoT Effect
-	public void dmgOverTime() {
-		// System.out.println("DoT!!!");
-		hp--;
-	}
+    //Renders the taser effect
+    public void renderDoT(Graphics g) {
+    	Vector2f pos = getPos(); 
+    	
+    	taserEffect.setxTranslation(pos.x);
+    	taserEffect.setyTranslation(pos.y);
+    	
+    	taserEffect.render(g);
+    }
 	
+    //Starts damage over time effect
 	public void activateDoT() {
-		conditions.activateStatus(5);
+		dmgTicks = 4;
+		tickTimer = 0;
+		tasered = true;
 	}
 
 }

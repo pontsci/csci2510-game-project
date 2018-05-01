@@ -50,22 +50,22 @@ public class StatusArchive {
 	
 	//Fire Rate Up Status effect
 	public Status getFireRateStatus() {
-        return new Status(1, "FireRateUp", 5.0f, new Vector2f(1,1), fireRateImg);
+        return new Status(1, "FireRateUp", 8f, new Vector2f(1,1), fireRateImg);
 	}
 	
 	//Damage Up Status effect
 	public Status getDmgStatus() {
-        return new Status(2, "DmgUp", 5.0f, new Vector2f(1,1), dmgUpImg);
+        return new Status(2, "DmgUp", 8f, new Vector2f(1,1), dmgUpImg);
 	}
 	
 	//Shield Effect
 	public Status getShieldStatus() {
-        return new Status(3, "ShieldUp", 5.0f, new Vector2f(1,1), shieldImg);
+        return new Status(3, "ShieldUp", 8f, new Vector2f(1,1), shieldImg);
 	}
 	
 	//Taser Effect
 	public Status getTaserStatus() {
-        return new Status(4, "TaserUp", 5.0f, new Vector2f(1,1), taserImg);
+        return new Status(4, "TaserUp", 8f, new Vector2f(1,1), taserImg);
 	}
 	
 	//DoT Effect

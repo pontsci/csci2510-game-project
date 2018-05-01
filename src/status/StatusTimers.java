@@ -10,14 +10,14 @@ public class StatusTimers {
 	private ArrayList<Status> statusList;
 	private ArrayList<Float> timers;
 	private StatusArchive archive = new StatusArchive();
-	
+
 	// Default Constructor pulls array from StatusArchive
 	public StatusTimers() {
 		statusList = new ArrayList<Status>();
 		timers = new ArrayList<Float>();
-		
+
 		ArrayList<Status> list = archive.returnStatuses();
-		
+
 		for (int i = 0; i < list.size(); i++) {
 			statusList.add(list.get(i));
 			timers.add(new Float(0));
@@ -37,7 +37,7 @@ public class StatusTimers {
 
 	// Adds a status object to the array
 	public void addStatus(int id, String name, float timer) {
-		statusList.add(new Status(id, name, timer, new Vector2f(1,1), null));
+		statusList.add(new Status(id, name, timer, new Vector2f(1, 1), null));
 		timers.add(new Float(0));
 	}
 
@@ -52,7 +52,7 @@ public class StatusTimers {
 					statusList.get(i).active = false;
 				}
 			}
-			
+
 			statusList.get(i).icon.update(delta, viewport);
 		}
 	}
@@ -62,6 +62,16 @@ public class StatusTimers {
 		for (int i = 0; i < statusList.size(); i++) {
 			if (statusList.get(i).active)
 				statusList.get(i).render(g);
+		}
+	}
+
+	// Renders Active Status's FXs
+	public void renderStatus(int id, Graphics g) {
+		for (int i = 0; i < statusList.size(); i++) {
+			if (statusList.get(i).id == id) {
+				statusList.get(i).render(g);
+				break;
+			}
 		}
 	}
 
@@ -84,7 +94,7 @@ public class StatusTimers {
 				timers.set(i, new Float(statusList.get(i).duration));
 				break;
 			}
-			
+
 		}
 	}
 
@@ -162,18 +172,39 @@ public class StatusTimers {
 
 		return ret;
 	}
-	
-	//Determines if any status effect is active
+
+	// Determines if any status effect is active
 	public boolean anyStatusActive() {
 		boolean ret = false;
-		
+
 		for (int i = 0; i < statusList.size(); i++) {
 			if (statusList.get(i).active) {
 				ret = true;
 				break;
 			}
 		}
-		
+
 		return ret;
 	}
+
+	public void resetStatusIconPos(int id) {
+		for (int i = 0; i < statusList.size(); i++) {
+			if (statusList.get(i).id == id) {
+				statusList.get(i).icon.setxTranslation(0f);
+				statusList.get(i).icon.setyTranslation(0f);
+				break;
+			}
+		}
+	}
+
+	public void setStatusIconPos(int id, float x, float y) {
+		for (int i = 0; i < statusList.size(); i++) {
+			if (statusList.get(i).id == id) {
+				statusList.get(i).icon.setxTranslation(x);
+				statusList.get(i).icon.setyTranslation(y);
+				break;
+			}
+		}
+	}
+
 }

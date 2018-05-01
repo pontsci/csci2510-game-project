@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 public class PowerUpManager extends Manager{
 	private BufferedImage powerupSpriteSheet = loadFile("src/resources/world/pickups/PickupObjects.png");
 	private BufferedImage healImg = loadFile("src/resources/world/pickups/health.png");
+	BufferedImage lightnShield = loadFile("src/resources/world/pickups/LightningShield.png");
 	private StatusArchive archive = new StatusArchive();
 	
 	private void addPowerUp(Status effect, Vector2f position) {
@@ -41,7 +42,7 @@ public class PowerUpManager extends Manager{
 		//Damage Over Time
 		//Won't be an actual powerup, since this effect will damage the player. Using taser image as a placeholder.
 		else if(effect.id == 5) {
-			getSprites().add(new PowerUp(position.x, position.y, new Vector2f(1,1), powerupSpriteSheet.getSubimage(100, 0, 50, 50), effect));
+			getSprites().add(new PowerUp(position.x, position.y, new Vector2f(.21f,.14f), lightnShield.getSubimage(0, 0, 237, 356), effect));
 		}
 	}
 

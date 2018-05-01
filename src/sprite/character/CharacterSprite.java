@@ -117,7 +117,7 @@ public abstract class CharacterSprite extends CollidableSprite{
      */
     public boolean decreaseHP(int amount){
         hp = hp - amount;
-        return hp == 0;
+        return hp <= 0;
     }
 
     public void setHit(boolean isHit){

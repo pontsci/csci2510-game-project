@@ -422,6 +422,11 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         else{
             dmgTicks = 0;
         }
+        
+        if(isFireRateActive()) 
+        	bulletWaitTime = .10f;
+        else
+        	bulletWaitTime = .25f;
     }
 
     // Health Item effect

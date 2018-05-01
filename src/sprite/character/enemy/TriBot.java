@@ -1,12 +1,17 @@
 package sprite.character.enemy;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.awt.*;
+
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import managers.BulletManager;
 import sound.SteamSound;
 import sprite.Sprite;
 import sprite.character.player.MainCharacter;
-import sprite.world.Floor;
+import sprite.world.StatusIcon;
 import util.Animation;
 import util.Vector2f;
 
@@ -25,9 +30,9 @@ public class TriBot extends Enemy
     private int dmgTicks = 0;
     private boolean shoot = false;
 
-    public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, BufferedImage spriteSheet)
+    public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, BufferedImage spriteSheet, StatusIcon lightning)
     {
-        super(startX, startY, scale, floors, screenWalls, platforms, player, walls, bm);
+        super(startX, startY, scale, floors, screenWalls, platforms, player, walls, bm, lightning);
         // get the animations for the tri bot - follow the main character
         setCurrentSpriteFrame(spriteSheet.getSubimage(0, 0, 237, 356));
         animation.addAnimation(spriteSheet.getSubimage(0, 0, 1659, 356), 7);
@@ -49,6 +54,7 @@ public class TriBot extends Enemy
     {
         super.process(delta);
 
+
         //we need to play our shooting animation, so set it
         if(playShootAnimation){
             currentAnimation = ATTACK_ANIMATION;
@@ -64,7 +70,6 @@ public class TriBot extends Enemy
 			shoot = false;
 		}
 
-		processEffects(delta);
 	}
 
     // Process which animation is playing, when an animation finishes, it returns

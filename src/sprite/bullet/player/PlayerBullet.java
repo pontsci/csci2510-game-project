@@ -16,6 +16,7 @@ public class PlayerBullet extends Bullet{
     private ArrayList<Sprite> enemies;
     boolean taserActive;
 
+
     public PlayerBullet(float startX, float startY, Vector2f scale, ArrayList<Sprite> enemies, ArrayList<Sprite> walls, int dmg, boolean taser, BufferedImage spriteSheet){
         super(startX, startY, scale, dmg, walls);
         setCurrentSpriteFrame(spriteSheet.getSubimage(671,0,197,306));
