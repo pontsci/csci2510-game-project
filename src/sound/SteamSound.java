@@ -26,7 +26,8 @@ public class SteamSound
         in = ResourceLoader.load(SteamSound.class, "src/resources/sound/WeaponFire.wav", "asdf");
         enemyWeaponBytes = readBytes(in);
         loadMusic(musicBytes);
-        loadWeapons(playerWeaponBytes);
+        loadPlayerWeapon(playerWeaponBytes);
+        loadEnemyWeapon(enemyWeaponBytes);
     }
 
     private static void loadMusic(byte[] rawData){
@@ -34,13 +35,14 @@ public class SteamSound
         musicLoopClip.initialize();
     }
 
-    private static void loadWeapons(byte[] rawData){
+    private static void loadPlayerWeapon(byte[] rawData){
         playerWeaponOneShotClip = new RestartEvent((new BlockingClip(rawData)));
         playerWeaponOneShotClip.initialize();
+    }
 
+    private static void loadEnemyWeapon(byte[] rawData){
         enemyWeaponOneShotClip = new RestartEvent(new BlockingClip(rawData));
         enemyWeaponOneShotClip.initialize();
-
     }
 
     public static void playerWeaponFire(){

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import managers.BulletManager;
+import sound.SteamSound;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.world.Door;
@@ -350,6 +351,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     // Shoot a bullet
     public void shoot(){
         if(canShoot){
+            SteamSound.playerWeaponFire();
             bm.addMainCharacterBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
             canShoot = false;
             bulletTimer = 0;
