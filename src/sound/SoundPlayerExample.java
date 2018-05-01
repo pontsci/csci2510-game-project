@@ -31,10 +31,10 @@ public class SoundPlayerExample extends SimpleFramework {
 	protected void initialize() {
 		super.initialize();
 		InputStream in = ResourceLoader.load(SoundPlayerExample.class,
-				"./resources/sound/levelmusic.wav", "asdf");
+				"src/resources/sound/levelmusic.wav", "asdf");
 		weaponBytes = readBytes(in);
 		in = ResourceLoader.load(SoundPlayerExample.class,
-				"./resources/sound/WeaponFire.wav", "asdf");
+				"src/resources/sound/WeaponFire.wav", "asdf");
 		rainBytes = readBytes(in);
 		loadWaveFile(weaponBytes);
 		loaded = "weapon";
@@ -138,13 +138,14 @@ public class SoundPlayerExample extends SimpleFramework {
 	@Override
 	protected void render(Graphics g) {
 		super.render(g);
-		/*"", "(F1) Load Weapon",
+		/*textPos = Utility.drawString(g, 20, textPos, "", "(F1) Load Weapon",
 				"(F2) Load Rain", loaded + " loaded!", "",
 				"(1) Fire One Shot (clip)", "(2) Cancel One Shot (clip)",
 				"(3) Start Loop (clip)", "(4) Stop Loop (clip)",
 				"(5) Reusable (clip)", "", "(6) Fire One Shot (stream)",
 				"(7) Cancel One Shot (stream)", "(8) Start Loop (stream)",
-				"(9) Stop Loop (stream)", "(0) Reusable (stream)");*/
+				"(9) Stop Loop (stream)", "(0) Reusable (stream)");
+				*/
 	}
 
 	@Override

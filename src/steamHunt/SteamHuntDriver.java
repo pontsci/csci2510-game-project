@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import managers.*;
+import sound.SteamSound;
 import spawning.Spawner;
 import sprite.Sprite;
 import sprite.character.player.MainCharacter;
@@ -92,7 +93,7 @@ public class SteamHuntDriver extends SimpleFramework{
     //Initialize the sprites each manager starts with
     protected void initialize(){
         super.initialize();
-
+        SteamSound.initialize();
         //Sync the array list and individual managers together
         managers[BACKGROUND.i] = backgroundManager;
         managers[WALL.i] = wallManager;

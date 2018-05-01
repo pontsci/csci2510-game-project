@@ -29,6 +29,7 @@ public class SimpleFramework extends JFrame implements Runnable {
     protected float appWorldHeight = 2.0f;
     protected long appSleep = 10L;
     protected boolean appMaintainRatio = false;
+    protected int textPos = 0;
 
     public SimpleFramework() {
 
