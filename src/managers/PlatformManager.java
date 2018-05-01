@@ -16,8 +16,6 @@ public class PlatformManager extends Manager{
 
     private ArrayList<SpawnRange> getPlatFormSpawns(Matrix3x3f viewport){
         ArrayList<SpawnRange> spawnRanges = new ArrayList<>();
-        //Add floor spawn.
-        spawnRanges.add(new SpawnRange(-5,7,-3,viewport));
         for(Sprite platform: getSprites()){
             if(!(platform instanceof PlayerPlatform)) {
                 spawnRanges.add(((Platform) platform).getSpawnRange(viewport));
