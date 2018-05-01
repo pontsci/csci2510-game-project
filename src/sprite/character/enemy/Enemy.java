@@ -30,6 +30,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private boolean playerInDetectionBox = false;
     private boolean vision = false;
     private boolean shotValid = false;
+    protected boolean moving;
     protected boolean playShootAnimation = false;
     private MainCharacter player;
     private Vector2f playerPos;
@@ -152,10 +153,12 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
 
         //if we don't have vision of the player, move
         if(!vision){
+            moving = true;
             processMovement(delta);
         }
         //if we have vision, shoot the player
         else{
+            moving = false;
             processShooting(delta);
         }
         //regenerate HP after 10 seconds of not being hit

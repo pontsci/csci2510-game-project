@@ -19,6 +19,7 @@ public class TriBot extends Enemy
     private final int MOVE_ANIMATION = 0;
     private final int ATTACK_ANIMATION = 1;
     private final int IDLE_ANIMATION = 2;
+    private BufferedImage idle;
     private int currentAnimation = 0;
     private int dmgTicks = 0;
     private boolean shoot = false;
@@ -30,6 +31,7 @@ public class TriBot extends Enemy
         setCurrentSpriteFrame(spriteSheet.getSubimage(0, 0, 237, 356));
         animation.addAnimation(spriteSheet.getSubimage(0, 0, 1659, 356), 7);
         animation.addAnimation(spriteSheet.getSubimage(0, 356, 1185, 356), 5);
+        idle = spriteSheet.getSubimage(0,0,237,356);
         initializeHitboxes();
     }
 
@@ -73,13 +75,16 @@ public class TriBot extends Enemy
             // idle Animation
             case ATTACK_ANIMATION:
                 if(animation.playAnimation(delta, ATTACK_ANIMATION, this)){
-                    currentAnimation = MOVE_ANIMATION;
+                    currentAnimation = IDLE_ANIMATION;
                     //now that the charge animation has finished, shoot a bullet
                     shoot = true;
                 }
                 break;
 
             case IDLE_ANIMATION:
+                setCurrentSpriteFrame(idle);
+                //if is moving, current
+                break;
                 // jump Animation
         }
     }
