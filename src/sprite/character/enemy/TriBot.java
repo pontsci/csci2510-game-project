@@ -1,17 +1,17 @@
 package sprite.character.enemy;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import managers.BulletManager;
 import sprite.Sprite;
 import sprite.character.player.MainCharacter;
-import sprite.world.Floor;
+import sprite.world.StatusIcon;
 import util.Animation;
 import util.Vector2f;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class TriBot extends Enemy {
 	private Animation animation = new Animation();
@@ -21,8 +21,8 @@ public class TriBot extends Enemy {
 	
 	private boolean shoot = false;
 
-	public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, BufferedImage spriteSheet) {
-		super(startX, startY, scale, floors, screenWalls, platforms, player, walls, bm);
+	public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, BufferedImage spriteSheet, StatusIcon lightning) {
+		super(startX, startY, scale, floors, screenWalls, platforms, player, walls, bm, lightning);
 		// get the animations for the tri bot - follow the main character
 		setCurrentSpriteFrame(spriteSheet.getSubimage(0, 0, 237, 356));
 		animation.addAnimation(spriteSheet.getSubimage(0, 0, 1659, 356), 7);
@@ -35,12 +35,6 @@ public class TriBot extends Enemy {
 		hitboxes.add(new BoundingBox(new Vector2f(-1.2f, -3), new Vector2f(1.1f, 1.9f), Color.BLUE));
 		hitboxes.add(new BoundingCircle(.4f, -.1f, 1.4f, Color.RED));
 		hitboxes.add(new BoundingBox(new Vector2f(-.9f, -1.7f), new Vector2f(.8f, 1.1f), Color.RED));
-	}
-
-	@Override
-	public void render(Graphics g) {
-		super.render(g);
-		
 	}
 	
 	@Override
@@ -61,7 +55,7 @@ public class TriBot extends Enemy {
 			shoot = false;
 		}
 		
-		processEffects(delta);
+		
 	}
 
 	// Process which animation is playing, when an animation finishes, it returns

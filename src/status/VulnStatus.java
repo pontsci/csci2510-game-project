@@ -6,5 +6,6 @@ public interface VulnStatus {
 	public StatusTimers conditions = new StatusTimers();
 	
 	//Abstract method that provides implementation of condition effects.
-	public abstract void processEffects(float delta);
+	public void processEffects(float delta);
+	
 }

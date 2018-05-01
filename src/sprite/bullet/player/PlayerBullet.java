@@ -22,6 +22,7 @@ public class PlayerBullet extends Bullet{
         this.enemies = enemies;
         taserActive = taser;
         bulletSpeed = 7;
+        bulletDamage = dmg;
         initializeHitboxes();
     }
 
