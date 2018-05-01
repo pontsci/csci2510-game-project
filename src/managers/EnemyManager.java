@@ -23,8 +23,10 @@ public class EnemyManager extends Manager
     private ArrayList<Sprite> walls;
     private MainCharacter player;
     private BulletManager bm;
-
-    public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm)
+    private float xBound;
+    private float yBound;
+    
+    public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, float xbounds, float ybounds)
     {
     	taserEffect = new StatusIcon(new Vector2f(.21f, .14f), effects.getSubimage(0, 0, 237, 356));
         this.floors = floors;
@@ -33,6 +35,8 @@ public class EnemyManager extends Manager
         this.platforms = platforms;
         this.player = player;
         this.bm = bm;
+        xBound = xbounds;
+        yBound = ybounds;
     }
 
     private void addTriBot(Vector2f pos)
@@ -46,6 +50,20 @@ public class EnemyManager extends Manager
         }
     }
 
+    @Override
+    public void update (float delta, Matrix3x3f viewport){
+        float x;
+        float y;
+        for(int i=0; i< getSprites().size(); i++){
+            x = getSprites().get(i).getxTranslation();
+            y = getSprites().get(i).getyTranslation();
+             if(x > xBound || x< -xBound || y> yBound ||y < -yBound){
+                 getSprites().remove(i);
+            }
+        }
+        super.update(delta, viewport);
+    }
+    
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         getSprites().clear();

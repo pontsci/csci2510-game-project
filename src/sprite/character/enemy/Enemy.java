@@ -30,6 +30,7 @@ public abstract class Enemy extends CharacterSprite{
     private boolean playerInDetectionBox = false;
     private boolean vision = false;
     private boolean shotValid = false;
+    protected boolean moving;
     protected boolean playShootAnimation = false;
     private MainCharacter player;
     private Vector2f playerPos;
@@ -86,7 +87,7 @@ public abstract class Enemy extends CharacterSprite{
         bulletSpawn = new Vector2f(getPos().x, getPos().y);
 
         Random rand = new Random();
-        maxVisionTime = (rand.nextFloat()*2)+1;
+        maxVisionTime = (rand.nextFloat()*1)+1;
     }
 
     @Override
@@ -167,10 +168,12 @@ public abstract class Enemy extends CharacterSprite{
 
         //if we don't have vision of the player, move
         if(!vision){
+            moving = true;
             processMovement(delta);
         }
         //if we have vision, shoot the player
         else{
+            moving = false;
             processShooting(delta);
         }
         //regenerate HP after 10 seconds of not being hit
@@ -265,30 +268,31 @@ public abstract class Enemy extends CharacterSprite{
         //is player in the detection box
         playerInDetectionBox = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
 
-        if(playerInDetectionBox){
-            //if our shot line has not collided, shot is considered valid
-            //for each platform, does our shot line collide
-            for(Sprite p : platforms){
-                if(Collision.intersectSegment(bulletSpawn, playerPos, p, true)){
+        for(Sprite p : platforms){
+            if(Collision.intersectSegment(bulletSpawn, playerPos, p, true)){
+                shotValid = false;
+                break;
+            }else{
+                shotValid = true;
+            }
+        }
+
+        //if our shot line has not collided, shot is considered valid
+        //for each wall, does our shot line collide
+        if(shotValid){
+            for(Sprite w : walls){
+                if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
                     shotValid = false;
-                    return;
+                    break;
                 }else{
                     shotValid = true;
                 }
             }
+        }
 
+        if(playerInDetectionBox){
             //if our shot line has not collided, shot is considered valid
-            //for each wall, does our shot line collide
-            if(shotValid){
-                for(Sprite w : walls){
-                    if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
-                        shotValid = false;
-                        return;
-                    }else{
-                        shotValid = true;
-                    }
-                }
-            }
+            //for each platform, does our shot line collide
             if(shotValid){
                 detectionBox.setObjectColor(Color.RED);
                 visionTimer = delta;
@@ -296,20 +300,16 @@ public abstract class Enemy extends CharacterSprite{
             }
         }else{
             detectionBox.setObjectColor(Color.CYAN);
+            
+            if(!shotValid){
+                visionTimer+=delta;
+            }
 
-            //if our shot is not valid, cut vision immediately
-            //if(!shotValid){
-            //    visionTimer += 10;
-            //}
-            visionTimer += delta;
             //if we go over maxVisionTime, we no longer have vision
             if(visionTimer > maxVisionTime){
                 vision = false;
             }
-            //if we have vision, update player position
-
         }
-
     }
 
     private void updatePlayerPos(float delta)

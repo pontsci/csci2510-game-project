@@ -24,23 +24,27 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private final int JUMP_ANIMATION = 2;
     private final int FALL_ANIMATION = 3;
     private final int LAND_ANIMATION = 4;
+
     private boolean onTheFloor = true;
     private boolean onAPlatform = false;
     private boolean ignorePlatforms = false;
     private boolean changingLevel = false;
+    //If falling, check platforms after 2 seconds (After the player has completely gone through a platform)
     private float platformTimer = 2;
     private float velocityY = 0;
     private ArrayList<Sprite> powerups;
     private ArrayList<Sprite> doors;
-    private boolean canCollideWithDoor = false;
+    private ArrayList<Sprite> levers;
+    private boolean canCollideInteractable = false;
     private Animation animation = new Animation();
     private int currentAnimation = 1;
     private float walkRate = 2.5f;// Walk rate per second. (The world is 16 by 9)
     //private int hp = 3;
     private int healTicks = 0;//Tick values for hp and dmg
     private int dmgTicks = 0;
+    private boolean end = false;
 
-    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors, BufferedImage idleAnimation, BufferedImage jumpAnimation, BufferedImage moveAnimation){
+    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors, BufferedImage idleAnimation, BufferedImage jumpAnimation, BufferedImage moveAnimation, ArrayList<Sprite> levers){
         super(startX, startY, scale, floor, screenWalls, platforms, walls, bm);
 
         //Always set the frame, even if it runs without setting the frame, a null error can occur on animated sprites when you try to create a new one.
@@ -55,6 +59,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         this.powerups = powerups;
         this.doors = doors;
         this.hp = 3;
+        this.levers = levers;
         bulletWaitTime = .25f;
         initializeHitboxes();
     }
@@ -153,10 +158,11 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         super.checkCollision(delta, viewport);
         checkPowerupCollision(delta, viewport);
         changingLevel = false;
-        if(canCollideWithDoor){
+        if(canCollideInteractable){
             checkDoorCollision(delta, viewport);
+            end = checkLeverCollision(delta, viewport);
         }
-        canCollideWithDoor = false;
+        canCollideInteractable = false;
     }
 
     private void checkDoorCollision(float delta, Matrix3x3f viewport){
@@ -165,6 +171,15 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                 changingLevel = true;
             }
         }
+    }
+
+    private boolean checkLeverCollision(float delta, Matrix3x3f viewport){
+        for(Sprite lever : levers){
+            if(Collision.checkSpriteCollision(this, lever)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void checkPowerupCollision(float delta, Matrix3x3f viewport){
@@ -343,8 +358,13 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     //Allows checking for door collision by setting 'canCollisdeWithDoor' to true.
     public void canGoThroughDoor(){
-        if(((Door)doors.get(0)).isOpen()){
-            canCollideWithDoor = true;
+        if(!doors.isEmpty()){
+            if(((Door)doors.get(0)).isOpen()){
+                canCollideInteractable = true;
+            }
+        }
+        if(!levers.isEmpty()){
+            canCollideInteractable = true;
         }
     }
 
@@ -449,5 +469,9 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     public boolean isChangingLevel(){
         return changingLevel;
+    }
+
+    public boolean isEnd(){
+        return end;
     }
 }

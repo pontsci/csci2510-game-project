@@ -54,12 +54,17 @@ public class HealthManager extends Manager{
             hpShowing = player.getHp();
         }
         
-        if (hpShowing == 1){
+        if (hpShowing == 0){
             //flicker
             if(cumulativeTime > 1){
+                
+                getSprites().get(0).setCurrentSpriteFrame(healthSprites[2]);
+                getSprites().get(1).setCurrentSpriteFrame(healthSprites[2]);
                 getSprites().get(2).setCurrentSpriteFrame(healthSprites[2]);
             }else{
-                getSprites().get(2).setCurrentSpriteFrame(healthSprites[0]);
+                getSprites().get(0).setCurrentSpriteFrame(healthSprites[1]);
+                getSprites().get(1).setCurrentSpriteFrame(healthSprites[1]);
+                getSprites().get(2).setCurrentSpriteFrame(healthSprites[1]);
             }
             
         }

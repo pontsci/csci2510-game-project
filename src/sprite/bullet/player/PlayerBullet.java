@@ -26,6 +26,16 @@ public class PlayerBullet extends Bullet{
         initializeHitboxes();
     }
 
+    public PlayerBullet(float startX, float startY, Vector2f scale, ArrayList<Sprite> enemies, ArrayList<Sprite> walls, int dmg, boolean taser, BufferedImage spriteSheet, int bulletDamage){
+        super(startX, startY, scale, dmg, walls);
+        setCurrentSpriteFrame(spriteSheet.getSubimage(671,0,197,306));
+        this.enemies = enemies;
+        taserActive = taser;
+        bulletSpeed = 7;
+        this.bulletDamage = bulletDamage;
+        initializeHitboxes();
+    }
+
     @Override
     public void initializeHitboxes(){
         hitboxes.add(new BoundingBox(new Vector2f(-.3f, .2f), new Vector2f(-.1f, .4f), Color.BLUE));

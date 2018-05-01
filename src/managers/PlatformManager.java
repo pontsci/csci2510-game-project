@@ -58,7 +58,7 @@ public class PlatformManager extends Manager{
             case 3:
                 getSprites().add(new Platform(-6.5f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
                 getSprites().add(new Platform(-2.0f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
-                getSprites().add(new Platform(-0.87f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(0.87f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
                 getSprites().add(new Platform(0.0f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
                 getSprites().add(new Platform(6.5f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
                 getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
