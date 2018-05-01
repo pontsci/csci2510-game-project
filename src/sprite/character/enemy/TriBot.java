@@ -83,7 +83,7 @@ public class TriBot extends Enemy
 
             case IDLE_ANIMATION:
                 setCurrentSpriteFrame(idle);
-                //if is moving, current
+                currentAnimation = moving ? MOVE_ANIMATION : IDLE_ANIMATION;
                 break;
                 // jump Animation
         }
