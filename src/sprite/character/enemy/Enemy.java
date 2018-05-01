@@ -253,51 +253,63 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         //is player in the detection box
         playerInDetectionBox = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
 
-        if(playerInDetectionBox){
-            //if our shot line has not collided, shot is considered valid
-            //for each platform, does our shot line collide
-            for(Sprite p : platforms){
-                if(Collision.intersectSegment(bulletSpawn, playerPos, p, true)){
+        for(Sprite p : platforms){
+            if(Collision.intersectSegment(bulletSpawn, playerPos, p, true)){
+                shotValid = false;
+                break;
+            }else{
+                shotValid = true;
+            }
+        }
+
+        //if our shot line has not collided, shot is considered valid
+        //for each wall, does our shot line collide
+        if(shotValid){
+            for(Sprite w : walls){
+                if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
                     shotValid = false;
-                    return;
+                    break;
                 }else{
                     shotValid = true;
                 }
             }
+        }
 
+
+        //System.out.println(shotValid);
+        /*if(shotValid){
+            System.out.println("Shot is valid");
+        }else{
+            System.out.println("Shot is invalid");
+        }*/
+        if(playerInDetectionBox){
             //if our shot line has not collided, shot is considered valid
-            //for each wall, does our shot line collide
-            if(shotValid){
-                for(Sprite w : walls){
-                    if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
-                        shotValid = false;
-                        return;
-                    }else{
-                        shotValid = true;
-                    }
-                }
-            }
+            //for each platform, does our shot line collide
             if(shotValid){
                 detectionBox.setObjectColor(Color.RED);
                 visionTimer = delta;
                 vision = true;
+            }else{
+                detectionBox.setObjectColor(Color.CYAN);
+                //playerInDetectionBox = false;
             }
+            //System.out.println("Player is in box");
         }else{
             detectionBox.setObjectColor(Color.CYAN);
-
+            //System.out.println("Player is out of box");
+            if(!shotValid){
+                visionTimer+=delta;
+            }
             //if our shot is not valid, cut vision immediately
             //if(!shotValid){
             //    visionTimer += 10;
             //}
-            visionTimer += delta;
+
             //if we go over maxVisionTime, we no longer have vision
             if(visionTimer > maxVisionTime){
                 vision = false;
             }
-            //if we have vision, update player position
-
         }
-
     }
 
     private void updatePlayerPos(float delta)
