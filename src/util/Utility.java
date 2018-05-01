@@ -1,6 +1,9 @@
 package util;
 
-import java.awt.*;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.util.List;
 
 public class Utility {
@@ -47,7 +50,6 @@ public class Utility {
         }
     }
 
-
     public static void fillPolygon(Graphics2D g, Vector2f[] polygon) {
         Polygon p = new Polygon();
         for (Vector2f v : polygon) {
@@ -62,5 +64,23 @@ public class Utility {
             p.addPoint((int) v.x, (int) v.y);
         }
         g.fill(p);
+    }
+
+    public static int drawString(Graphics g, int x, int y, String str) {
+        return drawString(g, x, y, new String[] { str });
+    }
+
+    public static int drawString(Graphics g, int x, int y, List<String> str) {
+        return drawString(g, x, y, str.toArray(new String[0]));
+    }
+
+    public static int drawString(Graphics g, int x, int y, String... str) {
+        FontMetrics fm = g.getFontMetrics();
+        int height = fm.getAscent() + fm.getDescent() + fm.getLeading();
+        for (String s : str) {
+            g.drawString(s, x, y + fm.getAscent());
+            y += height;
+        }
+        return y;
     }
 }

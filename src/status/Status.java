@@ -1,29 +1,31 @@
 package status;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
-import sprite.Sprite;
+import sprite.world.StatusIcon;
+import util.Vector2f;
 
 public class Status {
 	public int id;
 	public boolean active;
 	public float duration;
 	public String name;
-	public Sprite FX;
+	public StatusIcon icon;
 	
 	//Fills in new Status object's information
-	public Status(int id, String name, float timer, Sprite newFX) {
+	public Status(int id, String name, float timer, Vector2f scale, BufferedImage newIc) {
 		this.id = id;
 		active =  false;
 		duration = timer;
 		this.name = name;
-		FX = newFX;
+		icon = new StatusIcon(scale, newIc);
 	}
 	
 	//Render given sprite
 	public void render(Graphics g) {
-		if(FX != null) {
-			FX.render(g);
+		if(active) {
+			icon.render(g);
 		}
 	}
 }

@@ -54,12 +54,14 @@ public class TriBot extends Enemy
         }
         processAnimations(delta);
 
-        //shoot is controlled by animation, it is set to true only when the animation is done playing
-        if(shoot){
-            bm.addEnemyBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
-            shoot = false;
-        }
-    }
+		//shoot is controlled by animation, it is set to true only when the animation is done playing
+		if(shoot){
+			bm.addEnemyBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
+			shoot = false;
+		}
+
+		processEffects(delta);
+	}
 
     // Process which animation is playing, when an animation finishes, it returns
     // true
@@ -84,28 +86,5 @@ public class TriBot extends Enemy
         }
     }
 
-    public void processEffects(float delta)
-    {
-        // DoT check
-        if(conditions.getStatus(5).active){
-            // At 3,2,and 1 on the timer, if the player is above 1 health, damage the player
-            if((conditions.getTimer(5) > 2.0 && dmgTicks < 1)
-                    || (conditions.getTimer(5) > 1.0 && conditions.getTimer(5) < 2.0 && dmgTicks < 2)
-                    || (conditions.getTimer(5) > 0.0 && conditions.getTimer(5) < 1.0 && dmgTicks < 3)){
-                if(hp > 1){
-                    dmgOverTime();
-                    dmgTicks++;
-                }
-            }
-        }else{
-            dmgTicks = 0;
-        }
-    }
 
-    // DoT Effect
-    public void dmgOverTime()
-    {
-        // System.out.println("DoT!!!");
-        hp--;
-    }
 }

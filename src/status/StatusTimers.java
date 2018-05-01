@@ -3,13 +3,25 @@ package status;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import util.Matrix3x3f;
+import util.Vector2f;
+
 public class StatusTimers {
 	private ArrayList<Status> statusList;
 	private ArrayList<Float> timers;
-
+	private StatusArchive archive = new StatusArchive();
+	
 	// Default Constructor pulls array from StatusArchive
 	public StatusTimers() {
-		this(StatusArchive.returnStatuses());
+		statusList = new ArrayList<Status>();
+		timers = new ArrayList<Float>();
+		
+		ArrayList<Status> list = archive.returnStatuses();
+		
+		for (int i = 0; i < list.size(); i++) {
+			statusList.add(list.get(i));
+			timers.add(new Float(0));
+		}
 	}
 
 	// Constructor when provided a Status ArrayList
@@ -25,12 +37,12 @@ public class StatusTimers {
 
 	// Adds a status object to the array
 	public void addStatus(int id, String name, float timer) {
-		statusList.add(new Status(id, name, timer, null));
+		statusList.add(new Status(id, name, timer, new Vector2f(1,1), null));
 		timers.add(new Float(0));
 	}
 
 	// Decrements the timers of any active status effects
-	public void updateObjects(float delta) {
+	public void updateObjects(float delta, Matrix3x3f viewport) {
 		for (int i = 0; i < statusList.size(); i++) {
 			if (statusList.get(i).active) {
 				timers.set(i, new Float(timers.get(i).floatValue() - delta));
@@ -40,6 +52,8 @@ public class StatusTimers {
 					statusList.get(i).active = false;
 				}
 			}
+			
+			statusList.get(i).icon.update(delta, viewport);
 		}
 	}
 
