@@ -51,17 +51,17 @@ public class EnemyManager extends Manager
     }
 
     @Override
-    public void update (float delta, Matrix3x3f viewport){
+    public void process(float delta){
+        super.process(delta);
         float x;
         float y;
         for(int i=0; i< getSprites().size(); i++){
             x = getSprites().get(i).getxTranslation();
             y = getSprites().get(i).getyTranslation();
-             if(x > xBound || x< -xBound || y> yBound ||y < -yBound){
-                 getSprites().remove(i);
+            if(x > xBound || x< -xBound || y> yBound ||y < -yBound){
+                getSprites().remove(i);
             }
         }
-        super.update(delta, viewport);
     }
     
     @Override
