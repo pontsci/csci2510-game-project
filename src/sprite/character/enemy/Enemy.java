@@ -81,7 +81,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         bulletSpawn = new Vector2f(getPos().x, getPos().y);
 
         Random rand = new Random();
-        maxVisionTime = (rand.nextFloat()*2)+1;
+        maxVisionTime = (rand.nextFloat()*1)+1;
     }
 
     @Override
@@ -275,13 +275,6 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
             }
         }
 
-
-        //System.out.println(shotValid);
-        /*if(shotValid){
-            System.out.println("Shot is valid");
-        }else{
-            System.out.println("Shot is invalid");
-        }*/
         if(playerInDetectionBox){
             //if our shot line has not collided, shot is considered valid
             //for each platform, does our shot line collide
@@ -289,21 +282,13 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
                 detectionBox.setObjectColor(Color.RED);
                 visionTimer = delta;
                 vision = true;
-            }else{
-                detectionBox.setObjectColor(Color.CYAN);
-                //playerInDetectionBox = false;
             }
-            //System.out.println("Player is in box");
         }else{
             detectionBox.setObjectColor(Color.CYAN);
-            //System.out.println("Player is out of box");
+            
             if(!shotValid){
                 visionTimer+=delta;
             }
-            //if our shot is not valid, cut vision immediately
-            //if(!shotValid){
-            //    visionTimer += 10;
-            //}
 
             //if we go over maxVisionTime, we no longer have vision
             if(visionTimer > maxVisionTime){
