@@ -70,7 +70,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     public void process(float delta){
         processGravity(delta);
         processAnimations(delta);
-        conditions.updateObjects(delta);
+        
         processEffects(delta);
         processAdjustPlatformTimer(delta);
     }
@@ -135,6 +135,11 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         }
     }
 
+    public void update(float delta, Matrix3x3f viewport) {
+    	super.update(delta, viewport);
+    	conditions.updateObjects(delta, viewport);
+    }
+    
     // Renders character and conditions
     public void render(Graphics g){
         super.render(g);
@@ -328,7 +333,14 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
 
     // Shoot a bullet
     public void shoot(){
-        bm.addMainCharacterBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
+    	if(isFireRateActive()) {
+    		bm.addMainCharacterBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
+    		bm.addMainCharacterBullet(getxTranslation()+.1f, getyTranslation()+.1f, getScale().x > 0);
+    		bm.addMainCharacterBullet(getxTranslation()-.1f, getyTranslation()-.1f, getScale().x > 0);
+    	}
+    	else{
+    		bm.addMainCharacterBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
+    	}
     }
 
     //Allows checking for door collision by setting 'canCollisdeWithDoor' to true.
@@ -376,26 +388,6 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
             healTicks = 0;
         }
 
-        //Fire Rate Check
-        if(conditions.getStatus(1).active){
-            //System.out.println("FR!!!");
-        }
-
-        //DMG Up Check
-        if(conditions.getStatus(2).active){
-            //System.out.println("DMG+!!!");
-        }
-
-        //Shield Check
-        if(conditions.getStatus(3).active){
-            //System.out.println("SHIELD!!!");
-        }
-
-        //Taser Check
-        if(conditions.getStatus(4).active){
-            //System.out.println("TASER!!!");
-        }
-
         //DoT check
         if(conditions.getStatus(5).active){
             //At 3,2,and 1 on the timer, if the player is above 1 health, damage the player
@@ -420,21 +412,28 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         hp++;
     }
 
-    //These effects are handled by a manager, or are not implemented yet (on/off values)
-    public void fireRateEffect(){}
-
-    public void dmgEffect(){}
-
-    public void shieldEffect(){}
-
-    public void taserEffect(){}
-
     //DoT Effect
     public void dmgOverTime(){
         //System.out.println("DoT!!!");
         hp--;
     }
-
+    
+    public boolean isFireRateActive() {
+    	return conditions.getStatus(1).active;
+    }
+    
+    public boolean isDmgUpActive() {
+    	return conditions.getStatus(2).active;
+    }
+    
+    public boolean isShieldActive() {
+    	return conditions.getStatus(3).active;
+    }
+    
+    public boolean isTaserActive() {
+    	return conditions.getStatus(4).active;
+    }
+    
     public int getHp()
     {
         return hp;

@@ -12,7 +12,8 @@ import java.awt.image.BufferedImage;
 public class PowerUpManager extends Manager{
 	private BufferedImage powerupSpriteSheet = loadFile("src/resources/world/pickups/PickupObjects.png");
 	private BufferedImage healImg = loadFile("src/resources/world/pickups/health.png");
-
+	private StatusArchive archive = new StatusArchive();
+	
 	private void addPowerUp(Status effect, Vector2f position) {
 		
 		//Adds a powerup with a matching StatusArchive id.
@@ -55,20 +56,20 @@ public class PowerUpManager extends Manager{
 		getSprites().clear();
 		switch(level){
 			case 1:
-				addPowerUp(StatusArchive.getDmgStatus(), spawner.getSpawnPoint());
-				addPowerUp(StatusArchive.getFireRateStatus(), spawner.getSpawnPoint());
+				addPowerUp(archive.getDmgStatus(), spawner.getSpawnPoint());
+				addPowerUp(archive.getFireRateStatus(), spawner.getSpawnPoint());
 				break;
 			case 2:
-				addPowerUp(StatusArchive.getHealthStatus(), spawner.getSpawnPoint());
-				addPowerUp(StatusArchive.getShieldStatus(), spawner.getSpawnPoint());
+				addPowerUp(archive.getHealthStatus(), spawner.getSpawnPoint());
+				addPowerUp(archive.getShieldStatus(), spawner.getSpawnPoint());
 				break;
 			case 3:
-				addPowerUp(StatusArchive.getTaserStatus(), spawner.getSpawnPoint());
-				addPowerUp(StatusArchive.getDoTStatus(), spawner.getSpawnPoint());
+				addPowerUp(archive.getTaserStatus(), spawner.getSpawnPoint());
+				addPowerUp(archive.getDoTStatus(), spawner.getSpawnPoint());
 				break;
 			case 4:
-				addPowerUp(StatusArchive.getHealthStatus(), spawner.getSpawnPoint());
-				addPowerUp(StatusArchive.getDoTStatus(), spawner.getSpawnPoint());
+				addPowerUp(archive.getHealthStatus(), spawner.getSpawnPoint());
+				addPowerUp(archive.getDoTStatus(), spawner.getSpawnPoint());
 		}
 	}
 }
