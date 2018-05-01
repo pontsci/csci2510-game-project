@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import managers.*;
 import spawning.Spawner;
+import sprite.Sprite;
 import sprite.character.player.MainCharacter;
 import sprite.world.Door;
 import util.SimpleFramework;
@@ -34,6 +35,10 @@ public class SteamHuntDriver extends SimpleFramework{
     private HealthManager healthManager = new HealthManager();
     private ScreenManager screenManager = new ScreenManager();
 
+    //original scale
+    private float origAppWidth;
+    private float origAppHeight;
+
     //Screen state
     private boolean paused = true;
     private boolean hasStarted = false;
@@ -55,6 +60,8 @@ public class SteamHuntDriver extends SimpleFramework{
         appTitle = "SteamHunt";
         appWorldWidth = 16f;
         appWorldHeight = 9f;
+        origAppHeight = appHeight;
+        origAppWidth = appWidth;
     }
 
     private enum ManagerType{
@@ -166,7 +173,19 @@ public class SteamHuntDriver extends SimpleFramework{
             processTestLevelChange();
         }
         for(Manager manager : managers){
+            processScale(manager);
             manager.process(delta);
+        }
+
+    }
+
+    private void processScale(Manager m){
+        float scaleX;
+        float scaleY;
+        scaleX = getWidth()/origAppWidth;
+        scaleY = getHeight()/origAppHeight;
+        for(Sprite s:m.getSprites()){
+            s.setGlobalScale(scaleX, scaleY);
         }
     }
 

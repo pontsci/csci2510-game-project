@@ -17,6 +17,7 @@ public abstract class Sprite{
     protected Matrix3x3f viewport;
     private float rotation = 0;
     private Vector2f scale;
+    private Vector2f globalScale = new Vector2f(1,1);
     private float xTranslation;
     private float yTranslation;
     protected ArrayList<BoundingShape> hitboxes = new ArrayList<>();
@@ -39,6 +40,8 @@ public abstract class Sprite{
             //bound.setRot(rotation); Squares and circles do not do well with the formulas from the book.
             bound.updateWorld(viewport);
         }
+        //scale.x = scale.x*globalScale.x;
+        //scale.y = scale.y*globalScale.y;
         setViewport(viewport);
     }
 
@@ -73,7 +76,7 @@ public abstract class Sprite{
     private AffineTransform createTransform(Vector2f position, float angle, Vector2f scale){
         Vector2f screen = viewport.mul(position);
         AffineTransform transform = AffineTransform.getTranslateInstance(screen.x, screen.y);
-        transform.scale(scale.x, scale.y);
+        transform.scale(scale.x*globalScale.x, scale.y*globalScale.y);
         transform.rotate(angle);
         transform.translate(-currentSpriteFrame.getWidth() / 2, -currentSpriteFrame.getHeight() / 2);
         return transform;
@@ -109,5 +112,9 @@ public abstract class Sprite{
     }
     public ArrayList<BoundingShape> getHitboxes(){
         return hitboxes;
+    }
+    public void setGlobalScale(float scaleX, float scaleY){
+        globalScale.x = scaleX;
+        globalScale.y = scaleY;
     }
 }
