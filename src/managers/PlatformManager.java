@@ -4,6 +4,7 @@ import spawning.SpawnRange;
 import spawning.Spawner;
 import sprite.Sprite;
 import sprite.world.Platform;
+import sprite.world.PlayerPlatform;
 import util.Matrix3x3f;
 import util.Vector2f;
 
@@ -18,7 +19,9 @@ public class PlatformManager extends Manager{
         //Add floor spawn.
         spawnRanges.add(new SpawnRange(-5,7,-3,viewport));
         for(Sprite platform: getSprites()){
-            spawnRanges.add(((Platform)platform).getSpawnRange(viewport));
+            if(!(platform instanceof PlayerPlatform)) {
+                spawnRanges.add(((Platform) platform).getSpawnRange(viewport));
+            }
         }
         return spawnRanges;
     }
@@ -61,7 +64,7 @@ public class PlatformManager extends Manager{
                 getSprites().add(new Platform(6.5f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
             break;
             case 4:
-                getSprites().add(new Platform(-7.5f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
+                getSprites().add(new PlayerPlatform(-7.5f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
                 getSprites().add(new Platform(-3.72f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
                 getSprites().add(new Platform(-0.0f, -1.5f, new Vector2f(.75f,.5f), platformSpriteSheet));
                 getSprites().add(new Platform(-0.5f, 1.0f, new Vector2f(.75f,.5f), platformSpriteSheet));
