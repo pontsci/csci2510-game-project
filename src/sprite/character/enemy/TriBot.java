@@ -18,7 +18,7 @@ public class TriBot extends Enemy {
 	private final int MOVE_ANIMATION = 0;
 	private final int ATTACK_ANIMATION = 1;
 	private int currentAnimation = 0;
-	private int dmgTicks = 0;
+	
 	private boolean shoot = false;
 
 	public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, BufferedImage spriteSheet) {
@@ -38,6 +38,12 @@ public class TriBot extends Enemy {
 	}
 
 	@Override
+	public void render(Graphics g) {
+		super.render(g);
+		
+	}
+	
+	@Override
 	public void process(float delta) {
 		super.process(delta);
 
@@ -54,6 +60,8 @@ public class TriBot extends Enemy {
 			bm.addEnemyBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
 			shoot = false;
 		}
+		
+		processEffects(delta);
 	}
 
 	// Process which animation is playing, when an animation finishes, it returns
@@ -76,26 +84,5 @@ public class TriBot extends Enemy {
 		}
 	}
 
-	public void processEffects(float delta) {
-		// DoT check
-		if (conditions.getStatus(5).active) {
-			// At 3,2,and 1 on the timer, if the player is above 1 health, damage the player
-			if ((conditions.getTimer(5) > 2.0 && dmgTicks < 1)
-					|| (conditions.getTimer(5) > 1.0 && conditions.getTimer(5) < 2.0 && dmgTicks < 2)
-					|| (conditions.getTimer(5) > 0.0 && conditions.getTimer(5) < 1.0 && dmgTicks < 3)) {
-				if (hp > 1) {
-					dmgOverTime();
-					dmgTicks++;
-				}
-			}
-		} else {
-			dmgTicks = 0;
-		}
-	}
-
-	// DoT Effect
-	public void dmgOverTime() {
-		// System.out.println("DoT!!!");
-		hp--;
-	}
+	
 }

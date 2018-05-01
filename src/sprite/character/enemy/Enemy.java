@@ -37,7 +37,8 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
     private float maxVisionTime;
     protected float regenTimer;
     protected float visionTimer = 0;
-
+    private int dmgTicks = 0;
+    
     /**
      * Creates a new enemy with references to objects it collides with and position data
      * @param startX starting x coord
@@ -407,5 +408,32 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
         setxTranslation(getxTranslation() - (walkRate * delta));
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
     }
+    
+    public void processEffects(float delta) {
+		// DoT check
+		if (conditions.getStatus(5).active) {
+			// At 3,2,and 1 on the timer, if the player is above 1 health, damage the player
+			if ((conditions.getTimer(5) > 2.0 && dmgTicks < 1)
+					|| (conditions.getTimer(5) > 1.0 && conditions.getTimer(5) < 2.0 && dmgTicks < 2)
+					|| (conditions.getTimer(5) > 0.0 && conditions.getTimer(5) < 1.0 && dmgTicks < 3)) {
+				if (hp > 1) {
+					dmgOverTime();
+					dmgTicks++;
+				}
+			}
+		} else {
+			dmgTicks = 0;
+		}
+	}
+
+	// DoT Effect
+	public void dmgOverTime() {
+		// System.out.println("DoT!!!");
+		hp--;
+	}
+	
+	public void activateDoT() {
+		conditions.activateStatus(5);
+	}
 
 }

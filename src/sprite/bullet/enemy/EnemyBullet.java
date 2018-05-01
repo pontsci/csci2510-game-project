@@ -36,7 +36,8 @@ public class EnemyBullet extends Bullet{
             return true;
         //if player hit, damage player and delete bullet
         if(Collision.checkSpriteCollision(this, player)){
-            player.decreaseHP(bulletDamage);
+        	if(!player.isShieldActive())
+            	player.decreaseHP(bulletDamage);
             return true;
         }
         return false;
