@@ -50,7 +50,7 @@ public abstract class Enemy extends CharacterSprite implements VulnStatus{
      */
     Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm){
         super(startX, startY, scale, floors, screenWalls, platforms, walls, bm);
-        initialize(player, 10);
+        initialize(player, 5);
     }
 
     /**

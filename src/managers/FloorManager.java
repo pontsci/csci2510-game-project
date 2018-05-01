@@ -21,30 +21,30 @@ public class FloorManager extends Manager{
         getSprites().clear();
         switch(level){
             case 1:
-                getSprites().add(new Floor(-6.4f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(-3.2f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(0.0f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(3.2f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(6.4f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(-6.4f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(-3.2f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(0.0f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(3.2f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(6.4f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
                 break;
             case 2:
-                getSprites().add(new Floor(-6.4f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(-3.2f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(0.0f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(3.2f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(6.4f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(-6.4f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(-3.2f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(0.0f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(3.2f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(6.4f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
                 break;
             case 3:
-                getSprites().add(new Floor(-6.4f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(-3.2f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(0.0f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(5.2f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(6.4f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(-6.4f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(-3.2f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(0.0f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(5.2f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(6.4f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
                 break;
             case 4:
-                getSprites().add(new Floor(-3.2f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(0.0f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
-                getSprites().add(new Floor(2.05f, -4.3f,  new Vector2f(.8f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(-3.2f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(0.0f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
+                getSprites().add(new Floor(2.05f, -4.3f,  new Vector2f(.85f,.5f), floorSpriteSheet));
         }
     }
 }

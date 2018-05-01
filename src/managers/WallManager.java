@@ -22,10 +22,9 @@ public class WallManager extends Manager{
             case 1:
                 getSprites().add(new Wall(3.8f, -0.24f, new Vector2f(.5f,.58f), wallSpriteSheet));
                 getSprites().add(new Wall(3.8f, -2.74f, new Vector2f(.5f,.58f), wallSpriteSheet));
-                getSprites().add(new Wall(5.5f, -0.24f, new Vector2f(.5f,.58f), wallSpriteSheet));
                 break;
             case 2:
-                getSprites().add(new Wall(-4.67f, 3.5f, new Vector2f(.5f,.58f), wallSpriteSheet));
+                getSprites().add(new Wall(-4.67f, 3.35f, new Vector2f(.5f,.58f), wallSpriteSheet));//This wall is designed for the enemy to shoot through, but not the player.
                 getSprites().add(new Wall(-4.67f, -0.26f, new Vector2f(.5f,.58f), wallSpriteSheet));
                 getSprites().add(new Wall(-2.04f, -0.26f, new Vector2f(.5f,.58f), wallSpriteSheet));
                 getSprites().add(new Wall(-2.04f, -3.11f, new Vector2f(.5f,.58f), wallSpriteSheet));
