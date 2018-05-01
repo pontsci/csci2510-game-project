@@ -26,7 +26,7 @@ public class SpriteSheetMaker {
 
     public static void main(String arg[]) {
         SpriteSheetMaker sm = new SpriteSheetMaker();
-        System.out.println("Done");
+        //System.out.println("Done");
     }
 
     private int height;

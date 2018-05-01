@@ -26,7 +26,7 @@ public class PlayingClipsExample implements LineListener {
 	}
 
 	public void runTestWithoutWaiting() throws Exception {
-		System.out.println("runTestWithoutWaiting()");
+		//System.out.println("runTestWithoutWaiting()");
 		Clip clip = AudioSystem.getClip();
 		clip.addLineListener(this);
 		InputStream resource = ResourceLoader.load(PlayingClipsExample.class,
@@ -50,7 +50,7 @@ public class PlayingClipsExample implements LineListener {
 	}
 
 	public void runTestWithWaiting() throws Exception {
-		System.out.println("runTestWithWaiting()");
+		//System.out.println("runTestWithWaiting()");
 		Clip clip = AudioSystem.getClip();
 		clip.addLineListener(this);
 		InputStream resource = ResourceLoader.load(PlayingClipsExample.class,
@@ -91,7 +91,7 @@ public class PlayingClipsExample implements LineListener {
 
 	@Override
 	public synchronized void update(LineEvent lineEvent) {
-		System.out.println("Got Event: " + lineEvent.getType());
+		//System.out.println("Got Event: " + lineEvent.getType());
 		LineEvent.Type type = lineEvent.getType();
 		if (type == LineEvent.Type.OPEN) {
 			open = true;

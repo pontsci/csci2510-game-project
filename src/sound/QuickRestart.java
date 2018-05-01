@@ -29,8 +29,8 @@ public class QuickRestart extends SoundEvent {
 	}
 
 	protected void processEvent(String event) throws InterruptedException {
-		System.out.println("Quick Restart Got: " + event);
-		System.out.println("Current State: " + currentState);
+		//System.out.println("Quick Restart Got: " + event);
+		//System.out.println("Current State: " + currentState);
 		if (currentState == STATE_CLOSED) {
 			if (event == EVENT_OPEN) {
 				audio.open();
@@ -58,7 +58,7 @@ public class QuickRestart extends SoundEvent {
 				currentState = STATE_WAITING;
 			}
 		}
-		System.out.println("New State: " + currentState);
+		//System.out.println("New State: " + currentState);
 	}
 
 	@Override

@@ -36,7 +36,7 @@ public class SoundEvent implements Runnable {
 			// and/or stop.
 			queue.put(SHUT_DOWN);
 			temp.join(10000L);
-			System.out.println("Event shutdown!!!");
+			//System.out.println("Event shutdown!!!");
 		} catch (InterruptedException ex) {
 		}
 	}

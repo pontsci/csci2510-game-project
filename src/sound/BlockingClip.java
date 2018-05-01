@@ -32,7 +32,7 @@ public class BlockingClip extends AudioStream {
 			//UPDATE
 			createControls( clip );
 			//UPDATE
-			System.out.println( "open" );
+			//System.out.println( "open" );
 		} catch (UnsupportedAudioFileException ex) {
 			throw new SoundException(ex.getMessage(), ex);
 		} catch (LineUnavailableException ex) {
@@ -56,7 +56,7 @@ public class BlockingClip extends AudioStream {
 			while (!started) {
 				cond.await();
 			}
-			System.out.println("It's Started");
+			//System.out.println("It's Started");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
@@ -74,7 +74,7 @@ public class BlockingClip extends AudioStream {
 			while (!started) {
 				cond.await();
 			}
-			System.out.println("It's Started");
+			//System.out.println("It's Started");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
@@ -124,7 +124,7 @@ public class BlockingClip extends AudioStream {
 			//UPDATE
 			clearControls();
 			//UPDATE
-			System.out.println("Turned off");
+			//System.out.println("Turned off");
 		} catch (InterruptedException ex) {
 			ex.printStackTrace();
 		} finally {
