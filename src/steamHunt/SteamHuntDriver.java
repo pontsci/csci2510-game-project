@@ -128,6 +128,7 @@ public class SteamHuntDriver extends SimpleFramework{
 
         //load level and spawner
         loadNewLevel();
+        SteamSound.musicLoopFire();
     }
     
      private void restart() {
