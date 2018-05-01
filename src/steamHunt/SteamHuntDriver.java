@@ -110,7 +110,7 @@ public class SteamHuntDriver extends SimpleFramework{
         doorManager.initialize(enemyManager.getSprites());
         leverManager.initialize(enemyManager.getSprites(), mainCharManager.getSprites());
         screenWallManager.initialize();
-        mainCharManager.initialize(floorManager.getSprites(),screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites(), wallManager.getSprites(), bulletManager, doorManager.getSprites());
+        mainCharManager.initialize(floorManager.getSprites(),screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites(), wallManager.getSprites(), bulletManager, doorManager.getSprites(), leverManager.getSprites());
         //Power ups don't initialize
         enemyManager.initialize(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0), wallManager.getSprites(), bulletManager);
         spawner.initialize();
@@ -162,13 +162,23 @@ public class SteamHuntDriver extends SimpleFramework{
             processRKeyInput();//Temporary for damaging the Main Character.
             processTKeyInput();//Temp
             processEKeyInput();
+            processEndInput();
             processTestLevelChange();
         }
         for(Manager manager : managers){
             manager.process(delta);
         }
     }
-    
+
+    //End screen... currently can't restart the game.
+    private void processEndInput(){
+        System.out.println(((MainCharacter)mainCharManager.getSprites().get(0)).isEnd());
+        if(((MainCharacter)mainCharManager.getSprites().get(0)).isEnd()){
+            paused = !paused;
+            screenManager.SetScreen(ScreenType.END);
+        }
+    }
+
     private void processKKeyInput(){
           if(keyboard.keyDownOnce(KeyEvent.VK_K)){
             mainCharManager.die();
