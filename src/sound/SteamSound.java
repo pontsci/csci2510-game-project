@@ -14,8 +14,8 @@ public class SteamSound
     private static byte[] playerWeaponBytes;
     private static byte[] enemyWeaponBytes;
     private static LoopEvent musicLoopClip;
-    private static OneShotEvent playerWeaponOneShotClip;
-    private static OneShotEvent enemyWeaponOneShotClip;
+    private static RestartEvent playerWeaponOneShotClip;
+    private static RestartEvent enemyWeaponOneShotClip;
 
     public static void initialize(){
         InputStream in = ResourceLoader.load(SteamSound.class,
@@ -23,21 +23,22 @@ public class SteamSound
         musicBytes = readBytes(in);
         in = ResourceLoader.load(SteamSound.class, "src/resources/sound/WeaponFire.wav", "asdf");
         playerWeaponBytes = readBytes(in);
+        in = ResourceLoader.load(SteamSound.class, "src/resources/sound/WeaponFire.wav", "asdf");
         enemyWeaponBytes = readBytes(in);
         loadMusic(musicBytes);
         loadWeapons(playerWeaponBytes);
     }
 
     private static void loadMusic(byte[] rawData){
-        musicLoopClip = new LoopEvent(new BlockingClip(rawData));
+        musicLoopClip = new LoopEvent(new BlockingDataLine(rawData));
         musicLoopClip.initialize();
     }
 
     private static void loadWeapons(byte[] rawData){
-        playerWeaponOneShotClip = new OneShotEvent(new BlockingClip(rawData));
+        playerWeaponOneShotClip = new RestartEvent((new BlockingClip(rawData)));
         playerWeaponOneShotClip.initialize();
 
-        enemyWeaponOneShotClip = new OneShotEvent(new BlockingClip(rawData));
+        enemyWeaponOneShotClip = new RestartEvent(new BlockingClip(rawData));
         enemyWeaponOneShotClip.initialize();
 
     }
