@@ -16,6 +16,11 @@ import java.util.ArrayList;
 public class PlatformManager extends Manager{
     private BufferedImage platformSpriteSheet = loadFile("src/resources/world/foreground/platform/PlatformResized_WH_448x119.png");
 
+    /**
+     * generates the platform spawns
+     * @param viewport the viewport
+     * @return spawn ranges for the platforms
+     */
     private ArrayList<SpawnRange> getPlatFormSpawns(Matrix3x3f viewport){
         ArrayList<SpawnRange> spawnRanges = new ArrayList<>();
         for(Sprite platform: getSprites()){
@@ -32,6 +37,12 @@ public class PlatformManager extends Manager{
         //not needed
     }
 
+    /**
+     * Depending on the level, change where platforms spawn
+     * @param level the current level
+     * @param spawner the spawn system
+     * @param viewport the viewport
+     */
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         getSprites().clear();

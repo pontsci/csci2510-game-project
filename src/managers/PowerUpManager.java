@@ -14,7 +14,12 @@ public class PowerUpManager extends Manager{
 	private BufferedImage healImg = loadFile("src/resources/world/pickups/health.png");
 	BufferedImage lightnShield = loadFile("src/resources/world/pickups/LightningShield.png");
 	private StatusArchive archive = new StatusArchive();
-	
+
+	/**
+	 * Add a power up according to passed parameters
+	 * @param effect the effect type
+	 * @param position the start position
+	 */
 	private void addPowerUp(Status effect, Vector2f position) {
 		
 		//Adds a powerup with a matching StatusArchive id.
@@ -52,6 +57,12 @@ public class PowerUpManager extends Manager{
 		//not needed
 	}
 
+	/**
+	 * Depending on the level, change what power ups will spawn
+	 * @param level the current level
+	 * @param spawner the spawn system
+	 * @param viewport the viewport
+	 */
 	@Override
 	public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
 		getSprites().clear();

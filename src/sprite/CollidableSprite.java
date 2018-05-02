@@ -8,7 +8,9 @@ public abstract class CollidableSprite extends Sprite {
         super(startX, startY, scale);
     }
 
-    //Each collidable sprite has hitboxes which should be set in subclasses
-    //the first hitbox is the outer hitbox
+    /**
+     * Each collidable sprite has hitboxes which should be set in subclasses
+     * the first hitbox is the outer hitbox
+     */
     public abstract void initializeHitboxes();
 }

@@ -12,7 +12,10 @@ import java.awt.image.BufferedImage;
 public class BackgroundManager extends Manager{
     private BufferedImage skyboxSpriteSheet = loadFile("src/resources/world/background/skyboxresized.png");
     private BufferedImage [] bgWallSprites;
-   
+
+    /**
+     * BackgroundManager constructor. Loads images and breaks them into easy to use tiles
+     */
     public BackgroundManager(){
         super();
         BufferedImage bgWallSpriteSheet = loadFile("src/resources/world/background/Building_WH_400x467_Wall.png");
@@ -20,7 +23,11 @@ public class BackgroundManager extends Manager{
         for(int i=0; i< bgWallSprites.length; i++){
             bgWallSprites[i] = bgWallSpriteSheet.getSubimage(400*i, 0 , 400, 467);
         }
-    }        
+    }
+
+    /**
+     * an enum for background types
+     */
     public enum BgWallType {
         WINDOWCRACKED(0), WINDOW(1), DIAGONAL(2), MEDIUM (3), BIGHOLE(4), LITTLEHOLE (5), SMALLSEGMENT(6), WALL(7), SCRATCHED(8);  
         private int i;
@@ -38,6 +45,12 @@ public class BackgroundManager extends Manager{
         //no collision needed
     }
 
+    /**
+     * Depending on the level, switch the backgrounds we are using
+     * @param level the current level
+     * @param spawner the spawn system
+     * @param viewport the viewport
+     */
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         getSprites().clear();
