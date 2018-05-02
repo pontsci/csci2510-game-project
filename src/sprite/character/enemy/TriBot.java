@@ -76,11 +76,14 @@ public class TriBot extends Enemy
     @Override
     protected void checkFloorCollision(float delta, Matrix3x3f viewport)
     {
-
+        //not needed
     }
 
-    // Process which animation is playing, when an animation finishes, it returns
-    // true
+    /**
+     * Process which animation is playing, when an animation finishes, it returns
+     * true
+     * @param delta time
+     */
     private void processAnimations(float delta)
     {
         switch(currentAnimation){

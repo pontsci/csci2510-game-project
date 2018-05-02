@@ -416,7 +416,10 @@ public abstract class Enemy extends CharacterSprite{
         }
     }
 
-
+    /**
+     * checks if the footBox collides with the ground
+     * @return whether or not it collided
+     */
     private boolean footboxCollidesWithGround(){
         for(Sprite platform : platforms){
             if(Collision.checkCollision(footBox, platform.getHitboxes())){
@@ -435,8 +438,11 @@ public abstract class Enemy extends CharacterSprite{
         setxTranslation(getxTranslation() - (walkRate * delta));
         setScale(new Vector2f(Math.abs(getScale().x), Math.abs(getScale().y)));
     }
-    
-    //Decrements enemy health when tasered
+
+    /**
+     * Decrements enemy health when tasered
+     * @param delta time
+     */
     public void processEffects(float delta) {
 		// DoT check
 		if(tasered) {
@@ -456,7 +462,10 @@ public abstract class Enemy extends CharacterSprite{
 		
 	}
 
-    //Renders the taser effect
+    /**
+     * Renders the taser effect
+     * @param g graphics
+     */
     public void renderDoT(Graphics g) {
     	Vector2f pos = getPos(); 
     	
@@ -465,8 +474,10 @@ public abstract class Enemy extends CharacterSprite{
     	
     	taserEffect.render(g);
     }
-	
-    //Starts damage over time effect
+
+    /**
+     * Starts damage over time effect
+     */
 	public void activateDoT() {
 		dmgTicks = 4;
 		tickTimer = 0;
