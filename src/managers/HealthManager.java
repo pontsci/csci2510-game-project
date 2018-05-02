@@ -14,7 +14,10 @@ public class HealthManager extends Manager{
     private MainCharacter player;
     private float cumulativeTime;
     private int hpShowing;
-    
+
+    /**
+     * The constructor. Loads the health resources and splits them into an array
+     */
     public HealthManager(){
         super();
         BufferedImage sheet = loadFile("src/resources/UI/UIElement_WH_131x203_Battery.png");
@@ -23,7 +26,11 @@ public class HealthManager extends Manager{
             healthSprites[i] = sheet.getSubimage(131*i, 0, 131, 203);
         }
     }
-    
+
+    /**
+     * initialize variables to passed parameters, as well as add the health sprites to sprites
+     * @param player the player
+     */
     public void initialize(MainCharacter player){
         this.player = player;
         getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), healthSprites[0]));
@@ -37,6 +44,10 @@ public class HealthManager extends Manager{
         //Not needed
     }
 
+    /**
+     *
+     * @param delta time
+     */
     @Override
     public void process(float delta){
         super.process(delta);

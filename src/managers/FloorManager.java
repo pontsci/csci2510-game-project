@@ -16,6 +16,12 @@ public class FloorManager extends Manager{
         //not needed
     }
 
+    /**
+     * Depending on the level, change where floors spawn
+     * @param level the current level
+     * @param spawner the spawn system
+     * @param viewport the viewport
+     */
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         getSprites().clear();
