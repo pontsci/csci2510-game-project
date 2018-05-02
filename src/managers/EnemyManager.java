@@ -25,14 +25,13 @@ public class EnemyManager extends Manager
 
     /**
      * Initialize variables to passed parameters
-     * @param floors the floors
      * @param screenWalls the screen walls
      * @param platforms the platforms
      * @param player the player
      * @param walls the walls
      * @param bm the bullet manager
      */
-    public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm)
+    public void initialize(ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm)
     {
     	taserEffect = new StatusIcon(new Vector2f(.21f, .14f), effects.getSubimage(0, 0, 237, 356));
         this.screenWalls = screenWalls;

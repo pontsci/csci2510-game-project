@@ -46,6 +46,10 @@ public abstract class CharacterSprite extends CollidableSprite{
         setyTranslation(getyTranslation() + ((getGravity()) * delta));
     }
 
+    /**
+     * This method keeps track of bullet time, it limits how much the character can shoot
+     * @param delta time
+     */
     protected void processBulletTime(float delta){
         if(bulletTimer < bulletWaitTime){
             bulletTimer += delta;
@@ -56,7 +60,11 @@ public abstract class CharacterSprite extends CollidableSprite{
         }
     }
 
-    //begin checking collision with floor and wall
+    /**
+     * begin checking collision with floor and wall
+     * @param delta time
+     * @param viewport the viewport
+     */
     public void checkCollision(float delta, Matrix3x3f viewport){
         checkScreenWallCollision(delta, viewport);
         checkFloorCollision(delta, viewport);
@@ -64,6 +72,11 @@ public abstract class CharacterSprite extends CollidableSprite{
         checkWallCollision(delta, viewport);
     }
 
+    /**
+     * push character up if they are on a platform
+     * @param delta time
+     * @param viewport the viewport
+     */
     protected void checkPlatformCollision(float delta, Matrix3x3f viewport){
         for(Sprite platform : platforms){
             while(Collision.checkSpriteCollision(this, platform)){
@@ -74,6 +87,11 @@ public abstract class CharacterSprite extends CollidableSprite{
 
     protected abstract void checkFloorCollision(float delta, Matrix3x3f viewport);
 
+    /**
+     * push characters away from wall if they collide with it
+     * @param delta time
+     * @param viewport the viewport
+     */
     protected void checkScreenWallCollision(float delta, Matrix3x3f viewport){
         for(int i = 0; i < screenWalls.size(); i++){
             while(Collision.checkSpriteCollision(this, screenWalls.get(i))){
@@ -92,7 +110,13 @@ public abstract class CharacterSprite extends CollidableSprite{
         Collision.checkAdvancedCollision(delta, viewport, this, walls);
     }
 
-    //Push the character
+    /**
+     * Push the character
+     * @param delta time
+     * @param viewport the viewport
+     * @param axis x or y, the direction
+     * @param amount how much to push
+     */
     public void pushCharacter(float delta, Matrix3x3f viewport, char axis, float amount){
         if(axis == 'y'){
             setyTranslation(getyTranslation() + amount);

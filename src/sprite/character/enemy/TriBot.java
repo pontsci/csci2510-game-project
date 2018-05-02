@@ -13,6 +13,7 @@ import sprite.Sprite;
 import sprite.character.player.MainCharacter;
 import sprite.world.StatusIcon;
 import util.Animation;
+import util.Matrix3x3f;
 import util.Vector2f;
 
 import java.awt.*;
@@ -72,8 +73,17 @@ public class TriBot extends Enemy
 
 	}
 
-    // Process which animation is playing, when an animation finishes, it returns
-    // true
+    @Override
+    protected void checkFloorCollision(float delta, Matrix3x3f viewport)
+    {
+        //not needed
+    }
+
+    /**
+     * Process which animation is playing, when an animation finishes, it returns
+     * true
+     * @param delta time
+     */
     private void processAnimations(float delta)
     {
         switch(currentAnimation){

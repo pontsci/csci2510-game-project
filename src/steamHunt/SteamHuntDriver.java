@@ -117,7 +117,7 @@ public class SteamHuntDriver extends SimpleFramework{
         screenWallManager.initialize();
         mainCharManager.initialize(screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites(), wallManager.getSprites(), bulletManager, doorManager.getSprites(), leverManager.getSprites());
         //Power ups don't initialize
-        enemyManager.initialize(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0), wallManager.getSprites(), bulletManager);
+        enemyManager.initialize(screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0), wallManager.getSprites(), bulletManager);
         spawner.initialize();
         bulletManager.initialize((MainCharacter)mainCharManager.getSprites().get(0), enemyManager.getSprites(), wallManager.getSprites());
         healthManager.initialize((MainCharacter)mainCharManager.getSprites().get(0));
@@ -202,7 +202,9 @@ public class SteamHuntDriver extends SimpleFramework{
         }
     }
 
-    // Process a P key as the pause
+    /**
+     *  Process a P key as the pause
+     */
     private void processPKeyInput() {
         if(keyboard.keyDownOnce(KeyEvent.VK_P) || keyboard.keyDownOnce(KeyEvent.VK_ESCAPE)){
             paused = !paused;
@@ -217,15 +219,20 @@ public class SteamHuntDriver extends SimpleFramework{
             }
         }
     }
-    
-    //Process what happens when w is pressed
+
+    /**
+     * Process what happens when w is pressed
+     */
     private void processWKeyInput(){
         if(keyboard.keyDown(KeyEvent.VK_W) || keyboard.keyDown(KeyEvent.VK_UP)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processJump();
         }
     }
 
-    //Process what happens when A or/and D are pressed
+    /**
+     * Process what happens when A or/and D are pressed
+     * @param delta time
+     */
     private void processMovementInput(float delta){
         //if both are pressed, do nothing
         if(keyboard.keyDown(KeyEvent.VK_A) && keyboard.keyDown(KeyEvent.VK_D)){
@@ -242,14 +249,18 @@ public class SteamHuntDriver extends SimpleFramework{
         }
     }
 
-    //Process what happens when B is pressed
+    /**
+     * Process what happens when B is pressed
+     */
     private void processBKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_B)){
             renderHitboxes = !renderHitboxes;
         }
     }
 
-    //Process what happens when S is pressed
+    /**
+     * Process what happens when S is pressed
+     */
     private void processSKeyInput(){
         if(keyboard.keyDown(KeyEvent.VK_S) || keyboard.keyDown(KeyEvent.VK_DOWN)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processIgnorePlatformCollision();
@@ -258,26 +269,36 @@ public class SteamHuntDriver extends SimpleFramework{
             ((MainCharacterManager)managers[MAINCHAR.i]).processAllowPlatformCollision();
     }
 
+    /**
+     * Process what happens when R is pressed
+     */
     private void processRKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_R)){
             ((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).setHp(((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).getHp() - 1);
         }
     }
 
+    /**
+     * Process what happens when T is pressed
+     */
     private void processTKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_T)){
             ((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).setHp(((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).getHp() + 1);
         }
     }
 
-    //Process what happens when E is pressed - go through door to next level.
+    /**
+     * Process what happens when E is pressed - go through door to next level.
+     */
     private void processEKeyInput(){
         if(keyboard.keyDown(KeyEvent.VK_E)){
             mainCharManager.canGoThroughDoor();
         }
     }
 
-    //Process what happens when S is pressed
+    /**
+     * Process what happens when Space is pressed
+     */
     private void processSpaceKeyInput(){
         if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
             if(!hasStarted) {
@@ -293,6 +314,9 @@ public class SteamHuntDriver extends SimpleFramework{
         }
     }
 
+    /**
+     * Handle level changing
+     */
     private void processTestLevelChange(){
         if(((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).isChangingLevel()){
             level++;
@@ -321,8 +345,10 @@ public class SteamHuntDriver extends SimpleFramework{
         }
     }
 
+    /**
+     * Update where everything supposed to be located in the world
+     */
     @Override
-    //Update where everything supposed to be located in the world
     protected void updateObjects(float delta){
         for(Manager manager : managers){
             manager.update(delta, getViewportTransform());
@@ -337,8 +363,11 @@ public class SteamHuntDriver extends SimpleFramework{
         enemyManager.checkCollision(delta,getViewportTransform());
     }
 
+    /**
+     * Render everything's location in the world
+     * @param g graphics
+     */
     @Override
-    //Render everything's location in the world
     protected void render(Graphics g){
         super.render(g);
 
