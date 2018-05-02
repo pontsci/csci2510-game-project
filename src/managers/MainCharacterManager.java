@@ -61,6 +61,10 @@ public class MainCharacterManager extends Manager{
                 getSprites().get(0).setxTranslation(-7);
                 getSprites().get(0).setyTranslation(-.25f);
                 break;
+            case 5:
+                getSprites().get(0).setxTranslation(-4);
+                getSprites().get(0).setyTranslation(1.0f);
+                break;
         }
     }
 
