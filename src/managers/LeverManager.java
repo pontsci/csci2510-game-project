@@ -34,7 +34,7 @@ public class LeverManager extends Manager{
         getSprites().clear();
         switch(level){
             case 7:
-                getSprites().add(new Lever(-6.7f, 2.45f, new Vector2f(.5f,.58f), enemies, leverSpriteSheet));
+                getSprites().add(new Lever(-6.7f, 2.55f, new Vector2f(.5f,.58f), enemies, leverSpriteSheet));
 
         }
     }

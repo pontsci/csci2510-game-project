@@ -147,9 +147,9 @@ public class PlatformManager extends Manager{
                 getSprites().add(new PlayerPlatform(-6.4f, -2.65f,  new Vector2f(.85f,.5f), platformSpriteSheet));
                 getSprites().add(new Platform(6.4f,  -1.5f,  new Vector2f(.75f,.5f),platformSpriteSheet));
                 getSprites().add(new PlayerPlatform(6.2f,  1.25f,  new Vector2f(.75f,.5f),platformSpriteSheet));
-                getSprites().add(new Platform(0, 1.70f,  new Vector2f(.85f,.5f), platformSpriteSheet));
-                getSprites().add(new Platform(-3.2f, 1.70f,  new Vector2f(.85f,.5f), platformSpriteSheet));
-                getSprites().add(new Platform(-6.4f, 1.70f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(0, 1.80f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-3.2f, 1.80f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-6.4f, 1.80f,  new Vector2f(.85f,.5f), platformSpriteSheet));
                 break;
 
 
