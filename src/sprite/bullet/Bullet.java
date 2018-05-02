@@ -66,7 +66,7 @@ public abstract class Bullet extends CollidableSprite {
     }
 
     /**
-     *
+     * Checks if a bullet has collided with a wall, returns true if so
      * @param delta time
      * @param viewport the viewport
      * @return whether it has collided or not
@@ -74,7 +74,7 @@ public abstract class Bullet extends CollidableSprite {
     public boolean checkCollision(float delta, Matrix3x3f viewport){
         //Check wall collision and delete bullet if it hits the wall
         for(Sprite wall : walls){
-            //bullet collides with enemy
+            //bullet collides with wall
             if(Collision.checkSpriteCollision(this, wall)){
                 return true;
             }
