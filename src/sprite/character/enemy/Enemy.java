@@ -57,13 +57,8 @@ public abstract class Enemy extends CharacterSprite{
         super(startX, startY, scale,  screenWalls, platforms, walls, bm);
         initialize(player, 5);
         taserEffect = lightning;
-        if(direction){
-            currentDirection = 0;
-        }
-        else{
-            currentDirection = 1;
-        }
 
+        currentDirection = direction ? 0 : 1;
     }
 
     /**
