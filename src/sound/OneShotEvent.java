@@ -23,14 +23,14 @@ public class OneShotEvent extends SoundEvent {
 
 	protected void processEvent(String event) throws InterruptedException {
 		//System.out.println("Got " + event + " event");
-		if (currentState == STATE_WAITING) {
-			if (event == EVENT_FIRE) {
+		if (currentState.equals(STATE_WAITING)) {
+			if (event.equals(EVENT_FIRE)) {
 				audio.open();
 				audio.start();
 				currentState = STATE_RUNNING;
 			}
-		} else if (currentState == STATE_RUNNING) {
-			if (event == EVENT_DONE) {
+		} else if (currentState.equals(STATE_RUNNING)) {
+			if (event.equals(EVENT_DONE)) {
 				audio.stop();
 				audio.close();
 				currentState = STATE_WAITING;
