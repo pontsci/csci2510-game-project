@@ -55,7 +55,12 @@ public abstract class Manager{
         return sprites;
     }
 
-    //Given an int, set a new level
+    /**
+     * Given an int, switch to a new level
+     * @param level the current level
+     * @param spawner the spawn system
+     * @param viewport the viewport
+     */
     public abstract void switchLevel(int level, Spawner spawner, Matrix3x3f viewport);
 
     //Load an image and return the found image
