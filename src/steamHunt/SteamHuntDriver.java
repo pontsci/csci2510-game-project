@@ -18,12 +18,11 @@ import managers.ScreenManager.ScreenType;
 //It does not deal with individual sprites, that is footBox for the manager to do.
 public class SteamHuntDriver extends SimpleFramework{
     //Used for looping
-    private Manager[] managers = new Manager[14];
+    private Manager[] managers = new Manager[13];
 
     //Used for easy calling
     private BackgroundManager backgroundManager = new BackgroundManager();
     private WallManager wallManager = new WallManager();
-    private FloorManager floorManager = new FloorManager();
     private PlatformManager platformManager = new PlatformManager();
     private DoorManager doorManager = new DoorManager();
     private LeverManager leverManager = new LeverManager();
@@ -66,7 +65,7 @@ public class SteamHuntDriver extends SimpleFramework{
     }
 
     private enum ManagerType{
-        BACKGROUND(0), WALL(1), FLOOR(2), PLATFORM(3), DOOR(4), LEVER(5), SCREENWALL(6), MAINCHAR(7), POWERUP(8), ENEMY(9), SPAWNER(10), BULLET(11), HEALTH(12), SCREEN(13);
+        BACKGROUND(0), WALL(1), PLATFORM(2), DOOR(3), LEVER(4), SCREENWALL(5), MAINCHAR(6), POWERUP(7), ENEMY(8), SPAWNER(9), BULLET(10), HEALTH(11), SCREEN(12);
         private int i;
         ManagerType(int i){
             this.i = i;
@@ -76,7 +75,6 @@ public class SteamHuntDriver extends SimpleFramework{
     //easier enum usage declarations
     private final ManagerType BACKGROUND = ManagerType.BACKGROUND;
     private final ManagerType WALL = ManagerType.WALL;
-    private final ManagerType FLOOR = ManagerType.FLOOR;
     private final ManagerType PLATFORM = ManagerType.PLATFORM;
     private final ManagerType DOOR = ManagerType.DOOR;
     private final ManagerType LEVER = ManagerType.LEVER;
@@ -97,7 +95,6 @@ public class SteamHuntDriver extends SimpleFramework{
         //Sync the array list and individual managers together
         managers[BACKGROUND.i] = backgroundManager;
         managers[WALL.i] = wallManager;
-        managers[FLOOR.i] = floorManager;
         managers[PLATFORM.i] = platformManager;
         managers[DOOR.i] = doorManager;
         managers[LEVER.i] = leverManager;
@@ -118,7 +115,7 @@ public class SteamHuntDriver extends SimpleFramework{
         doorManager.initialize(enemyManager.getSprites());
         leverManager.initialize(enemyManager.getSprites(), mainCharManager.getSprites());
         screenWallManager.initialize();
-        mainCharManager.initialize(floorManager.getSprites(),screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites(), wallManager.getSprites(), bulletManager, doorManager.getSprites(), leverManager.getSprites());
+        mainCharManager.initialize(screenWallManager.getSprites(), powerUpManager.getSprites(), platformManager.getSprites(), wallManager.getSprites(), bulletManager, doorManager.getSprites(), leverManager.getSprites());
         //Power ups don't initialize
         enemyManager.initialize(floorManager.getSprites(), screenWallManager.getSprites(), platformManager.getSprites(),(MainCharacter)mainCharManager.getSprites().get(0), wallManager.getSprites(), bulletManager);
         spawner.initialize();
@@ -223,7 +220,7 @@ public class SteamHuntDriver extends SimpleFramework{
     
     //Process what happens when w is pressed
     private void processWKeyInput(){
-        if(keyboard.keyDown(KeyEvent.VK_W)){
+        if(keyboard.keyDown(KeyEvent.VK_W) || keyboard.keyDown(KeyEvent.VK_UP)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processJump();
         }
     }
@@ -234,10 +231,10 @@ public class SteamHuntDriver extends SimpleFramework{
         if(keyboard.keyDown(KeyEvent.VK_A) && keyboard.keyDown(KeyEvent.VK_D)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processIdle();
         }
-        else if(keyboard.keyDown(KeyEvent.VK_A)){
+        else if(keyboard.keyDown(KeyEvent.VK_A) || keyboard.keyDown(KeyEvent.VK_LEFT)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processWalkLeft(delta);
         }
-        else if(keyboard.keyDown(KeyEvent.VK_D)){
+        else if(keyboard.keyDown(KeyEvent.VK_D ) || keyboard.keyDown(KeyEvent.VK_RIGHT)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processWalkRight(delta);
         }
         else{
@@ -254,7 +251,7 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //Process what happens when S is pressed
     private void processSKeyInput(){
-        if(keyboard.keyDown(KeyEvent.VK_S)){
+        if(keyboard.keyDown(KeyEvent.VK_S) || keyboard.keyDown(KeyEvent.VK_DOWN)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processIgnorePlatformCollision();
         }
         else
@@ -282,14 +279,17 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //Process what happens when S is pressed
     private void processSpaceKeyInput(){
-        if(keyboard.keyDown(KeyEvent.VK_SPACE)){
-            if(!hasStarted){
+        if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
+            if(!hasStarted) {
                 hasStarted = true;
                 screenManager.SetScreen(ScreenType.NONE);
                 paused = false;
-            }else{
-                ((MainCharacterManager)managers[MAINCHAR.i]).processShoot();
             }
+        }
+        else if(keyboard.keyDown(KeyEvent.VK_SPACE)){
+            if(hasStarted)
+                ((MainCharacterManager)managers[MAINCHAR.i]).processShoot();
+
         }
     }
 

@@ -12,8 +12,7 @@ import java.util.ArrayList;
 
 public abstract class CharacterSprite extends CollidableSprite{
     protected final int TERMINAL_VELOCITY = -5;
-    protected final float ONE_PIXEL = .00833333f;
-    protected ArrayList<Sprite> floors;
+    protected final float ONE_PIXEL = .01833333f;
     protected ArrayList<Sprite> screenWalls;
     protected ArrayList<Sprite> walls;
     protected ArrayList<Sprite> platforms;
@@ -26,9 +25,8 @@ public abstract class CharacterSprite extends CollidableSprite{
     protected float bulletTimer;
     protected boolean canShoot;
 
-    public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm){
+    public CharacterSprite(float startX, float startY, Vector2f scale, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm){
         super(startX, startY, scale);
-        this.floors = floors;
         this.screenWalls = screenWalls;
         this.walls = walls;
         this.platforms = platforms;

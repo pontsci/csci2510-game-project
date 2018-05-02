@@ -13,7 +13,6 @@ public class MainCharacterManager extends Manager{
 
     /**
      * Get the MainCharacter's sprite sheets and make the main character.
-     * @param floors the floors
      * @param screenWalls the screen walls
      * @param powerups the power ups
      * @param platforms the platforms
@@ -22,8 +21,8 @@ public class MainCharacterManager extends Manager{
      * @param doors the doors
      * @param levers the levers
      */
-    public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors, ArrayList<Sprite> levers){
-        getSprites().add(new MainCharacter(0, 0, new Vector2f(-.3f,.3f), floors, screenWalls, powerups, platforms, walls, bm, doors,loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png"), loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png"), loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Move.png"), levers));
+    public void initialize( ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors, ArrayList<Sprite> levers){
+        getSprites().add(new MainCharacter(0, 0, new Vector2f(-.3f,.3f), screenWalls, powerups, platforms, walls, bm, doors,loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png"), loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png"), loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Move.png"), levers));
     }
 
     /**

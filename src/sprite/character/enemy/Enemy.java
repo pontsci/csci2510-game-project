@@ -49,13 +49,12 @@ public abstract class Enemy extends CharacterSprite{
      * @param startX starting x coord
      * @param startY starting y coord
      * @param scale starting scale
-     * @param floors the floor
      * @param screenWalls the walls
      * @param platforms the platforms
      * @param player the player
      */
-    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, StatusIcon lightning){
-        super(startX, startY, scale, floors, screenWalls, platforms, walls, bm);
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, StatusIcon lightning){
+        super(startX, startY, scale,  screenWalls, platforms, walls, bm);
         initialize(player, 5);
         taserEffect = lightning;
     }
@@ -65,14 +64,13 @@ public abstract class Enemy extends CharacterSprite{
      * @param startX starting x coord
      * @param startY starting y coord
      * @param scale starting scale
-     * @param floors the floor
      * @param screenWalls the walls
      * @param platforms the platforms
      * @param player the player
      * @param hp starting hp
      */
-    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, int hp, StatusIcon lightning){
-        super(startX, startY, scale, floors, screenWalls, platforms, walls, bm);
+    Enemy(float startX, float startY, Vector2f scale,  ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, int hp, StatusIcon lightning){
+        super(startX, startY, scale,  screenWalls, platforms, walls, bm);
         initialize(player, hp);
         taserEffect = lightning;
     }
@@ -382,7 +380,7 @@ public abstract class Enemy extends CharacterSprite{
     @Override
     //Advanced collision checking which pushes a sprite every direction until it not longer collides with the given object.
     public void checkFloorCollision(float delta, Matrix3x3f viewport){
-        float yStartState = getyTranslation();
+        /*float yStartState = getyTranslation();
         int magnitude = 1;
         if(!(floors == null)){
             for(Sprite otherSprite : floors){
@@ -397,17 +395,12 @@ public abstract class Enemy extends CharacterSprite{
                     magnitude++;
                 }
             }
-        }
+        }*/
     }
 
     private boolean footboxCollidesWithGround(){
         for(Sprite platform : platforms){
             if(Collision.checkCollision(footBox, platform.getHitboxes())){
-                return true;
-            }
-        }
-        for(Sprite floor: floors){
-            if(Collision.checkCollision(footBox, floor.getHitboxes())){
                 return true;
             }
         }

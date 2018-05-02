@@ -17,7 +17,6 @@ public class EnemyManager extends Manager
     private BufferedImage tribotSpriteSheet = loadFile("src/resources/character/enemy/tribot/Enemy_WH_237x356_EnemyMove_EnemyAttack.png");
     private BufferedImage effects = loadFile("src/resources/world/pickups/LightningShield.png");
     private StatusIcon taserEffect;
-    private ArrayList<Sprite> floors;
     private ArrayList<Sprite> screenWalls;
     private ArrayList<Sprite> platforms;
     private ArrayList<Sprite> walls;
@@ -36,7 +35,6 @@ public class EnemyManager extends Manager
     public void initialize(ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm)
     {
     	taserEffect = new StatusIcon(new Vector2f(.21f, .14f), effects.getSubimage(0, 0, 237, 356));
-        this.floors = floors;
         this.screenWalls = screenWalls;
         this.walls = walls;
         this.platforms = platforms;
@@ -50,7 +48,7 @@ public class EnemyManager extends Manager
      */
     private void addTriBot(Vector2f pos)
     {
-        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f), floors, screenWalls, platforms, player, walls, bm, tribotSpriteSheet, taserEffect));
+        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f),  screenWalls, platforms, player, walls, bm, tribotSpriteSheet, taserEffect));
     }
 
     /**
