@@ -103,7 +103,11 @@ public abstract class Enemy extends CharacterSprite{
         taserEffect.update(delta, viewport);
         setViewport(viewport);
     }
-    
+
+    /**
+     * updates the detection hitboxes
+     * @param viewport the viewport
+     */
     private void updateDetectionHitboxes(Matrix3x3f viewport)
     {
         footBox.setxTranslation(getxTranslation());
@@ -116,15 +120,21 @@ public abstract class Enemy extends CharacterSprite{
         detectionBox.updateWorld(viewport);
     }
 
-    //Renders lightning effect when tasered
+    /**
+     * Renders lightning effect when tasered
+     * @param g graphics
+     */
     @Override
     public void render(Graphics g) {
     	super.render(g);
     	if(tasered)
     		renderDoT(g);
     }
-    
-    //For each hitbox, render the hitbox
+
+    /**
+     * For each hitbox, render the hitbox
+     * @param g graphics
+     */
     @Override
     public void renderHitboxes(Graphics g){
         super.renderHitboxes(g);
@@ -155,6 +165,10 @@ public abstract class Enemy extends CharacterSprite{
         }
     }
 
+    /**
+     * process vision, movement, and shooting.
+     * @param delta time
+     */
     @Override
     public void process(float delta)
     {
@@ -179,9 +193,11 @@ public abstract class Enemy extends CharacterSprite{
         processEffects(delta);
     }
 
+    /**
+     * process the shooting, detects whether shots are valid, and whether the enemy should be playing shooting anaimations
+     * @param delta time
+     */
     private void processShooting(float delta){
-        //shoot stuff
-
         //detect if the player walks behind the enemy, turning the enemy around
         if(shotValid){
             if(playerPos.x > getPos().x){
@@ -207,6 +223,10 @@ public abstract class Enemy extends CharacterSprite{
         }
     }
 
+    /**
+     * Enemies regenerate health after 10 seconds of not being hit
+     * @param delta time
+     */
     private void processRegeneration(float delta)
     {
         //enemy is damaged under max hp
@@ -229,6 +249,10 @@ public abstract class Enemy extends CharacterSprite{
         }
     }
 
+    /**
+     * process whether the enemy goes left or right
+     * @param delta time
+     */
     private void processMovement(float delta){
         //If going left
         if(currentDirection == GOING_LEFT){
@@ -254,6 +278,11 @@ public abstract class Enemy extends CharacterSprite{
         }
     }
 
+    /**
+     * Enemies do not fall of platforms, turn around when reaching an end of platform
+     * @param delta time
+     * @param viewport the viewport
+     */
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
         super.checkCollision(delta, viewport);
@@ -315,6 +344,11 @@ public abstract class Enemy extends CharacterSprite{
             playerPos = player.getPos();
     }
 
+    /**
+     * check if the enemy has collided with a wall, push them out
+     * @param delta time
+     * @param viewport the viewport
+     */
     @Override
     protected void checkScreenWallCollision(float delta, Matrix3x3f viewport){
         wallCollision = false;
@@ -333,6 +367,11 @@ public abstract class Enemy extends CharacterSprite{
         }
     }
 
+    /**
+     * check if the enemy has collided with a wall, push them out
+     * @param delta time
+     * @param viewport the viewport
+     */
     @Override
     protected void checkWallCollision(float delta, Matrix3x3f viewport){
         float xStartState = getxTranslation();
@@ -377,26 +416,6 @@ public abstract class Enemy extends CharacterSprite{
         }
     }
 
-    @Override
-    //Advanced collision checking which pushes a sprite every direction until it not longer collides with the given object.
-    public void checkFloorCollision(float delta, Matrix3x3f viewport){
-        /*float yStartState = getyTranslation();
-        int magnitude = 1;
-        if(!(floors == null)){
-            for(Sprite otherSprite : floors){
-                while(Collision.checkSpriteCollision(this, otherSprite)){
-                    pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, otherSprite)){
-                        setyTranslation(yStartState);
-                    }
-                    else{
-                        return;
-                    }
-                    magnitude++;
-                }
-            }
-        }*/
-    }
 
     private boolean footboxCollidesWithGround(){
         for(Sprite platform : platforms){
