@@ -19,17 +19,17 @@ public class RestartEvent extends SoundEvent {
 
 	protected void processEvent(String event) throws InterruptedException {
 		//System.out.println("Got " + event + " event");
-		if (currentState == STATE_WAITING) {
-			if (event == EVENT_FIRE) {
+		if (currentState.equals(STATE_WAITING)) {
+			if (event.equals(EVENT_FIRE)) {
 				currentState = STATE_RUNNING;
 				audio.open();
 				audio.start();
 			}
-		} else if (currentState == STATE_RUNNING) {
-			if (event == EVENT_FIRE) {
+		} else if (currentState.equals(STATE_RUNNING)) {
+			if (event.equals(EVENT_FIRE)) {
 				audio.restart();
 			}
-			if (event == EVENT_DONE) {
+			if (event.equals(EVENT_DONE)) {
 				currentState = STATE_WAITING;
 				audio.close();
 			}

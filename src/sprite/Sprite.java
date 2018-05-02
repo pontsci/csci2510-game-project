@@ -28,10 +28,17 @@ public abstract class Sprite{
         this.scale = scale;
     }
 
-    //Process anything that's constantly affecting the sprite
+    /**
+     * Process anything that's constantly affecting the sprite
+     * @param delta time
+     */
     public abstract void process(float delta);
 
-    //Update where the sprite is currently located in the world
+    /**
+     * Update where the sprite is currently located in the world
+     * @param delta time
+     * @param viewport the viewport
+     */
     public void update(float delta, Matrix3x3f viewport){
         for(BoundingShape bound : hitboxes){
             bound.setxTranslation(xTranslation);
@@ -49,7 +56,10 @@ public abstract class Sprite{
         this.viewport = viewport;
     }
 
-    //Render the location of the sprite
+    /**
+     * Render the location of the sprite
+     * @param g graphics
+     */
     public void render(Graphics g){
         Graphics2D g2d = (Graphics2D)g;
         //Set antialias
@@ -59,7 +69,10 @@ public abstract class Sprite{
         doAffineTransform(g2d);
     }
 
-    //For each hitbox, render the hitbox
+    /**
+     * For each hitbox, render the hitbox
+     * @param g graphics
+     */
     public void renderHitboxes(Graphics g){
         for(BoundingShape bound : hitboxes){
             bound.render(g);
