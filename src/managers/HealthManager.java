@@ -45,7 +45,7 @@ public class HealthManager extends Manager{
     }
 
     /**
-     *
+     * process how health UI is displayed
      * @param delta time
      */
     @Override
@@ -82,52 +82,10 @@ public class HealthManager extends Manager{
         if (cumulativeTime > 2){
             cumulativeTime = 0;
         }
-        
-//        
-//        switch(player.getHp()){
-//            case 1:
-//                if(getSprites().size() == 2){
-//                    getSprites().remove(1);
-//                }
-//                else if(getSprites().size() == 3){
-//                    getSprites().remove(2);
-//                    getSprites().remove(1);
-//                }
-//                if(getSprites().size() == 0)
-//                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(0,0,131,203)));
-//                break;
-//            case 2:
-//                if(getSprites().size() == 3)
-//                    getSprites().remove(2);
-//                else if(getSprites().size() == 1)
-//                    getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(131,0,131, 203)));
-//                break;
-//            case 3:
-//                if(getSprites().size() == 2){
-//                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(0,0,131,203)));
-//                }
-//                else if(getSprites().size() == 1){
-//                    getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(131,0,131, 203)));
-//                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(0,0,131,203)));
-//                }
-//                else if(getSprites().size() == 0){
-//                    getSprites().add(new Health(7,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(262,0,131, 203)));
-//                    getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(131,0,131, 203)));
-//                    getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(0,0,131,203)));
-//                }
-//                break;
-//        }
     }
 
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
-        switch(level){
-            case 1:
-//                getSprites().clear();
-//                getSprites().add(new Health(7,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(262,0,131, 203)));
-//                getSprites().add(new Health(6,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(131,0,131, 203)));
-//                getSprites().add(new Health(5,4, new Vector2f(.5f, .5f), healthSpriteSheet.getSubimage(0,0,131,203)));
-                break;
-        }
+        //not needed
     }
 }
