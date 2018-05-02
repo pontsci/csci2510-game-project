@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 
 import bounding.BoundingBox;
 import sprite.CollidableSprite;
-import sprite.Sprite;
 import status.Status;
 import util.Vector2f;
 

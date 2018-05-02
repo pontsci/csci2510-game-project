@@ -5,7 +5,6 @@ import sprite.Sprite;
 import util.Vector2f;
 
 import java.awt.image.BufferedImage;
-import java.lang.management.BufferPoolMXBean;
 
 public class Health extends Sprite{
     private boolean active;

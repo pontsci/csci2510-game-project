@@ -2,8 +2,6 @@ package managers;
 
 import spawning.Spawner;
 import sprite.Sprite;
-import sprite.character.CharacterSprite;
-import sprite.bullet.Bullet;
 import util.Matrix3x3f;
 
 import javax.imageio.ImageIO;

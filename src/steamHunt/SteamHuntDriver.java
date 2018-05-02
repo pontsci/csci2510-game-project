@@ -9,7 +9,6 @@ import sound.SteamSound;
 import spawning.Spawner;
 import sprite.Sprite;
 import sprite.character.player.MainCharacter;
-import sprite.world.Door;
 import util.SimpleFramework;
 import managers.ScreenManager.ScreenType;
 

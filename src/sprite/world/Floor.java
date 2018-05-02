@@ -1,7 +1,6 @@
 package sprite.world;
 
 import bounding.BoundingBox;
-import sprite.Sprite;
 import util.Vector2f;
 
 import java.awt.*;

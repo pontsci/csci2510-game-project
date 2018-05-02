@@ -2,7 +2,6 @@ package sprite.world;
 
 import bounding.BoundingBox;
 import sprite.CollidableSprite;
-import sprite.Sprite;
 import util.Matrix3x3f;
 import util.Vector2f;
 import spawning.SpawnRange;

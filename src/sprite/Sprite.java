@@ -4,12 +4,9 @@ import bounding.BoundingShape;
 import util.Matrix3x3f;
 import util.Vector2f;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Sprite{

@@ -2,7 +2,6 @@ package sprite.bullet;
 
 import sprite.CollidableSprite;
 import sprite.Sprite;
-import sprite.character.enemy.Enemy;
 import util.Collision;
 import util.Matrix3x3f;
 import util.Vector2f;

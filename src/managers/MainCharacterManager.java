@@ -6,7 +6,6 @@ import sprite.Sprite;
 import util.Matrix3x3f;
 import util.Vector2f;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class MainCharacterManager extends Manager{

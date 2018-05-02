@@ -1,10 +1,5 @@
 package sprite.character.enemy;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.awt.*;
-
 import bounding.BoundingBox;
 import bounding.BoundingCircle;
 import managers.BulletManager;
