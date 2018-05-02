@@ -14,6 +14,11 @@ public class LeverManager extends Manager{
     ArrayList<Sprite> players;
     BufferedImage leverSpriteSheet = loadFile("src/resources/world/foreground/lever/Interact_Switch_WH_285x203.png");
 
+    /**
+     * Initialize variables to passed parameters
+     * @param enemies all enemies
+     * @param players the player
+     */
     public void initialize(ArrayList<Sprite> enemies, ArrayList<Sprite> players){
         this.enemies = enemies;
         this.players = players;
