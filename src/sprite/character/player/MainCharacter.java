@@ -47,8 +47,8 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     private int dmgTicks = 0;
     private boolean end = false;
 
-    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> floor, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors, BufferedImage idleAnimation, BufferedImage jumpAnimation, BufferedImage moveAnimation, ArrayList<Sprite> levers){
-        super(startX, startY, scale, floor, screenWalls, platforms, walls, bm);
+    public MainCharacter(float startX, float startY, Vector2f scale, ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors, BufferedImage idleAnimation, BufferedImage jumpAnimation, BufferedImage moveAnimation, ArrayList<Sprite> levers){
+        super(startX, startY, scale, screenWalls, platforms, walls, bm);
 
         //Always set the frame, even if it runs without setting the frame, a null error can occur on animated sprites when you try to create a new one.
         setCurrentSpriteFrame(idleAnimation.getSubimage(0, 0, 237, 356));
@@ -283,19 +283,18 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         float xStartState = getxTranslation();
         float yStartState = getyTranslation();
         int magnitude = 1;
-        if(!(floors == null)){
-            for(Sprite floor : platforms) {
-                if (floor instanceof Floor || floor instanceof PlayerFloor) {
-                    while (Collision.checkSpriteCollision(this, floor)) {
-                        pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
-                        if (Collision.checkSpriteCollision(this, floor)) {
-                            setyTranslation(yStartState);
+        for(Sprite floor : platforms) {
+            if (floor instanceof Floor || floor instanceof PlayerFloor) {
+                while (Collision.checkSpriteCollision(this, floor)) {
+                    pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
+                    if (Collision.checkSpriteCollision(this, floor)) {
+                        setyTranslation(yStartState);
                         } else {
                             onTheFloor = true;
                             return;
                         }
                         pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
-                        if (Collision.checkSpriteCollision(this, floor)) {
+                    if (Collision.checkSpriteCollision(this, floor)) {
                             setxTranslation(xStartState);
                         } else
                             return;
@@ -308,7 +307,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
                     }
                 }
             }
-        }
+
         onAPlatform = false;
     }
 

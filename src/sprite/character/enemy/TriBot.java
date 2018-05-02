@@ -30,9 +30,9 @@ public class TriBot extends Enemy
     private int dmgTicks = 0;
     private boolean shoot = false;
 
-    public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> floors, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, BufferedImage spriteSheet, StatusIcon lightning)
+    public TriBot(float startX, float startY, Vector2f scale, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, BufferedImage spriteSheet, StatusIcon lightning)
     {
-        super(startX, startY, scale, floors, screenWalls, platforms, player, walls, bm, lightning);
+        super(startX, startY, scale, screenWalls, platforms, player, walls, bm, lightning);
         // get the animations for the tri bot - follow the main character
         setCurrentSpriteFrame(spriteSheet.getSubimage(0, 0, 237, 356));
         animation.addAnimation(spriteSheet.getSubimage(0, 0, 1659, 356), 7);
