@@ -12,6 +12,8 @@ import sound.SteamSound;
 import sprite.Sprite;
 import sprite.character.CharacterSprite;
 import sprite.world.Door;
+import sprite.world.Floor;
+import sprite.world.PlayerFloor;
 import sprite.world.PowerUp;
 import status.VulnStatus;
 import util.Animation;
@@ -203,29 +205,28 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
             float xStartState = getxTranslation();
             float yStartState = getyTranslation();
             int magnitude = 1;
-            for(Sprite platform : platforms){
-                while(Collision.checkOuterCollision(this, platform)){
-                    pushCharacter(delta, viewport, 'y', ONE_PIXEL*magnitude);
-                    if(Collision.checkOuterCollision(this, platform)){
-                        setyTranslation(yStartState);
+            for(Sprite platform : platforms) {
+                if (!(platform instanceof Floor) || !(platform instanceof PlayerFloor)) {
+                    while (Collision.checkOuterCollision(this, platform)) {
+                        pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
+                        if (Collision.checkOuterCollision(this, platform)) {
+                            setyTranslation(yStartState);
+                        } else {
+                            onAPlatform = true;
+                            break;
+                        }
+                        pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
+                        if (Collision.checkOuterCollision(this, platform)) {
+                            setxTranslation(xStartState);
+                        } else
+                            break;
+                        pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
+                        if (Collision.checkOuterCollision(this, platform)) {
+                            setxTranslation(xStartState);
+                        } else
+                            break;
+                        magnitude++;
                     }
-                    else{
-                        onAPlatform = true;
-                        break;
-                    }
-                    pushCharacter(delta, viewport, 'x', ONE_PIXEL*magnitude);
-                    if(Collision.checkOuterCollision(this, platform)){
-                        setxTranslation(xStartState);
-                    }
-                    else
-                        break;
-                    pushCharacter(delta, viewport, 'x', -ONE_PIXEL*magnitude);
-                    if(Collision.checkOuterCollision(this, platform)){
-                        setxTranslation(xStartState);
-                    }
-                    else
-                        break;
-                    magnitude++;
                 }
             }
         }
@@ -283,29 +284,28 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         float yStartState = getyTranslation();
         int magnitude = 1;
         if(!(floors == null)){
-            for(Sprite floor : floors){
-                while(Collision.checkSpriteCollision(this, floor)){
-                    pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, floor)){
-                        setyTranslation(yStartState);
+            for(Sprite floor : platforms) {
+                if (floor instanceof Floor || floor instanceof PlayerFloor) {
+                    while (Collision.checkSpriteCollision(this, floor)) {
+                        pushCharacter(delta, viewport, 'y', ONE_PIXEL * magnitude);
+                        if (Collision.checkSpriteCollision(this, floor)) {
+                            setyTranslation(yStartState);
+                        } else {
+                            onTheFloor = true;
+                            return;
+                        }
+                        pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
+                        if (Collision.checkSpriteCollision(this, floor)) {
+                            setxTranslation(xStartState);
+                        } else
+                            return;
+                        pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
+                        if (Collision.checkSpriteCollision(this, floor)) {
+                            setxTranslation(xStartState);
+                        } else
+                            return;
+                        magnitude++;
                     }
-                    else{
-                        onTheFloor = true;
-                        return;
-                    }
-                    pushCharacter(delta, viewport, 'x', ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, floor)){
-                        setxTranslation(xStartState);
-                    }
-                    else
-                        return;
-                    pushCharacter(delta, viewport, 'x', -ONE_PIXEL * magnitude);
-                    if(Collision.checkSpriteCollision(this, floor)){
-                        setxTranslation(xStartState);
-                    }
-                    else
-                        return;
-                    magnitude++;
                 }
             }
         }
