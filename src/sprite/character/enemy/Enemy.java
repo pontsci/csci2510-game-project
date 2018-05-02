@@ -20,6 +20,7 @@ public abstract class Enemy extends CharacterSprite{
     protected BoundingBox detectionBox = new BoundingBox(new Vector2f(-40f,0f), new Vector2f(0f,2f), Color.CYAN);
     protected Vector2f bulletLine = new Vector2f(0,0);
     private float walkRate = 1.5f;
+    private final float MAX_DISPLAY_TIME = .15f;
     private final float REGEN_TIME = 10;
     private int currentDirection = 1;
     private int GOING_RIGHT = 0;
@@ -41,8 +42,11 @@ public abstract class Enemy extends CharacterSprite{
     private int dmgTicks = 0;
     private float tickTimer = 0;
     private float tickInterval = .5f;
+    private float displayHitTimer;
     private boolean tasered = false;
+    private boolean displayHitEffect;
     private StatusIcon taserEffect;
+    private StatusIcon hitEffect;
     
     /**
      * Creates a new enemy with references to objects it collides with and position data
@@ -53,11 +57,11 @@ public abstract class Enemy extends CharacterSprite{
      * @param platforms the platforms
      * @param player the player
      */
-    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, StatusIcon lightning, boolean direction){
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, StatusIcon lightning, boolean direction, StatusIcon hitEffect){
         super(startX, startY, scale,  screenWalls, platforms, walls, bm);
         initialize(player, 5);
         taserEffect = lightning;
-
+        this.hitEffect = hitEffect;
         currentDirection = direction ? 0 : 1;
     }
 
@@ -71,10 +75,11 @@ public abstract class Enemy extends CharacterSprite{
      * @param player the player
      * @param hp starting hp
      */
-    Enemy(float startX, float startY, Vector2f scale,  ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, int hp, StatusIcon lightning){
+    Enemy(float startX, float startY, Vector2f scale,  ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, int hp, StatusIcon lightning, StatusIcon hitEffect){
         super(startX, startY, scale,  screenWalls, platforms, walls, bm);
         initialize(player, hp);
         taserEffect = lightning;
+        this.hitEffect = hitEffect;
     }
 
     private void initialize(MainCharacter player, int hp){
@@ -85,6 +90,9 @@ public abstract class Enemy extends CharacterSprite{
         gravity = -1;
         playerPos = player.getPos();
         bulletSpawn = new Vector2f(getPos().x, getPos().y);
+
+        displayHitEffect = false;
+        displayHitTimer = 0;
 
         Random rand = new Random();
         maxVisionTime = (rand.nextFloat()*1)+1;
@@ -103,6 +111,7 @@ public abstract class Enemy extends CharacterSprite{
         super.update(delta,viewport);
         updateDetectionHitboxes(viewport);
         taserEffect.update(delta, viewport);
+        hitEffect.update(delta, viewport);
         setViewport(viewport);
     }
 
@@ -131,6 +140,9 @@ public abstract class Enemy extends CharacterSprite{
     	super.render(g);
     	if(tasered)
     		renderDoT(g);
+    	if(displayHitEffect){
+    	    renderHitEffect(g);
+        }
     }
 
     /**
@@ -176,6 +188,19 @@ public abstract class Enemy extends CharacterSprite{
     {
         super.process(delta);
 
+        if(hit){
+            displayHitEffect = true;
+            displayHitTimer = 0;
+        }
+        if(displayHitEffect){
+            displayHitTimer += delta;
+            hitEffect.setxTranslation(getPos().x);
+            hitEffect.setyTranslation(getPos().y);
+        }
+        if(displayHitTimer > MAX_DISPLAY_TIME){
+            displayHitEffect = false;
+            displayHitTimer = 0;
+        }
         //where to spawn the bullets when shot
         bulletSpawn.x = currentDirection == GOING_LEFT ? getPos().x + .2f : getPos().x - .2f;
         bulletSpawn.y = getPos().y - .08f;
@@ -475,6 +500,10 @@ public abstract class Enemy extends CharacterSprite{
     	taserEffect.setyTranslation(pos.y);
     	
     	taserEffect.render(g);
+    }
+
+    private void renderHitEffect(Graphics g){
+        hitEffect.render(g);
     }
 
     /**

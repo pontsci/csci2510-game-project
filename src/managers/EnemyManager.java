@@ -16,8 +16,10 @@ import util.Vector2f;
 public class EnemyManager extends Manager
 {
     private BufferedImage tribotSpriteSheet = loadFile("src/resources/character/enemy/tribot/Enemy_WH_237x356_EnemyMove_EnemyAttack.png");
+    private BufferedImage hitEffectIcon = loadFile("src/resources/character/enemy/tribot/onHitEffect_WH_237x356_OnHitEffect.png");
     private BufferedImage effects = loadFile("src/resources/world/pickups/LightningShield.png");
     private StatusIcon taserEffect;
+    private StatusIcon hitEffect;
     private ArrayList<Sprite> screenWalls;
     private ArrayList<Sprite> platforms;
     private ArrayList<Sprite> walls;
@@ -36,6 +38,7 @@ public class EnemyManager extends Manager
     public void initialize(ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm)
     {
     	taserEffect = new StatusIcon(new Vector2f(.21f, .14f), effects.getSubimage(0, 0, 237, 356));
+    	hitEffect = new StatusIcon(new Vector2f(.2f,.2f), hitEffectIcon.getSubimage(0,0,237,356));
         this.screenWalls = screenWalls;
         this.walls = walls;
         this.platforms = platforms;
@@ -49,7 +52,7 @@ public class EnemyManager extends Manager
      */
     private void addTriBot(Vector2f pos)
     {
-        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f),  screenWalls, platforms, player, walls, bm, tribotSpriteSheet, taserEffect, random.nextBoolean()));
+        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f),  screenWalls, platforms, player, walls, bm, tribotSpriteSheet, taserEffect, random.nextBoolean(), hitEffect));
     }
 
     /**
