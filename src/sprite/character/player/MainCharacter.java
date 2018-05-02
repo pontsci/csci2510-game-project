@@ -137,7 +137,7 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
         }
     }
 
-
+    //When a player presses 'S' when they are on a platform, it takes .7 seconds before checking platform collision.
     private void processAdjustPlatformTimer(float delta){
         if(platformTimer < .70f){
             platformTimer = platformTimer + delta;
