@@ -323,7 +323,8 @@ public abstract class Enemy extends CharacterSprite{
 
         //is player in the detection box
         playerInDetectionBox = Collision.checkCollision(detectionBox, player.getHitboxes().get(0));
-
+        platformShotValid = true;
+        wallShotValid = true;
         for(Sprite p : platforms){
             if(Collision.intersectSegment(bulletSpawn, playerPos, p, true)){
                 platformShotValid = false;
@@ -345,37 +346,30 @@ public abstract class Enemy extends CharacterSprite{
             }
         }
 
-        System.out.println("Shot valid = " + shotValid);
+        //System.out.println("Shot valid = " + shotValid);
         if(wallShotValid && platformShotValid){
             shotValid = true;
         }else{
             shotValid = false;
         }
 
-        if(playerInDetectionBox){
+        if(shotValid){
+            visionTimer = delta;
+        }else{
+            visionTimer += delta;
+        }
+
+        if(playerInDetectionBox && shotValid){
             //if our shot line has not collided, shot is considered valid
             //for each platform, does our shot line collide
-            if(shotValid){
-                detectionBox.setObjectColor(Color.RED);
-                visionTimer = delta;
-                vision = true;
-            }else{
-                visionTimer +=delta;
-                if(visionTimer > maxVisionTime){
-                    vision = false;
-                }
-            }
+            detectionBox.setObjectColor(Color.RED);
+            vision = true;
+
         }else{
             detectionBox.setObjectColor(Color.CYAN);
-            
-            if(!shotValid){
-                visionTimer+=delta;
-            }
-
-            //if we go over maxVisionTime, we no longer have vision
-            if(visionTimer > maxVisionTime){
-                vision = false;
-            }
+        }
+        if(visionTimer > maxVisionTime){
+            vision = false;
         }
     }
 
