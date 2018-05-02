@@ -72,25 +72,32 @@ public class EnemyManager extends Manager
         getSprites().clear();
         switch(level){
             case 1:
-                for (int i = 0; i < 3; i++){
-                    addTriBot(spawner.getSpawnPoint());
-                }
+                spawnTriBots(spawner, 3);
                 break;
             case 2:
-                for (int i = 0; i < 4; i++){
-                    addTriBot(spawner.getSpawnPoint());
-                }
+                spawnTriBots(spawner, 4);
                 break;
             case 3:
-                for (int i = 0; i < 5; i++){
-                    addTriBot(spawner.getSpawnPoint());
-                }
+                spawnTriBots(spawner, 5);
                 break;
             case 4:
-                for (int i = 0; i < 6; i++){
-                    addTriBot(spawner.getSpawnPoint());
-                }
+                spawnTriBots(spawner, 6);
                 break;
+            case 5:
+                spawnTriBots(spawner, 6);
+                break;
+            case 6:
+                spawnTriBots(spawner, 6);
+                break;
+            case 7:
+                spawnTriBots(spawner, 7);
+                break;
+
+        }
+    }
+    public void spawnTriBots(Spawner spawner, int num){
+        for (int i = 0; i < num; i++){
+            addTriBot(spawner.getSpawnPoint());
         }
     }
 }

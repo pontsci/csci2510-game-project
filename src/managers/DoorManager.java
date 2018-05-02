@@ -47,6 +47,15 @@ public class DoorManager extends Manager{
             case 3:
                 getSprites().add(new Door(7.12f,1.82f ,new Vector2f(.35f, .35f), enemies, doorSpriteSheet));
                 break;
+            case 4:
+                getSprites().add(new Door(7, -0.68f, new Vector2f(.35f, .35f), enemies, doorSpriteSheet));
+                break;
+            case 5:
+                getSprites().add(new Door(-7, -3.48f, new Vector2f(.35f, .35f), enemies, doorSpriteSheet));
+                break;
+            case 6:
+                getSprites().add(new Door(7, 1.82f, new Vector2f(.35f, .35f), enemies, doorSpriteSheet));
+                break;
         }
     }
 }

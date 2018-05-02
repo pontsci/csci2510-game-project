@@ -47,7 +47,7 @@ public class SteamHuntDriver extends SimpleFramework{
     private boolean renderHitboxes = false;
 
     //Level
-    private int level = 5;
+    private int level = 1;
 
 
     private SteamHuntDriver(){
@@ -296,7 +296,7 @@ public class SteamHuntDriver extends SimpleFramework{
     private void processTestLevelChange(){
         if(((MainCharacter)(managers[MAINCHAR.i]).getSprites().get(0)).isChangingLevel()){
             level++;
-            if(level > 4){
+            if(level > 7){
                 level = 1;
             }
             loadNewLevel();
@@ -308,13 +308,13 @@ public class SteamHuntDriver extends SimpleFramework{
         else if(keyboard.keyDownOnce(KeyEvent.VK_Z)){
             level--;
             if(level < 1){
-                level = 4;
+                level = 7;
             }
             loadNewLevel();
         }
         else if(keyboard.keyDownOnce(KeyEvent.VK_C)){
             level++;
-            if(level > 4){
+            if(level > 7){
                 level = 1;
             }
             loadNewLevel();

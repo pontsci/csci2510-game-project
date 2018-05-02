@@ -120,6 +120,38 @@ public class PlatformManager extends Manager{
                 getSprites().add(new Platform(3.5f, -1.5f, new Vector2f(.75f, .5f),platformSpriteSheet));
                 getSprites().add(new Platform(5.5f, 1.0f, new Vector2f(.75f,.5f),platformSpriteSheet));
                 getSprites().add(new Platform(3.5f, 1.0f, new Vector2f(.75f, .5f),platformSpriteSheet));
+                break;
+            case 6:
+                //floor
+                getSprites().add(new Floor(-6.4f, -4.3f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new Floor(6.4f, -4.3f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+
+                getSprites().add(new Platform(-6.4f, 1.0f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                getSprites().add(new Platform(-6.4f, -1.5f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                getSprites().add(new Platform(-3.2f, 1.0f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                getSprites().add(new Platform(-3.2f, -1.5f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                getSprites().add(new Platform(0.0f,  1.0f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                getSprites().add(new PlayerPlatform(0.0f,  -1.5f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                getSprites().add(new Platform(3.2f,  -1.5f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                getSprites().add(new Platform(6.4f,  1.0f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                getSprites().add(new Platform(6.4f,  -1.5f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                break;
+            case 7:
+                //floor
+                getSprites().add(new PlayerFloor(-6.4f, -4.3f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new PlayerFloor(-3.2f, -4.3f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new Floor(0.0f, -4.3f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new Floor(3.2f, -4.3f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new Floor(6.4f, -4.3f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+
+                getSprites().add(new PlayerPlatform(-6.4f, -2.65f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(6.4f,  -1.5f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                getSprites().add(new PlayerPlatform(6.2f,  1.25f,  new Vector2f(.75f,.5f),platformSpriteSheet));
+                getSprites().add(new Platform(0, 1.80f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-3.2f, 1.80f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                getSprites().add(new Platform(-6.4f, 1.80f,  new Vector2f(.85f,.5f), platformSpriteSheet));
+                break;
+
 
         }
         spawner.setSpawnRanges(getPlatFormSpawns(viewport));

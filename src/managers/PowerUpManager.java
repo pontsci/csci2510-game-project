@@ -83,6 +83,17 @@ public class PowerUpManager extends Manager{
 			case 4:
 				addPowerUp(archive.getHealthStatus(), spawner.getSpawnPoint());
 				addPowerUp(archive.getDoTStatus(), spawner.getSpawnPoint());
+				break;
+			case 5:
+				addPowerUp(archive.getFireRateStatus(), spawner.getSpawnPoint());
+				addPowerUp(archive.getShieldStatus(), spawner.getSpawnPoint());
+				break;
+			case 6:
+				addPowerUp(archive.getTaserStatus(), spawner.getSpawnPoint());
+				addPowerUp(archive.getHealthStatus(), spawner.getSpawnPoint());
+				break;
+			case 7:
+				addPowerUp(archive.getDmgStatus(), new Vector2f(-6.0f, -4.1f));
 		}
 	}
 }

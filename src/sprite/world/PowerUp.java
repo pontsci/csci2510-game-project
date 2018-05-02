@@ -21,6 +21,12 @@ public class PowerUp extends CollidableSprite {
 		setCurrentSpriteFrame(spriteSheet);
 		effect = statusEffect;
 		initializeHitboxes();
+		if(getxTranslation() >= 7.5f){
+			setxTranslation(7.0f);
+		}
+		else if(getxTranslation() <= -7.5f){
+			setxTranslation(-7.0f);
+		}
 		setyTranslation(getyTranslation() + 0.3f);
 	}
 

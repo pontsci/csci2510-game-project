@@ -33,8 +33,9 @@ public class LeverManager extends Manager{
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         getSprites().clear();
         switch(level){
-            case 4:
-                getSprites().add(new Lever(7, -.75f, new Vector2f(.5f,.58f), enemies, leverSpriteSheet));
+            case 7:
+                getSprites().add(new Lever(-6.7f, 2.55f, new Vector2f(.5f,.58f), enemies, leverSpriteSheet));
+
         }
     }
 }
