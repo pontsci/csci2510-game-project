@@ -10,12 +10,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class MainCharacterManager extends Manager{
-<<<<<<< HEAD
     //Get the MainCharacter's sprite sheets and make the main character.
     public void initialize( ArrayList<Sprite> screenWalls, ArrayList<Sprite> powerups, ArrayList<Sprite> platforms, ArrayList<Sprite> walls, BulletManager bm, ArrayList<Sprite> doors, ArrayList<Sprite> levers){
         getSprites().add(new MainCharacter(0, 0, new Vector2f(-.3f,.3f), screenWalls, powerups, platforms, walls, bm, doors,loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Idle.png"), loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Jump.png"), loadFile("src/resources/character/player/MainCharSprite_WH_237x356_Move.png"), levers));
-=======
->>>>>>> comments
     }
 
     public void checkCollision(float delta, Matrix3x3f viewport){
