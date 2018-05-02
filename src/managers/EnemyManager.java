@@ -22,10 +22,13 @@ public class EnemyManager extends Manager
     private ArrayList<Sprite> walls;
     private MainCharacter player;
     private BulletManager bm;
+<<<<<<< HEAD
     private float xBound;
     private float yBound;
     
     public void initialize( ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, float xbounds, float ybounds)
+=======
+>>>>>>> comments
     {
     	taserEffect = new StatusIcon(new Vector2f(.21f, .14f), effects.getSubimage(0, 0, 237, 356));
         this.screenWalls = screenWalls;

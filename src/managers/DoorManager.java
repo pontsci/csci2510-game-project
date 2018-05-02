@@ -13,6 +13,10 @@ public class DoorManager extends Manager{
     private ArrayList<Sprite> enemies;
     private BufferedImage doorSpriteSheet = loadFile("src/resources/world/foreground/door/door.png");
 
+    /**
+     * initialize variables to passed parameters
+     * @param enemies all enemies
+     */
     public void initialize(ArrayList<Sprite> enemies){
         this.enemies = enemies;
     }
@@ -22,6 +26,12 @@ public class DoorManager extends Manager{
         //Not needed, the character interacts with the door
     }
 
+    /**
+     * Depending on the level, switch where the door is
+     * @param level the current level
+     * @param spawner the spawn system
+     * @param viewport the viewport
+     */
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         //Could just close the door and translate it to improve effecientcy rather tan completely recreate a new door.
