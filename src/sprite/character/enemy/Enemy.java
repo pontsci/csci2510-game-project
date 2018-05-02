@@ -31,6 +31,8 @@ public abstract class Enemy extends CharacterSprite{
     private boolean playerInDetectionBox = false;
     private boolean vision = false;
     private boolean shotValid = false;
+    private boolean platformShotValid = false;
+    private boolean wallShotValid = false;
     protected boolean moving;
     protected boolean playShootAnimation = false;
     private MainCharacter player;
@@ -324,24 +326,30 @@ public abstract class Enemy extends CharacterSprite{
 
         for(Sprite p : platforms){
             if(Collision.intersectSegment(bulletSpawn, playerPos, p, true)){
-                shotValid = false;
+                platformShotValid = false;
                 break;
             }else{
-                shotValid = true;
+                platformShotValid = true;
             }
         }
 
         //if our shot line has not collided, shot is considered valid
         //for each wall, does our shot line collide
-        if(shotValid){
-            for(Sprite w : walls){
-                if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
-                    shotValid = false;
-                    break;
-                }else{
-                    shotValid = true;
-                }
+
+        for(Sprite w : walls){
+            if(Collision.intersectSegment(bulletSpawn, playerPos, w, false)){
+                wallShotValid = false;
+                break;
+            }else{
+                wallShotValid = true;
             }
+        }
+
+        System.out.println("Shot valid = " + shotValid);
+        if(wallShotValid && platformShotValid){
+            shotValid = true;
+        }else{
+            shotValid = false;
         }
 
         if(playerInDetectionBox){
@@ -351,6 +359,11 @@ public abstract class Enemy extends CharacterSprite{
                 detectionBox.setObjectColor(Color.RED);
                 visionTimer = delta;
                 vision = true;
+            }else{
+                visionTimer +=delta;
+                if(visionTimer > maxVisionTime){
+                    vision = false;
+                }
             }
         }else{
             detectionBox.setObjectColor(Color.CYAN);
