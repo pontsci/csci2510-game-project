@@ -161,31 +161,74 @@ public class BackgroundManager extends Manager{
             case 5:
                 //FIRST
                  getSprites().add(new BackgroundWall(7, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(4.63f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
+                 getSprites().add(new BackgroundWall(4.63f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WINDOW.getIndex()]));
                  getSprites().add(new BackgroundWall(2.26f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(-.11f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(-2.48f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(-4.85f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
+                 getSprites().add(new BackgroundWall(-.11f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
+                 getSprites().add(new BackgroundWall(-4.85f, -3, new Vector2f(-.55f,.6f), bgWallSprites[BgWallType.SMALLSEGMENT.getIndex()]));
+                 getSprites().add(new BackgroundWall(-7.22f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.SCRATCHED.getIndex()]));
+                 
+                //SECOND
+                 getSprites().add(new BackgroundWall(7, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.LITTLEHOLE.getIndex()]));
+                 getSprites().add(new BackgroundWall(4.63f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.SCRATCHED.getIndex()]));
+                 getSprites().add(new BackgroundWall(2.26f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WINDOW.getIndex()]));
+                 getSprites().add(new BackgroundWall(-.11f, 0, new Vector2f(.55f,-.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
+                 getSprites().add(new BackgroundWall(-4.85f, 0, new Vector2f(-.55f,-.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
+                 getSprites().add(new BackgroundWall(-7.22f, 0, new Vector2f(.55f,-.6f), bgWallSprites[BgWallType.SCRATCHED.getIndex()]));
+                
+                //THIRD
+                 getSprites().add(new BackgroundWall(7, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
+                 getSprites().add(new BackgroundWall(4.63f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.BIGHOLE.getIndex()]));
+                 getSprites().add(new BackgroundWall(2.26f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
+                 getSprites().add(new BackgroundWall(-.11f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WINDOW.getIndex()]));
+                 getSprites().add(new BackgroundWall(-2.48f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.BIGHOLE.getIndex()]));
+                 getSprites().add(new BackgroundWall(-4.85f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WINDOWCRACKED.getIndex()]));
+                 getSprites().add(new BackgroundWall(-7.22f, 3, new Vector2f(-.55f,.6f), bgWallSprites[BgWallType.SCRATCHED.getIndex()]));
+                 break; 
+            case 6:
+                //FIRST
+                 getSprites().add(new BackgroundWall(7, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
+                 getSprites().add(new BackgroundWall(4.63f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.MEDIUM.getIndex()]));
+                 
+                 getSprites().add(new BackgroundWall(-4.85f, -3, new Vector2f(-.55f,.6f), bgWallSprites[BgWallType.SMALLSEGMENT.getIndex()]));
                  getSprites().add(new BackgroundWall(-7.22f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
                  
                 //SECOND
-                 getSprites().add(new BackgroundWall(7, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(4.63f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(2.26f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(-.11f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(-2.48f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(-4.85f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
+                 getSprites().add(new BackgroundWall(7, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WINDOWCRACKED.getIndex()]));
+                 getSprites().add(new BackgroundWall(4.63f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.SCRATCHED.getIndex()]));
+                 getSprites().add(new BackgroundWall(2.26f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.BIGHOLE.getIndex()]));
+                 getSprites().add(new BackgroundWall(-.11f, 0, new Vector2f(.55f,-.6f), bgWallSprites[BgWallType.SMALLSEGMENT.getIndex()]));
+                 getSprites().add(new BackgroundWall(-4.85f, 0, new Vector2f(-.55f,-.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
                  getSprites().add(new BackgroundWall(-7.22f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
                 
                 //THIRD
                  getSprites().add(new BackgroundWall(7, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
                  getSprites().add(new BackgroundWall(4.63f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(2.26f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(-.11f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(-2.48f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(-4.85f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 getSprites().add(new BackgroundWall(-7.22f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
-                 break; 
+                 getSprites().add(new BackgroundWall(2.26f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.LITTLEHOLE.getIndex()]));
+                 getSprites().add(new BackgroundWall(-.11f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.MEDIUM.getIndex()]));
+                 getSprites().add(new BackgroundWall(-2.48f, 3, new Vector2f(-.55f,-.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
+                 getSprites().add(new BackgroundWall(-4.85f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.SCRATCHED.getIndex()]));
+                 getSprites().add(new BackgroundWall(-7.22f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
+                 break;
+            case 7:
+                //FIRST
+                 getSprites().add(new BackgroundWall(-2.48f, -3, new Vector2f(-.55f,.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
+                 getSprites().add(new BackgroundWall(-4.85f, -3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.LITTLEHOLE.getIndex()]));
+                 getSprites().add(new BackgroundWall(-7.22f, -3, new Vector2f(.55f,-.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
+                 
+                //SECOND
+                 getSprites().add(new BackgroundWall(7, 0, new Vector2f(.55f,-.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
+                 getSprites().add(new BackgroundWall(-.11f, 0, new Vector2f(-.55f,.6f), bgWallSprites[BgWallType.SMALLSEGMENT.getIndex()]));
+                 getSprites().add(new BackgroundWall(-2.48f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.BIGHOLE.getIndex()]));
+                 getSprites().add(new BackgroundWall(-4.85f, 0, new Vector2f(-.55f,.6f), bgWallSprites[BgWallType.SCRATCHED.getIndex()]));
+                 getSprites().add(new BackgroundWall(-7.22f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.MEDIUM.getIndex()]));
+                
+                //THIRD
+                 getSprites().add(new BackgroundWall(7, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.MEDIUM.getIndex()]));
+                 getSprites().add(new BackgroundWall(-.11f, 3, new Vector2f(-.55f,.6f), bgWallSprites[BgWallType.MEDIUM.getIndex()]));
+                 getSprites().add(new BackgroundWall(-2.48f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.LITTLEHOLE.getIndex()]));
+                 getSprites().add(new BackgroundWall(-4.85f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
+                // getSprites().add(new BackgroundWall(-7.22f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
+                 break;
         }
     }
 }
