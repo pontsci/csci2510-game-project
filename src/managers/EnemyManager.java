@@ -45,22 +45,6 @@ public class EnemyManager extends Manager
             ((Enemy)sprite).checkCollision(delta, viewport);
         }
     }
-
-    /*
-    @Override
-    public void process(float delta){
-        super.process(delta);
-        float x;
-        float y;
-        for(int i=0; i< getSprites().size(); i++){
-            x = getSprites().get(i).getxTranslation();
-            y = getSprites().get(i).getyTranslation();
-            if(x > xBound || x< -xBound || y> yBound ||y < -yBound){
-                getSprites().remove(i);
-            }
-        }
-    }
-    */
     
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
