@@ -53,10 +53,17 @@ public abstract class Enemy extends CharacterSprite{
      * @param platforms the platforms
      * @param player the player
      */
-    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, StatusIcon lightning){
+    Enemy(float startX, float startY, Vector2f scale, ArrayList<Sprite> screenWalls, ArrayList<Sprite> platforms, MainCharacter player, ArrayList<Sprite> walls, BulletManager bm, StatusIcon lightning, boolean direction){
         super(startX, startY, scale,  screenWalls, platforms, walls, bm);
         initialize(player, 5);
         taserEffect = lightning;
+        if(direction){
+            currentDirection = 0;
+        }
+        else{
+            currentDirection = 1;
+        }
+
     }
 
     /**

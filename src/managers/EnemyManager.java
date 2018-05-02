@@ -2,6 +2,7 @@ package managers;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import spawning.Spawner;
 import sprite.Sprite;
@@ -22,6 +23,7 @@ public class EnemyManager extends Manager
     private ArrayList<Sprite> walls;
     private MainCharacter player;
     private BulletManager bm;
+    private Random random = new Random();
 
     /**
      * Initialize variables to passed parameters
@@ -47,7 +49,7 @@ public class EnemyManager extends Manager
      */
     private void addTriBot(Vector2f pos)
     {
-        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f),  screenWalls, platforms, player, walls, bm, tribotSpriteSheet, taserEffect));
+        getSprites().add(new TriBot(pos.x, pos.y, new Vector2f(.3f, .3f),  screenWalls, platforms, player, walls, bm, tribotSpriteSheet, taserEffect, random.nextBoolean()));
     }
 
     /**
