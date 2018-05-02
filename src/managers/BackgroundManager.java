@@ -227,7 +227,6 @@ public class BackgroundManager extends Manager{
                  getSprites().add(new BackgroundWall(-.11f, 3, new Vector2f(-.55f,.6f), bgWallSprites[BgWallType.MEDIUM.getIndex()]));
                  getSprites().add(new BackgroundWall(-2.48f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.LITTLEHOLE.getIndex()]));
                  getSprites().add(new BackgroundWall(-4.85f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
-                // getSprites().add(new BackgroundWall(-7.22f, 3, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
                  break;
         }
     }
