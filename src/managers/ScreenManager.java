@@ -55,7 +55,7 @@ public class ScreenManager extends Manager{
         if (currentScreen != ScreenType.NONE)
             getSprites().get(currentScreen.getIndex()).render(g);
     }
-    
+
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport)
     {

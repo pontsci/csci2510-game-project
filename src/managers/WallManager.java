@@ -9,12 +9,23 @@ import java.awt.image.BufferedImage;
 
 public class WallManager extends Manager{
     private BufferedImage wallSpriteSheet = loadFile("src/resources/world/foreground/wall/WallBlock_WH_400x467_WallStand.png");
-    //Get the wall's sprite sheet and make two walls on either side of the screen
+
+    /**
+     * Get the wall's sprite sheet and make two walls on either side of the screen
+     * @param delta time
+     * @param viewport the viewport
+     */
     @Override
     public void checkCollision(float delta, Matrix3x3f viewport){
 
     }
 
+    /**
+     * Depending on the level, switch where walls are to be spawned
+     * @param level the current level
+     * @param spawner the spawn system
+     * @param viewport the viewport
+     */
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
         getSprites().clear();
