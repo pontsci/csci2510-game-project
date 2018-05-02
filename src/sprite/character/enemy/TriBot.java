@@ -66,9 +66,9 @@ public class TriBot extends Enemy
 
 		//shoot is controlled by animation, it is set to true only when the animation is done playing
 		if(shoot){
-            SteamSound.enemyWeaponFire();
 			bm.addEnemyBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
 			shoot = false;
+            SteamSound.enemyWeaponFire();
 		}
 
 	}

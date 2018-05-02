@@ -350,8 +350,8 @@ public class MainCharacter extends CharacterSprite implements VulnStatus{
     // Shoot a bullet
     public void shoot(){
         if(canShoot){
-            SteamSound.playerWeaponFire();
             bm.addMainCharacterBullet(getxTranslation(), getyTranslation(), getScale().x > 0);
+            SteamSound.playerWeaponFire();
             canShoot = false;
             bulletTimer = 0;
         }
