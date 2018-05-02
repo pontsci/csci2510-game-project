@@ -50,6 +50,7 @@ public class EnemyManager extends Manager
         }
     }
 
+    /*
     @Override
     public void process(float delta){
         super.process(delta);
@@ -63,6 +64,7 @@ public class EnemyManager extends Manager
             }
         }
     }
+    */
     
     @Override
     public void switchLevel(int level, Spawner spawner, Matrix3x3f viewport){
