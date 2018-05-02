@@ -220,7 +220,7 @@ public class SteamHuntDriver extends SimpleFramework{
     
     //Process what happens when w is pressed
     private void processWKeyInput(){
-        if(keyboard.keyDown(KeyEvent.VK_W)){
+        if(keyboard.keyDown(KeyEvent.VK_W) || keyboard.keyDown(KeyEvent.VK_UP)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processJump();
         }
     }
@@ -231,10 +231,10 @@ public class SteamHuntDriver extends SimpleFramework{
         if(keyboard.keyDown(KeyEvent.VK_A) && keyboard.keyDown(KeyEvent.VK_D)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processIdle();
         }
-        else if(keyboard.keyDown(KeyEvent.VK_A)){
+        else if(keyboard.keyDown(KeyEvent.VK_A) || keyboard.keyDown(KeyEvent.VK_LEFT)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processWalkLeft(delta);
         }
-        else if(keyboard.keyDown(KeyEvent.VK_D)){
+        else if(keyboard.keyDown(KeyEvent.VK_D ) || keyboard.keyDown(KeyEvent.VK_RIGHT)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processWalkRight(delta);
         }
         else{
@@ -251,7 +251,7 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //Process what happens when S is pressed
     private void processSKeyInput(){
-        if(keyboard.keyDown(KeyEvent.VK_S)){
+        if(keyboard.keyDown(KeyEvent.VK_S) || keyboard.keyDown(KeyEvent.VK_DOWN)){
             ((MainCharacterManager)managers[MAINCHAR.i]).processIgnorePlatformCollision();
         }
         else
@@ -279,14 +279,17 @@ public class SteamHuntDriver extends SimpleFramework{
 
     //Process what happens when S is pressed
     private void processSpaceKeyInput(){
-        if(keyboard.keyDown(KeyEvent.VK_SPACE)){
-            if(!hasStarted){
+        if(keyboard.keyDownOnce(KeyEvent.VK_SPACE)){
+            if(!hasStarted) {
                 hasStarted = true;
                 screenManager.SetScreen(ScreenType.NONE);
                 paused = false;
-            }else{
-                ((MainCharacterManager)managers[MAINCHAR.i]).processShoot();
             }
+        }
+        else if(keyboard.keyDown(KeyEvent.VK_SPACE)){
+            if(hasStarted)
+                ((MainCharacterManager)managers[MAINCHAR.i]).processShoot();
+
         }
     }
 

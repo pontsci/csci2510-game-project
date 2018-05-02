@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public abstract class CharacterSprite extends CollidableSprite{
     protected final int TERMINAL_VELOCITY = -5;
-    protected final float ONE_PIXEL = .00833333f;
+    protected final float ONE_PIXEL = .01833333f;
     protected ArrayList<Sprite> screenWalls;
     protected ArrayList<Sprite> walls;
     protected ArrayList<Sprite> platforms;
