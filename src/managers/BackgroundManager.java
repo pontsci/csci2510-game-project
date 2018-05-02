@@ -100,6 +100,7 @@ public class BackgroundManager extends Manager{
                  //second story
                  getSprites().add(new BackgroundWall(4.63f, 0, new Vector2f(-.55f,.6f), bgWallSprites[BgWallType.DIAGONAL.getIndex()]));
                  getSprites().add(new BackgroundWall(2.26f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.SMALLSEGMENT.getIndex()]));
+                 getSprites().add(new BackgroundWall(.95f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WALL.getIndex()]));
                  getSprites().add(new BackgroundWall(-.11f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.SCRATCHED.getIndex()]));
                  getSprites().add(new BackgroundWall(-2.48f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.WINDOWCRACKED.getIndex()]));
                  getSprites().add(new BackgroundWall(-4.85f, 0, new Vector2f(.55f,.6f), bgWallSprites[BgWallType.BIGHOLE.getIndex()]));
