@@ -23,12 +23,20 @@ public class SpawnRange implements Drawable
         this.viewport = viewport;
     }
 
-    // SpawnRange for a point.
+    /**
+     * / SpawnRange for a point.
+     * @param x x position
+     * @param y y position
+     * @param viewport the viewport
+     */
     public SpawnRange(float x, float y, Matrix3x3f viewport){
         this(x,x,y,viewport);
     }
 
-    /* Returns a random vector location from the spawn range. */
+    /**
+     * Returns a random vector location from the spawn range.
+     * @return a vector location
+     */
     public Vector2f getSpawnPoint(){
 
         return new Vector2f(minx + random.nextFloat() * (maxx - minx),y);
@@ -40,6 +48,10 @@ public class SpawnRange implements Drawable
         this.viewport = viewport;
     }
 
+    /**
+     * render the spawn range
+     * @param g graphics
+     */
     public void render(Graphics g){
         g.setColor(Color.CYAN);
         Vector2f min = new Vector2f(minx, y);

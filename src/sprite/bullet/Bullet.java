@@ -65,7 +65,12 @@ public abstract class Bullet extends CollidableSprite {
         return getxTranslation() > 8.5 || getxTranslation() < -8.5;
     }
 
-
+    /**
+     *
+     * @param delta time
+     * @param viewport the viewport
+     * @return whether it has collided or not
+     */
     public boolean checkCollision(float delta, Matrix3x3f viewport){
         //Check wall collision and delete bullet if it hits the wall
         for(Sprite wall : walls){
